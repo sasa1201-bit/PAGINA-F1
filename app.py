@@ -2649,18 +2649,20 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. MATRIZ CRONOLÓGICA DE DINASTÍAS (En lugar de la tabla) ---
+    # --- 2. MATRIZ CRONOLÓGICA DE DINASTÍAS CON COLORES DE ESCUDERÍA ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>⏱️ Matriz Cronológica de Dinastías [1950 - 2024]</h3>", unsafe_allow_html=True)
     
     cards_html = ""
     for _, row in df_historico.iterrows():
         esc = row["Escudería"]
-        color_borde = colores_f1.get(esc, "#E10600")
+        # Tomamos el color exacto de la escudería (con un color por defecto si no existe)
+        color_escuderia = colores_f1.get(esc, "#E10600")
+        
         cards_html += f"""
-        <div style="background: rgba(15, 23, 42, 0.9); border-top: 3px solid {color_borde}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;">
-            <div style="font-size: 0.75rem; font-weight: 800; color: #E10600; letter-spacing: 1px; margin-bottom: 4px;">{row['Temporada']}</div>
+        <div style="background: rgba(15, 23, 42, 0.9); border-top: 4px solid {color_escuderia}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;">
+            <div style="font-size: 0.75rem; font-weight: 800; color: {color_escuderia}; letter-spacing: 1px; margin-bottom: 4px;">{row['Temporada']}</div>
             <div style="font-size: 0.95rem; font-weight: 800; color: #F8FAFC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['Piloto Campeón']}">{row['Piloto Campeón']}</div>
-            <div style="font-size: 0.8rem; color: #38BDF8; margin-top: 4px; font-weight: 600;">{esc}</div>
+            <div style="font-size: 0.8rem; color: {color_escuderia}; margin-top: 4px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{esc}">{esc}</div>
             <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 2px;">{row['Nacionalidad']}</div>
         </div>
         """
@@ -2684,7 +2686,7 @@ with tab12:
         .grid-container > div:hover {{
             transform: translateY(-3px);
             background: rgba(30, 41, 59, 0.95);
-            box-shadow: 0 8px 20px rgba(225, 6, 0, 0.25);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         }}
     </style>
     </head>
