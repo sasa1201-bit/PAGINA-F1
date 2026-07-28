@@ -2518,30 +2518,31 @@ with tab12:
 
     # --- AGREGADO DE INTERACTIVIDAD (Buscador dinámico en tiempo real) ---
     col_search, col_count = st.columns([3, 1])
+    
     with col_search:
-    busqueda_historica = st.text_input(
-        "Filtro inteligente de leyendas:",
-        placeholder="🔍 Escribe un piloto (ej. Senna), escudería (ej. Ferrari) o año...",
-        key="input_busqueda_historica_f1"
-    )
+        busqueda_historica = st.text_input(
+            "Filtro inteligente de leyendas:",
+            placeholder="🔍 Escribe un piloto (ej. Senna), escudería (ej. Ferrari) o año...",
+            key="input_busqueda_historica_f1"
+        )
+        
     with col_count:
-    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
-    st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; text-align: right; margin: 0;'>Total Registros: <b>{len(df_historico)}</b></p>", unsafe_allow_html=True)
-
-    # Lógica de filtrado interactivo
+        st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+        st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; text-align: right; margin: 0;'>Total Registros: <b>{len(df_historico)}</b></p>", unsafe_allow_html=True)
+   # Lógica de filtrado interactivo
     if busqueda_historica:
-    filtro_mask = df_historico.astype(str).apply(lambda x: x.str.contains(busqueda_historica, case=False).any(), axis=1)
-    df_a_mostrar = df_historico[filtro_mask]
+        filtro_mask = df_historico.astype(str).apply(lambda x: x.str.contains(busqueda_historica, case=False).any(), axis=1)
+        df_a_mostrar = df_historico[filtro_mask]
     else:
-    df_a_mostrar = df_historico
+        df_a_mostrar = df_historico
 
     # Mostrar la tabla interactiva limpia en Streamlit
     st.dataframe(
-    df_a_mostrar,
-    use_container_width=True,
-    hide_index=True,
-    height=400
-)
+        df_a_mostrar,
+        use_container_width=True,
+        hide_index=True,
+        height=400
+    )
 
     st.markdown("</div>", unsafe_allow_html=True)
 
