@@ -2649,7 +2649,7 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & BALLOONS ---
+    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & FUEGOS ARTIFICIALES ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>🔬 Inspector de Telemetría & Dossier de Leyenda</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento, datos clave y telemetría de campeonato.</p>", unsafe_allow_html=True)
 
@@ -2661,9 +2661,25 @@ with tab12:
     
     color_esc_sel = colores_f1.get(datos_seleccion["Escudería"], "#E10600")
 
-    # Efecto de celebración dinámico para temporadas legendarias o hitos clave
-    if anio_seleccionado in [1950, 1988, 2000, 2008, 2021]:
-        st.balloons()
+    # Lista ampliada de temporadas legendarias que activan fuegos artificiales
+    if anio_seleccionado in [1950, 1957, 1976, 1984, 1988, 1992, 1994, 2000, 2004, 2008, 2009, 2012, 2016, 2021, 2023]:
+        components.html("""
+            <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+            <script>
+                var count = 200;
+                var defaults = { origin: { y: 0.7 } };
+                function fire(particleRatio, opts) {
+                  confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                  }));
+                }
+                fire(0.25, { spread: 26, startVelocity: 55 });
+                fire(0.2, { spread: 60 });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+                fire(0.1, { spread: 120, startVelocity: 45 });
+            </script>
+        """, height=0)
 
     # Tarjeta Dossier Avanzada con el Dato Histórico Incluido
     st.markdown(f"""
@@ -2755,7 +2771,7 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 4. HEAD-TO-HEAD: COMPARADOR DE LEYENDAS ---
+    # --- 4. HEAD-TO-HEAD: COMPARADOR DE LEYENDAS (CIERRE) ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>⚔️ Head-to-Head: Comparador de Leyendas</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Compara cara a cara las métricas, títulos mundiales y escuderías de dos campeones históricos.</p>", unsafe_allow_html=True)
 
