@@ -2547,7 +2547,7 @@ with tab12:
     # Sub-pestañas enfocadas exclusivamente en Pilotos y Analítica Gráfica
     tab_pilotos, tab_grafico_pro = st.tabs([
         "🏎️ Tabla de Campeones", 
-        "📊 Analítica Gráfica de Pilotos Más Ganadores"
+        "📊 Centro de Analítica Avanzada [Innovador]"
     ])
 
     with tab_pilotos:
@@ -2579,7 +2579,6 @@ with tab12:
             csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
             st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean")
 
-        # Generación dinámica de la tabla estructurada con Pandas y renderizado seguro por componentes HTML
         df_display = df_filtrado_p.copy()
         df_display['Temporada'] = df_display['Temporada'].apply(lambda x: f"<span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{x}</span>")
         df_display['Piloto Campeón'] = df_display['Piloto Campeón'].apply(lambda x: f"<span style='font-weight: 700; color: #F8FAFC;'>{x}</span>")
@@ -2637,57 +2636,54 @@ with tab12:
         components.html(table_html, height=420, scrolling=False)
 
     with tab_grafico_pro:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo avanzado con destacados de leyenda y analítica de campeonatos:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 20px;'>Exploración analítica avanzada: Jerarquía de Dinastías por Escudería y Línea Temporal Interactiva de Campeonatos Mundiales.</p>", unsafe_allow_html=True)
         
-        df_chart_p = df_historico["Piloto Campeón"].value_counts().reset_index()
-        df_chart_p.columns = ["Piloto", "Títulos"]
-        df_chart_p = df_chart_p.sort_values(by="Títulos", ascending=False)
-        
-        df_chart_p["Color"] = df_chart_p["Títulos"].apply(lambda x: "#F59E0B" if x == 7 else "#E10600")
-        mean_titulos = df_chart_p["Títulos"].mean()
-
-        fig = px.bar(
-            df_chart_p,
-            x="Piloto",
-            y="Títulos",
-            text="Títulos",
-            title="<b>Pilotos Más Ganadores en la Historia de la Fórmula 1 [Análisis Elite]</b>"
+        # 1. Gráfico Sunburst (Jerarquía Constructores -> Pilotos)
+        df_sun = df_historico.groupby(["Escudería", "Piloto Campeón"]).size().reset_index(name="Títulos")
+        fig_sun = px.sunburst(
+            df_sun,
+            path=["Escudería", "Piloto Campeón"],
+            values="Títulos",
+            title="<b>🧬 Mapa Jerárquico de Dinastías: Constructores vs Pilotos</b>"
         )
-        
-        fig.update_traces(
-            marker_color=df_chart_p["Color"],
-            texttemplate='%{text}', 
-            textposition='outside', 
-            marker_line_color='#FFFFFF', 
-            marker_line_width=1,
-            hovertemplate="<b>Piloto:</b> %{x}<br><b>Campeonatos Mundiales:</b> %{y}<extra></extra>"
+        fig_sun.update_layout(
+            template="plotly_dark",
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="sans-serif", color="#F8FAFC", size=13),
+            margin=dict(l=10, r=10, t=55, b=10)
         )
+        fig_sun.update_traces(marker=dict(colorscale='Reds', line=dict(color='#090d16', width=2)))
+        st.plotly_chart(fig_sun, use_container_width=True)
 
-        fig.add_hline(
-            y=mean_titulos, 
-            line_dash="dot", 
-            line_color="#38BDF8", 
-            annotation_text=f"Promedio Histórico: {mean_titulos:.2f}", 
-            annotation_position="top right",
-            annotation_font=dict(color="#38BDF8", size=11)
+        st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.08); margin: 25px 0;'>", unsafe_allow_html=True)
+
+        # 2. Línea Temporal / Scatter Evolutivo de Campeones (1950-2024)
+        fig_time = px.scatter(
+            df_historico,
+            x="Temporada",
+            y="Piloto Campeón",
+            color="Escudería",
+            symbol="Nacionalidad",
+            title="<b>⏱️ Línea de Tiempo Interactiva y Cronología de Monarcas [1950 - 2024]</b>",
+            labels={"Temporada": "Año de Temporada", "Piloto Campeón": "Leyenda F1"}
         )
-
-        fig.update_layout(
+        fig_time.update_traces(marker=dict(size=13, line=dict(width=1.5, color='#FFFFFF')))
+        fig_time.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(family="sans-serif", color="#F8FAFC", size=12),
             xaxis=dict(
-                title="Piloto", 
-                tickangle=-35,
+                title="Temporada", 
+                dtick=4, 
                 rangeslider=dict(visible=True, bgcolor="#1e293b", bordercolor="#E10600", thickness=0.08)
             ),
-            yaxis=dict(title="Campeonatos Mundiales"),
-            margin=dict(l=20, r=20, t=60, b=90),
-            hovermode="x unified"
+            yaxis=dict(title="Piloto Campeón", categoryorder="total ascending"),
+            margin=dict(l=20, r=20, t=60, b=80),
+            legend=dict(orientation="h", yanchor="bottom", y=1.03, xanchor="right", x=1)
         )
-        
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig_time, use_container_width=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
