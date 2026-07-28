@@ -2427,7 +2427,7 @@ with tab11:
         st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    with tab12:
+with tab12:
     # --- SALÓN DE LA FAMA: HISTORIAL COMPLETO DE CAMPEONES MUNDIALES (1950 - 2024) ---
 st.markdown("<div style='background: rgba(15, 23, 42, 0.75); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>", unsafe_allow_html=True)
 st.markdown("<h3 style='color: #F8FAFC; margin-bottom: 5px;'>📜 Archivo Histórico Oficial: Todos los Campeones del Mundo de la F1</h3>", unsafe_allow_html=True)
