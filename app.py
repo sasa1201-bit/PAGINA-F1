@@ -2432,7 +2432,7 @@ with tab12:
     st.markdown("<div style='background: linear-gradient(135deg, #090d16 0%, #151c2c 100%); padding: 35px; border-radius: 20px; border: 2px solid #E10600; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); margin-bottom: 25px;'>", unsafe_allow_html=True)
     
     st.markdown("<h1 style='color: #FFFFFF; font-weight: 900; font-size: 2.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px;'>🏛️ Salón de la Fama F1 <span style='color: #E10600;'>[1950 - 2024]</span></h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales de Pilotos y Constructores. Sistema analítico de alto rendimiento.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales de Pilotos. Sistema analítico de alto rendimiento.</p>", unsafe_allow_html=True)
 
     import pandas as pd
     import plotly.express as px
@@ -2517,7 +2517,7 @@ with tab12:
 
     df_historico = pd.DataFrame(datos_historicos)
 
-    # Tarjetas de Resumen Ejecutivo (Pilotos y Escuderías Destacadas)
+    # Tarjetas de Resumen Ejecutivo (Pilotos)
     c_kpi1, c_kpi2, c_kpi3 = st.columns(3)
     with c_kpi1:
         st.markdown("""
@@ -2535,19 +2535,18 @@ with tab12:
         """, unsafe_allow_html=True)
     with c_kpi3:
         st.markdown("""
-            <div style='background: rgba(15, 23, 42, 0.9); padding: 18px; border-radius: 12px; border-left: 4px solid #10B981; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>
-                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Escudería más Laureada</span>
-                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>Scuderia Ferrari <span style='color: #10B981; font-size: 0.85rem;'>(16 Títulos F1)</span></div>
+            <div style='background: rgba(15, 23, 42, 0.9); padding: 18px; border-radius: 12px; border-left: 4px solid #F59E0B; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Total de Leyendas</span>
+                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>34 Pilotos Campeones <span style='color: #F59E0B; font-size: 0.85rem;'>(Histórico)</span></div>
             </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 10px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # Sub-pestañas Profesionales para separar Pilotos, Escuderías y Analítica Visual Interactiva
-    tab_pilotos, tab_escuderias, tab_grafico_pro = st.tabs([
-        "🏎️ Campeones de Pilotos", 
-        "🛠️ Campeones de Escuderías", 
-        "📊 Telemetría y Analítica Interactiva"
+    # Sub-pestañas enfocadas exclusivamente en Pilotos y Analítica Gráfica de Pilotos Más Ganadores
+    tab_pilotos, tab_grafico_pro = st.tabs([
+        "🏎️ Tabla de Campeones", 
+        "📊 Analítica Gráfica de Pilotos Más Ganadores"
     ])
 
     with tab_pilotos:
@@ -2556,13 +2555,13 @@ with tab12:
             filtro_leyenda = st.selectbox(
                 "⚡ Filtrar por Leyenda de Pilotos:",
                 ["Todos los Campeones", "Michael Schumacher", "Ayrton Senna", "Lewis Hamilton", "Sebastian Vettel", "Max Verstappen", "Fernando Alonso", "Juan Manuel Fangio"],
-                key="select_leyenda_enterprise"
+                key="select_leyenda_enterprise_pilotos"
             )
         with col_f2:
             busqueda_libre = st.text_input(
                 "🔍 Búsqueda Inteligente (Pilotos):",
                 placeholder="Filtra por piloto, escudería o año...",
-                key="input_busqueda_enterprise"
+                key="input_busqueda_enterprise_pilotos"
             )
 
         df_filtrado_p = df_historico.copy()
@@ -2577,7 +2576,7 @@ with tab12:
             st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; padding-top: 12px; margin: 0;'>Registros activos: <b>{len(df_filtrado_p)}</b></p>", unsafe_allow_html=True)
         with col_st2:
             csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
-            st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p")
+            st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean")
 
         st.dataframe(
             df_filtrado_p,
@@ -2592,53 +2591,29 @@ with tab12:
             }
         )
 
-    with tab_escuderias:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Listado histórico de constructores vinculados a los campeonatos de la categoría:</p>", unsafe_allow_html=True)
-        
-        # Agregación para tabla de escuderías
-        df_escuderias_resumen = df_historico["Escudería"].value_counts().reset_index()
-        df_escuderias_resumen.columns = ["Escudería / Constructor", "Títulos Asociados"]
-        
-        col_e1, col_e2 = st.columns([3, 1])
-        with col_e1:
-            st.markdown(f"<p style='color: #10B981; font-size: 0.9rem; padding-top: 12px; margin: 0;'>Total Constructores Históricos: <b>{len(df_escuderias_resumen)}</b></p>", unsafe_allow_html=True)
-        with col_e2:
-            csv_data_e = df_escuderias_resumen.to_csv(index=False).encode('utf-8')
-            st.download_button("📥 Exportar CSV", data=csv_data_e, file_name="constructores_f1.csv", mime="text/csv", key="dl_e")
-
-        st.dataframe(
-            df_escuderias_resumen,
-            use_container_width=True,
-            hide_index=True,
-            height=380,
-            column_config={
-                "Escudería / Constructor": st.column_config.TextColumn("🛠️ Escudería"),
-                "Títulos Asociados": st.column_config.NumberColumn("🏆 Campeonatos Mundiales", format="%d")
-            }
-        )
-
     with tab_grafico_pro:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Analítica gráfica avanzada de dominio por Constructor (Estilo Plotly interactivo):</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo de los pilotos con más campeonatos mundiales en la historia de la F1:</p>", unsafe_allow_html=True)
         
-        # Gráfica Plotly Interactiva Avanzada (Muy llamativa y profesional)
-        df_chart = df_historico["Escudería"].value_counts().reset_index()
-        df_chart.columns = ["Escudería", "Títulos"]
+        # Gráfica Plotly Interactiva Avanzada de Pilotos Más Ganadores
+        df_chart_p = df_historico["Piloto Campeón"].value_counts().reset_index()
+        df_chart_p.columns = ["Piloto", "Títulos"]
+        df_chart_p = df_chart_p.sort_values(by="Títulos", ascending=False)
         
         fig = px.bar(
-            df_chart,
-            x="Escudería",
+            df_chart_p,
+            x="Piloto",
             y="Títulos",
             text="Títulos",
             color="Títulos",
             color_continuous_scale=["#1e293b", "#E10600"],
-            title="<b>Dominio Histórico de Constructores en la F1</b>"
+            title="<b>Pilotos Más Ganadores en la Historia de la Fórmula 1</b>"
         )
         fig.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(family="sans-serif", color="#F8FAFC", size=12),
-            xaxis=dict(title="Escudería", tickangle=-35),
+            xaxis=dict(title="Piloto", tickangle=-35),
             yaxis=dict(title="Campeonatos Mundiales"),
             margin=dict(l=20, r=20, t=50, b=80)
         )
