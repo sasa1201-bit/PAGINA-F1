@@ -2432,88 +2432,88 @@ with tab12:
     st.markdown("<div style='background: linear-gradient(135deg, #090d16 0%, #151c2c 100%); padding: 35px; border-radius: 20px; border: 2px solid #E10600; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); margin-bottom: 25px;'>", unsafe_allow_html=True)
     
     st.markdown("<h1 style='color: #FFFFFF; font-weight: 900; font-size: 2.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px;'>🏛️ Salón de la Fama F1 <span style='color: #E10600;'>[1950 - 2024]</span></h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales. Sistema analítico de alto rendimiento.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales. Sistema analítico de alto rendimiento con analítica histórica.</p>", unsafe_allow_html=True)
 
     import pandas as pd
     import plotly.express as px
     import streamlit.components.v1 as components
 
     datos_historicos = [
-        {"Temporada": 2024, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
-        {"Temporada": 2023, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
-        {"Temporada": 2022, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
-        {"Temporada": 2021, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
-        {"Temporada": 2020, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2019, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2018, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2017, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2016, "Piloto Campeón": "Nico Rosberg", "Escudería": "Mercedes", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2015, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2014, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2013, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2012, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2011, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2010, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2009, "Piloto Campeón": "Jenson Button", "Escudería": "Brawn GP", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2008, "Piloto Campeón": "Lewis Hamilton", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 2007, "Piloto Campeón": "Kimi Räikkönen", "Escudería": "Ferrari", "Nacionalidad": "🇫🇮 Finlandia"},
-        {"Temporada": 2006, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España"},
-        {"Temporada": 2005, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España"},
-        {"Temporada": 2004, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2003, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2002, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2001, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 2000, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 1999, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia"},
-        {"Temporada": 1998, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia"},
-        {"Temporada": 1997, "Piloto Campeón": "Jacques Villeneuve", "Escudería": "Williams", "Nacionalidad": "🇨🇦 Canadá"},
-        {"Temporada": 1996, "Piloto Campeón": "Damon Hill", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1995, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 1994, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania"},
-        {"Temporada": 1993, "Piloto Campeón": "Alain Prost", "Escudería": "Williams", "Nacionalidad": "🇫🇷 Francia"},
-        {"Temporada": 1992, "Piloto Campeón": "Nigel Mansell", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1991, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1990, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1989, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
-        {"Temporada": 1988, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1987, "Piloto Campeón": "Nelson Piquet", "Escudería": "Williams", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1986, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
-        {"Temporada": 1985, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
-        {"Temporada": 1984, "Piloto Campeón": "Niki Lauda", "Escudería": "McLaren", "Nacionalidad": "🇦🇹 Austria"},
-        {"Temporada": 1983, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1982, "Piloto Campeón": "Keke Rosberg", "Escudería": "Williams", "Nacionalidad": "🇫🇮 Finlandia"},
-        {"Temporada": 1981, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1980, "Piloto Campeón": "Alan Jones", "Escudería": "Williams", "Nacionalidad": "🇦🇺 Australia"},
-        {"Temporada": 1979, "Piloto Campeón": "Jody Scheckter", "Escudería": "Ferrari", "Nacionalidad": "🇿🇦 Sudáfrica"},
-        {"Temporada": 1978, "Piloto Campeón": "Mario Andretti", "Escudería": "Lotus", "Nacionalidad": "🇺🇸 Estados Unidos"},
-        {"Temporada": 1977, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria"},
-        {"Temporada": 1976, "Piloto Campeón": "James Hunt", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1975, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria"},
-        {"Temporada": 1974, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1973, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1972, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "Lotus", "Nacionalidad": "🇧🇷 Brasil"},
-        {"Temporada": 1971, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1970, "Piloto Campeón": "Jochen Rindt", "Escudería": "Lotus", "Nacionalidad": "🇦🇹 Austria"},
-        {"Temporada": 1969, "Piloto Campeón": "Jackie Stewart", "Escudería": "Matra", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1968, "Piloto Campeón": "Graham Hill", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1967, "Piloto Campeón": "Denny Hulme", "Escudería": "Brabham", "Nacionalidad": "🇳🇿 Nueva Zelanda"},
-        {"Temporada": 1966, "Piloto Campeón": "Jack Brabham", "Escudería": "Brabham", "Nacionalidad": "🇦🇺 Australia"},
-        {"Temporada": 1965, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1964, "Piloto Campeón": "John Surtees", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1963, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1962, "Piloto Campeón": "Graham Hill", "Escudería": "BRM", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1961, "Piloto Campeón": "Phil Hill", "Escudería": "Ferrari", "Nacionalidad": "🇺🇸 Estados Unidos"},
-        {"Temporada": 1960, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia"},
-        {"Temporada": 1959, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia"},
-        {"Temporada": 1958, "Piloto Campeón": "Mike Hawthorn", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido"},
-        {"Temporada": 1957, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati", "Nacionalidad": "🇦🇷 Argentina"},
-        {"Temporada": 1956, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Ferrari", "Nacionalidad": "🇦🇷 Argentina"},
-        {"Temporada": 1955, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Mercedes", "Nacionalidad": "🇦🇷 Argentina"},
-        {"Temporada": 1954, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati / Mercedes", "Nacionalidad": "🇦🇷 Argentina"},
-        {"Temporada": 1953, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia"},
-        {"Temporada": 1952, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia"},
-        {"Temporada": 1951, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Alfa Romeo", "Nacionalidad": "🇦🇷 Argentina"},
-        {"Temporada": 1950, "Piloto Campeón": "Nino Farina", "Escudería": "Alfa Romeo", "Nacionalidad": "🇮🇹 Italia"}
+        {"Temporada": 2024, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos", "Dato": "Aseguró su cuarto título consecutivo tras una intensa batalla táctica frente a McLaren y Norris."},
+        {"Temporada": 2023, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos", "Dato": "Red Bull logró el mayor porcentaje de victorias en una sola temporada (95.5%, ganando 21 de 22 carreras)."},
+        {"Temporada": 2022, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos", "Dato": "Bajo el nuevo reglamento de efecto suelo, rompió el récord histórico con 15 victorias en un año."},
+        {"Temporada": 2021, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos", "Dato": "Clímax histórico y dramático en Abu Dabi; el título se definió en la última vuelta de la temporada."},
+        {"Temporada": 2020, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Temporada marcada por la pandemia; Hamilton igualó los 7 títulos mundiales históricos de Michael Schumacher."},
+        {"Temporada": 2019, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Hamilton sumó su sexto título mundial, quedando a solo uno de la marca absoluta."},
+        {"Temporada": 2018, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Intensa batalla contra Sebastian Vettel y Ferrari; Mercedes selló otro doblete de campeonatos."},
+        {"Temporada": 2017, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Ferrari presionó fuerte al inicio, pero la consistencia de Hamilton y Mercedes inclinó la balanza."},
+        {"Temporada": 2016, "Piloto Campeón": "Nico Rosberg", "Escudería": "Mercedes", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Rosberg se coronó tras una dura lucha contra Hamilton y anunció su retiro de la F1 días después."},
+        {"Temporada": 2015, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Dominio absoluto de la era híbrida de Mercedes con 16 victorias sobre 19 posibles."},
+        {"Temporada": 2014, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Debut de los motores V6 Turbo Híbridos; el inicio de la dinastía dorada de Mercedes."},
+        {"Temporada": 2013, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Vettel igualó el récord histórico de 9 victorias consecutivas en una sola temporada."},
+        {"Temporada": 2012, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Temporada caótica y emocionante con 7 ganadores diferentes en las primeras 7 carreras."},
+        {"Temporada": 2011, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Vettel logró 15 poles position en una temporada, estableciendo un récord supremo a una vuelta."},
+        {"Temporada": 2010, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Emocionante cuádruple pelea por el campeonato en Abu Dabi; el campeón más joven hasta entonces."},
+        {"Temporada": 2009, "Piloto Campeón": "Jenson Button", "Escudería": "Brawn GP", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Cuento de hadas: Brawn GP nació de las cenizas de Honda y ganó ambos campeonatos desde cero."},
+        {"Temporada": 2008, "Piloto Campeón": "Lewis Hamilton", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Dramático desenlace en la última curva del GP de Brasil para arrebatarle el título a Massa."},
+        {"Temporada": 2007, "Piloto Campeón": "Kimi Räikkönen", "Escudería": "Ferrari", "Nacionalidad": "🇫🇮 Finlandia", "Dato": "Räikkönen remontó dramáticamente en la última cita superando a los dos pilotos de McLaren por 1 punto."},
+        {"Temporada": 2006, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España", "Dato": "Bicampeonato consecutivo para Alonso y Renault tras una emocionante lucha frente a Schumacher."},
+        {"Temporada": 2005, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España", "Dato": "Alonso rompió la larga hegemonía de Ferrari y se convirtió en el campeón más joven de la historia."},
+        {"Temporada": 2004, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Schumacher y Ferrari barrieron con 13 victorias en 18 Grandes Premios."},
+        {"Temporada": 2003, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Campeonato sumamente apretado; Schumacher aseguró su sexto título por solo 2 puntos de ventaja."},
+        {"Temporada": 2002, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Ferrari ganó 15 de 17 Grandes Premios en un año de dominio técnico abrumador."},
+        {"Temporada": 2001, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Schumacher selló el título con 4 fechas de anticipación y 11 victorias en su bolsillo."},
+        {"Temporada": 2000, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Primer título de Schumacher con Ferrari, rompiendo una sequía de 21 años sin campeonatos para Maranello."},
+        {"Temporada": 1999, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia", "Dato": "Häkkinen conquistó su bicampeonato tras un año de máxima presión por parte de Ferrari."},
+        {"Temporada": 1998, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia", "Dato": "Inicio de la era de los neumáticos rayados y anchos; McLaren dominó el arranque del mundial."},
+        {"Temporada": 1997, "Piloto Campeón": "Jacques Villeneuve", "Escudería": "Williams", "Nacionalidad": "🇨🇦 Canadá", "Dato": "Polémica definición en Jerez tras la colisión directa entre Villeneuve y Michael Schumacher."},
+        {"Temporada": 1996, "Piloto Campeón": "Damon Hill", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Damon Hill emuló a su padre Graham Hill consagrándose campeón mundial con Williams."},
+        {"Temporada": 1995, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Schumacher arrasó con el motor Renault logrando 9 victorias memorables."},
+        {"Temporada": 1994, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania", "Dato": "Año trágico y oscuro marcado por las muertes de Ayrton Senna y Roland Ratzenberger."},
+        {"Temporada": 1993, "Piloto Campeón": "Alain Prost", "Escudería": "Williams", "Nacionalidad": "🇫🇷 Francia", "Dato": "Prost consiguió su cuarto y último título mundial antes de retirarse definitivamente."},
+        {"Temporada": 1992, "Piloto Campeón": "Nigel Mansell", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Mansell dominó con el imparable Williams FW14B dotado de una revolucionaria suspensión activa."},
+        {"Temporada": 1991, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Senna selló su tercer campeonato mundial con una primera mitad de temporada impecable."},
+        {"Temporada": 1990, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil", "Dato": "La histórica y polémica revancha en Suzuka: Senna chocó a Prost en la primera curva."},
+        {"Temporada": 1989, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "El famoso choque en Suzuka entre compañeros de equipo; el título fue para el profesor Prost."},
+        {"Temporada": 1988, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil", "Dato": "McLaren ganó 15 de 16 carreras; Senna se coronó por primera vez tras batallar con Prost."},
+        {"Temporada": 1987, "Piloto Campeón": "Nelson Piquet", "Escudería": "Williams", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Piquet superó a Mansell gracias a su mayor consistencia en pista y manejo de carrera."},
+        {"Temporada": 1986, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "Final de infarto en Adelaida: Prost aprovechó el reventón de neumático de Mansell para llevarse la corona."},
+        {"Temporada": 1985, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "Prost conquistó su primer campeonato mundial, siendo el primer piloto francés en lograrlo."},
+        {"Temporada": 1984, "Piloto Campeón": "Niki Lauda", "Escudería": "McLaren", "Nacionalidad": "🇦🇹 Austria", "Dato": "Lauda venció a Prost por apenas medio punto, la diferencia más ajustada de la historia de la F1."},
+        {"Temporada": 1983, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Primer campeonato de la historia ganado con un motor turbocargado (BMW)."},
+        {"Temporada": 1982, "Piloto Campeón": "Keke Rosberg", "Escudería": "Williams", "Nacionalidad": "🇫🇮 Finlandia", "Dato": "Año salvaje con 11 ganadores distintos; Rosberg fue campeón ganando una sola carrera en el año."},
+        {"Temporada": 1981, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Piquet aseguró el título mundial en el estacionamiento del Caesars Palace en Las Vegas."},
+        {"Temporada": 1980, "Piloto Campeón": "Alan Jones", "Escudería": "Williams", "Nacionalidad": "🇦🇺 Australia", "Dato": "Jones le otorgó a Frank Williams su primer campeonato mundial de pilotos."},
+        {"Temporada": 1979, "Piloto Campeón": "Jody Scheckter", "Escudería": "Ferrari", "Nacionalidad": "🇿🇦 Sudáfrica", "Dato": "Scheckter coronó un año fantástico para Ferrari, siendo el último título de pilotos del siglo XX para los de Maranello."},
+        {"Temporada": 1978, "Piloto Campeón": "Mario Andretti", "Escudería": "Lotus", "Nacionalidad": "🇺🇸 Estados Unidos", "Dato": "Andretti arrasó con el revolucionario Lotus 78/79 de 'efecto suelo'."},
+        {"Temporada": 1977, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria", "Dato": "Lauda logró su segundo título con Ferrari demostrando una resiliencia inquebrantable."},
+        {"Temporada": 1976, "Piloto Campeón": "James Hunt", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "El legendario y peligroso duelo bajo la lluvia en Fuji inmortalizado en la historia del cine y el deporte."},
+        {"Temporada": 1975, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria", "Dato": "Lauda conquistó su primer título mundial con el icónico y veloz Ferrari 312T."},
+        {"Temporada": 1974, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Fittipaldi le entregó a McLaren su segundo campeonato mundial de pilotos."},
+        {"Temporada": 1973, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Stewart anunció su retiro definitivo de las pistas inmediatamente después de amarrar su tercer título."},
+        {"Temporada": 1972, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "Lotus", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Con 25 años, Fittipaldi se convirtió en el campeón más joven de la historia en ese entonces."},
+        {"Temporada": 1971, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Stewart dominó de principio a fin al volante del Tyrrell 003 con motor Cosworth."},
+        {"Temporada": 1970, "Piloto Campeón": "Jochen Rindt", "Escudería": "Lotus", "Nacionalidad": "🇦🇹 Austria", "Dato": "Trágico hito: Rindt es el único piloto en la historia en ser coronado campeón póstumo tras su accidente en Monza."},
+        {"Temporada": 1969, "Piloto Campeón": "Jackie Stewart", "Escudería": "Matra", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Stewart y Matra ganaron el campeonato usando un chasis francés con motor Ford Cosworth."},
+        {"Temporada": 1968, "Piloto Campeón": "Graham Hill", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Hill lideró con gallardía a Lotus tras la dolorosa pérdida de Jim Clark."},
+        {"Temporada": 1967, "Piloto Campeón": "Denny Hulme", "Escudería": "Brabham", "Nacionalidad": "🇳🇿 Nueva Zelanda", "Dato": "Hulme se alzó con la corona gracias a su impresionante y constante ritmo de puntuación."},
+        {"Temporada": 1966, "Piloto Campeón": "Jack Brabham", "Escudería": "Brabham", "Nacionalidad": "🇦🇺 Australia", "Dato": "Hazaña única: Brabham ganó el campeonato con un monoplaza construido por su propio equipo."},
+        {"Temporada": 1965, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Clark ganó las 500 Millas de Indianápolis y el campeonato de F1 en el mismo año calendario."},
+        {"Temporada": 1964, "Piloto Campeón": "John Surtees", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Surtees se convirtió en el único deportista en ser campeón mundial tanto en motociclismo como en F1."},
+        {"Temporada": 1963, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Dominio descomunal: Clark ganó 7 de 10 carreras con el revolucionario Lotus 25 monocasco."},
+        {"Temporada": 1962, "Piloto Campeón": "Graham Hill", "Escudería": "BRM", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Hill le dio a BRM su primer campeonato mundial de constructores y pilotos."},
+        {"Temporada": 1961, "Piloto Campeón": "Phil Hill", "Escudería": "Ferrari", "Nacionalidad": "🇺🇸 Estados Unidos", "Dato": "Primer estadounidense en ser campeón, en una temporada ensombrecida por el accidente mortal de su compañero von Trips."},
+        {"Temporada": 1960, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia", "Dato": "Brabham consolidó la revolución del motor trasero que condenó a los bólidos con motor delantero."},
+        {"Temporada": 1959, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia", "Dato": "Brabham ganó su primer título llevando al límite la agilidad del diseño de motor trasero Cooper."},
+        {"Temporada": 1958, "Piloto Campeón": "Mike Hawthorn", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido", "Dato": "Hawthorn se coronó y se retiró inmediatamente tras el trágico fallecimiento de su gran amigo Peter Collins."},
+        {"Temporada": 1957, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati", "Nacionalidad": "🇦🇷 Argentina", "Dato": "Obtuvo su quinto título con una remontada legendaria e inolvidable en el circuito de Nürburgring."},
+        {"Temporada": 1956, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Ferrari", "Nacionalidad": "🇦🇷 Argentina", "Dato": "Fangio conquistó su cuarto título tras una tensa y fascinante temporada corriendo para la Scuderia Ferrari."},
+        {"Temporada": 1955, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Mercedes", "Nacionalidad": "🇦🇷 Argentina", "Dato": "Dominio con las 'Flechas de Plata' en un año acortado por la cancelación de GPs tras el desastre de Le Mans."},
+        {"Temporada": 1954, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati / Mercedes", "Nacionalidad": "🇦🇷 Argentina", "Dato": "Fangio arrancó el año con Maserati y lo terminó con Mercedes, ganando su segundo campeonato mundial."},
+        {"Temporada": 1953, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia", "Dato": "Ascari dominó con el icónico Ferrari 500, asegurando su bicampeonato mundial consecutivo."},
+        {"Temporada": 1952, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia", "Dato": "Ascari arrasó ganando todas las carreras puntuables del calendario europeo bajo el reglamento de F2."},
+        {"Temporada": 1951, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Alfa Romeo", "Nacionalidad": "🇦🇷 Argentina", "Dato": "Fangio y el supercargado Alfa Romeo 159 derrotaron por estrategia a la escudería Ferrari."},
+        {"Temporada": 1950, "Piloto Campeón": "Nino Farina", "Escudería": "Alfa Romeo", "Nacionalidad": "🇮🇹 Italia", "Dato": "Farina ganó la carrera inaugural absoluta de la historia de la Fórmula 1 en Silverstone."}
     ]
 
     df_historico = pd.DataFrame(datos_historicos)
@@ -2649,21 +2649,19 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. INTERFAZ INTERACTIVA: INSPECTOR DE TELEMETRÍA DE CAMPEÓN ---
+    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>🔬 Inspector de Telemetría & Dossier de Leyenda</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento y telemetría de campeonato.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento, datos clave y telemetría de campeonato.</p>", unsafe_allow_html=True)
 
-    # Opciones formateadas para el selector interactivo
     opciones_campeones = [f"{row['Temporada']} ➔ {row['Piloto Campeón']} ({row['Escudería']})" for _, row in df_historico.iterrows()]
     seleccion_usuario = st.selectbox("⚡ Seleccionar Temporada o Campeón para Analizar:", opciones_campeones, key="inspect_campeon_f1_tab12")
 
-    # Extraer el año seleccionado
     anio_seleccionado = int(seleccion_usuario.split(" ➔ ")[0])
     datos_seleccion = df_historico[df_historico["Temporada"] == anio_seleccionado].iloc[0]
     
     color_esc_sel = colores_f1.get(datos_seleccion["Escudería"], "#E10600")
 
-    # Tarjeta de Interfaz Detallada (Dossier de Telemetría)
+    # Tarjeta Dossier Avanzada con el Dato Histórico Incluido
     st.markdown(f"""
     <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid {color_esc_sel}; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 15px; margin-bottom: 25px;'>
         <div style='display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 15px;'>
@@ -2675,6 +2673,10 @@ with tab12:
                 <div style='font-size: 0.8rem; color: #94A3B8; text-transform: uppercase; font-weight: 700;'>Constructor Dominante</div>
                 <div style='font-size: 1.2rem; font-weight: 800; color: {color_esc_sel};'>{datos_seleccion["Escudería"]}</div>
             </div>
+        </div>
+        <div style='background: rgba(255, 255, 255, 0.04); border-left: 4px solid {color_esc_sel}; padding: 15px; border-radius: 8px; margin-bottom: 18px;'>
+            <div style='font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: {color_esc_sel}; letter-spacing: 1px; margin-bottom: 4px;'>💡 Dato Clave & Contexto Histórico</div>
+            <div style='font-size: 1.02rem; color: #F8FAFC; line-height: 1.5;'>{datos_seleccion["Dato"]}</div>
         </div>
         <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;'>
             <div style='background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border-left: 3px solid {color_esc_sel};'>
@@ -2704,7 +2706,7 @@ with tab12:
         color_escuderia = colores_f1.get(esc, "#E10600")
         
         cards_html += f"""
-        <div style="background: rgba(15, 23, 42, 0.9); border-top: 4px solid {color_escuderia}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;">
+        <div style="background: rgba(15, 23, 42, 0.9); border-top: 4px solid {color_escuderia}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;" title="{row['Dato']}">
             <div style="font-size: 0.75rem; font-weight: 800; color: {color_escuderia}; letter-spacing: 1px; margin-bottom: 4px;">{row['Temporada']}</div>
             <div style="font-size: 0.95rem; font-weight: 800; color: #F8FAFC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['Piloto Campeón']}">{row['Piloto Campeón']}</div>
             <div style="font-size: 0.8rem; color: {color_escuderia}; margin-top: 4px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{esc}">{esc}</div>
