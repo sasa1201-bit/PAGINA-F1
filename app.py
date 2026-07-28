@@ -2661,34 +2661,48 @@ with tab12:
     
     color_esc_sel = colores_f1.get(datos_seleccion["Escudería"], "#E10600")
 
-    # Efecto de fuegos artificiales en toda la pantalla para temporadas legendarias
+    # Efecto de fuegos artificiales global en pantalla completa inyectado en la ventana principal
     if anio_seleccionado in [1950, 1957, 1976, 1984, 1988, 1992, 1994, 2000, 2004, 2008, 2009, 2012, 2016, 2021, 2023]:
         components.html("""
-            <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999999;">
-                <canvas id="fullscreen-fireworks" style="width: 100%; height: 100%;"></canvas>
-            </div>
             <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
             <script>
-                var myCanvas = document.getElementById('fullscreen-fireworks');
-                var myConfetti = confetti.create(myCanvas, { resize: true, useWorker: true });
-                
-                var duration = 3 * 1000;
-                var animationEnd = Date.now() + duration;
-                var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
+                try {
+                    var parentDoc = window.parent.document;
+                    var canvasId = 'f1-fireworks-canvas';
+                    var canvas = parentDoc.getElementById(canvasId);
+                    if (!canvas) {
+                        canvas = parentDoc.createElement('canvas');
+                        canvas.id = canvasId;
+                        canvas.style.position = 'fixed';
+                        canvas.style.top = '0';
+                        canvas.style.left = '0';
+                        canvas.style.width = '100vw';
+                        canvas.style.height = '100vh';
+                        canvas.style.pointerEvents = 'none';
+                        canvas.style.zIndex = '999999';
+                        parentDoc.body.appendChild(canvas);
+                    }
+                    var myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+                    var duration = 3 * 1000;
+                    var animationEnd = Date.now() + duration;
+                    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
 
-                function randomInRange(min, max) {
-                  return Math.random() * (max - min) + min;
+                    function randomInRange(min, max) {
+                      return Math.random() * (max - min) + min;
+                    }
+
+                    var interval = setInterval(function() {
+                      var timeLeft = animationEnd - Date.now();
+                      if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                      }
+                      var particleCount = 50 * (timeLeft / duration);
+                      myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                      myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+                    }, 250);
+                } catch(e) {
+                    console.log(e);
                 }
-
-                var interval = setInterval(function() {
-                  var timeLeft = animationEnd - Date.now();
-                  if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                  }
-                  var particleCount = 50 * (timeLeft / duration);
-                  myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                  myConfetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-                }, 250);
             </script>
         """, height=0)
 
