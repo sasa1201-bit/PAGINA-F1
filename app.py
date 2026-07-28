@@ -2436,6 +2436,7 @@ with tab12:
 
     import pandas as pd
     import plotly.express as px
+    import streamlit.components.v1 as components
 
     datos_historicos = [
         {"Temporada": 2024, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
@@ -2578,7 +2579,7 @@ with tab12:
             csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
             st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean")
 
-        # Generación dinámica de la tabla estructurada con Pandas para evitar cortes de código
+        # Generación dinámica de la tabla estructurada con Pandas y renderizado seguro por componentes HTML
         df_display = df_filtrado_p.copy()
         df_display['Temporada'] = df_display['Temporada'].apply(lambda x: f"<span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{x}</span>")
         df_display['Piloto Campeón'] = df_display['Piloto Campeón'].apply(lambda x: f"<span style='font-weight: 700; color: #F8FAFC;'>{x}</span>")
@@ -2590,16 +2591,23 @@ with tab12:
         html_table_content = df_display.to_html(classes="f1-table", index=False, escape=False)
         
         table_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
         <style>
+            body {{
+                background-color: transparent;
+                margin: 0;
+                font-family: sans-serif;
+            }}
             .f1-table {{
                 width: 100%;
                 border-collapse: collapse;
                 text-align: left;
                 color: #F8FAFC;
-                font-family: sans-serif;
             }}
             .f1-table th {{
-                background: rgba(225, 6, 0, 0.25);
+                background: rgba(225, 6, 0, 0.85);
                 border-bottom: 2px solid #E10600;
                 color: #FFFFFF;
                 padding: 14px 18px;
@@ -2614,14 +2622,19 @@ with tab12:
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }}
             .f1-table tr:hover {{
-                background: rgba(255, 255, 255, 0.02);
+                background: rgba(255, 255, 255, 0.04);
             }}
         </style>
-        <div style='max-height: 400px; overflow-y: auto; margin-top: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.75);'>
+        </head>
+        <body>
+        <div style='max-height: 400px; overflow-y: auto; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.85);'>
             {html_table_content}
         </div>
+        </body>
+        </html>
         """
-        st.markdown(table_html, unsafe_allow_html=True)
+        
+        components.html(table_html, height=420, scrolling=False)
 
     with tab_grafico_pro:
         st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo avanzado con destacados de leyenda y analítica de campeonatos:</p>", unsafe_allow_html=True)
