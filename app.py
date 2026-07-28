@@ -2531,7 +2531,7 @@ with tab12:
         st.markdown("""
             <div style='background: rgba(15, 23, 42, 0.9); padding: 18px; border-radius: 12px; border-left: 4px solid #E10600; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>
                 <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Máximo Monarca Escudería</span>
-                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>Ferrari <span style='color: #E10600; font-size: 0.85rem;'>(16 Títulos Constructores)</span></div>
+                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>Ferrari <span style='color: #E10600; font-size: 0.85rem;'>(15 Títulos Pilotos)</span></div>
             </div>
         """, unsafe_allow_html=True)
     with c_kpi3:
@@ -2544,10 +2544,10 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 10px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # Sub-pestañas enfocadas exclusivamente en Pilotos y Analítica Gráfica
+    # Sub-pestañas
     tab_pilotos, tab_grafico_pro = st.tabs([
         "🏎️ Tabla de Campeones", 
-        "📊 Centro de Analítica Avanzada [Innovador]"
+        "📊 Telemetría y Dinastías [Diseño Pro]"
     ])
 
     with tab_pilotos:
@@ -2636,40 +2636,55 @@ with tab12:
         components.html(table_html, height=420, scrolling=False)
 
     with tab_grafico_pro:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 20px;'>Exploración analítica avanzada: Jerarquía de Dinastías por Escudería y Línea Temporal Interactiva de Campeonatos Mundiales.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 20px;'>Centro analítico optimizado: Dominio histórico por escuderías y línea de tiempo limpia sin saturación visual.</p>", unsafe_allow_html=True)
         
-        # 1. Gráfico Sunburst (Jerarquía Constructores -> Pilotos)
-        df_sun = df_historico.groupby(["Escudería", "Piloto Campeón"]).size().reset_index(name="Títulos")
-        fig_sun = px.sunburst(
-            df_sun,
-            path=["Escudería", "Piloto Campeón"],
-            values="Títulos",
-            title="<b>🧬 Mapa Jerárquico de Dinastías: Constructores vs Pilotos</b>"
+        # 1. Gráfico de Barras Horizontales: Dominios por Escudería (Limpiísimo y Estilizado)
+        df_esc = df_historico["Escudería"].value_counts().reset_index()
+        df_esc.columns = ["Escudería", "Campeonatos"]
+        df_esc = df_esc.sort_values(by="Campeonatos", ascending=True)
+
+        fig_esc = px.bar(
+            df_esc,
+            x="Campeonatos",
+            y="Escudería",
+            orientation="h",
+            text="Campeonatos",
+            title="<b>🏆 Campeonatos Mundiales por Escudería [Constructores Legendarios]</b>"
         )
-        fig_sun.update_layout(
+        fig_esc.update_traces(
+            marker_color="#E10600",
+            texttemplate='%{text}',
+            textposition='outside',
+            marker_line_color='#FFFFFF',
+            marker_line_width=1
+        )
+        fig_esc.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="sans-serif", color="#F8FAFC", size=13),
-            margin=dict(l=10, r=10, t=55, b=10)
+            font=dict(family="sans-serif", color="#F8FAFC", size=12),
+            xaxis=dict(title="Total de Títulos Mundiales"),
+            yaxis=dict(title=""),
+            margin=dict(l=20, r=40, t=55, b=20)
         )
-        fig_sun.update_traces(marker=dict(colorscale='Reds', line=dict(color='#090d16', width=2)))
-        st.plotly_chart(fig_sun, use_container_width=True)
+        st.plotly_chart(fig_esc, use_container_width=True)
 
-        st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.08); margin: 25px 0;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.08); margin: 30px 0;'>", unsafe_allow_html=True)
 
-        # 2. Línea Temporal / Scatter Evolutivo de Campeones (1950-2024)
-        fig_time = px.scatter(
+        # 2. Línea de Tiempo Minimalista (Sin leyenda basura, interactiva y limpia)
+        fig_clean_time = px.scatter(
             df_historico,
             x="Temporada",
             y="Piloto Campeón",
             color="Escudería",
-            symbol="Nacionalidad",
-            title="<b>⏱️ Línea de Tiempo Interactiva y Cronología de Monarcas [1950 - 2024]</b>",
-            labels={"Temporada": "Año de Temporada", "Piloto Campeón": "Leyenda F1"}
+            title="<b>⏱️ Cronología Interactiva de Monarcas [1950 - 2024]</b>",
+            labels={"Temporada": "Año", "Piloto Campeón": "Piloto"}
         )
-        fig_time.update_traces(marker=dict(size=13, line=dict(width=1.5, color='#FFFFFF')))
-        fig_time.update_layout(
+        fig_clean_time.update_traces(
+            marker=dict(size=12, line=dict(width=1.5, color='#FFFFFF')),
+            hovertemplate="<b>Temporada:</b> %{x}<br><b>Piloto:</b> %{y}<br><b>Escudería:</b> %{marker.color}<extra></extra>"
+        )
+        fig_clean_time.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
@@ -2679,11 +2694,11 @@ with tab12:
                 dtick=4, 
                 rangeslider=dict(visible=True, bgcolor="#1e293b", bordercolor="#E10600", thickness=0.08)
             ),
-            yaxis=dict(title="Piloto Campeón", categoryorder="total ascending"),
-            margin=dict(l=20, r=20, t=60, b=80),
-            legend=dict(orientation="h", yanchor="bottom", y=1.03, xanchor="right", x=1)
+            yaxis=dict(title="", categoryorder="total ascending"),
+            margin=dict(l=20, r=20, t=55, b=80),
+            showlegend=False  # ¡Adiós al bloque gigante de leyendas que ensuciaba la pantalla!
         )
-        st.plotly_chart(fig_time, use_container_width=True)
+        st.plotly_chart(fig_clean_time, use_container_width=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
