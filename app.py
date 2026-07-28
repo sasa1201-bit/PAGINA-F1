@@ -2649,13 +2649,58 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. MATRIZ CRONOLÓGICA DE DINASTÍAS CON COLORES DE ESCUDERÍA ---
+    # --- 2. INTERFAZ INTERACTIVA: INSPECTOR DE TELEMETRÍA DE CAMPEÓN ---
+    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>🔬 Inspector de Telemetría & Dossier de Leyenda</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento y telemetría de campeonato.</p>", unsafe_allow_html=True)
+
+    # Opciones formateadas para el selector interactivo
+    opciones_campeones = [f"{row['Temporada']} ➔ {row['Piloto Campeón']} ({row['Escudería']})" for _, row in df_historico.iterrows()]
+    seleccion_usuario = st.selectbox("⚡ Seleccionar Temporada o Campeón para Analizar:", opciones_campeones, key="inspect_campeon_f1_tab12")
+
+    # Extraer el año seleccionado
+    anio_seleccionado = int(seleccion_usuario.split(" ➔ ")[0])
+    datos_seleccion = df_historico[df_historico["Temporada"] == anio_seleccionado].iloc[0]
+    
+    color_esc_sel = colores_f1.get(datos_seleccion["Escudería"], "#E10600")
+
+    # Tarjeta de Interfaz Detallada (Dossier de Telemetría)
+    st.markdown(f"""
+    <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid {color_esc_sel}; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 15px; margin-bottom: 25px;'>
+        <div style='display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 15px;'>
+            <div>
+                <span style='background: {color_esc_sel}; color: #FFFFFF; padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.9rem;'>TEMPORADA {datos_seleccion["Temporada"]}</span>
+                <h2 style='color: #FFFFFF; font-size: 1.8rem; font-weight: 900; margin: 8px 0 0 0;'>{datos_seleccion["Piloto Campeón"]}</h2>
+            </div>
+            <div style='text-align: right;'>
+                <div style='font-size: 0.8rem; color: #94A3B8; text-transform: uppercase; font-weight: 700;'>Constructor Dominante</div>
+                <div style='font-size: 1.2rem; font-weight: 800; color: {color_esc_sel};'>{datos_seleccion["Escudería"]}</div>
+            </div>
+        </div>
+        <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;'>
+            <div style='background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border-left: 3px solid {color_esc_sel};'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Nacionalidad</span>
+                <div style='color: #F8FAFC; font-size: 1rem; font-weight: 700; margin-top: 3px;'>{datos_seleccion["Nacionalidad"]}</div>
+            </div>
+            <div style='background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border-left: 3px solid #38BDF8;'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Estado del Campeonato</span>
+                <div style='color: #38BDF8; font-size: 1rem; font-weight: 700; margin-top: 3px;'>🏆 Monarca Mundial Oficial</div>
+            </div>
+            <div style='background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border-left: 3px solid #10B981;'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Eficiencia Dinástica</span>
+                <div style='color: #10B981; font-size: 1rem; font-weight: 700; margin-top: 3px;'>Optimizada / 100%</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 25px 0;'>", unsafe_allow_html=True)
+
+    # --- 3. MATRIZ CRONOLÓGICA DE DINASTÍAS ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>⏱️ Matriz Cronológica de Dinastías [1950 - 2024]</h3>", unsafe_allow_html=True)
     
     cards_html = ""
     for _, row in df_historico.iterrows():
         esc = row["Escudería"]
-        # Tomamos el color exacto de la escudería (con un color por defecto si no existe)
         color_escuderia = colores_f1.get(esc, "#E10600")
         
         cards_html += f"""
