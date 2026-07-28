@@ -2517,7 +2517,7 @@ with tab12:
 
     df_historico = pd.DataFrame(datos_historicos)
 
-    # Tarjetas de Resumen Ejecutivo (KPIs): 1. Máximo Monarca Pilotos, 2. Máximo Monarca Escudería, 3. Total de Leyendas
+    # Tarjetas de Resumen Ejecutivo (KPIs)
     c_kpi1, c_kpi2, c_kpi3 = st.columns(3)
     with c_kpi1:
         st.markdown("""
@@ -2578,34 +2578,47 @@ with tab12:
             csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
             st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean")
 
-        # Tabla Estructurada con Diseño Fregón (HTML/CSS Tabular de Alta Gama)
-        table_html = """
-        <div style='max-height: 400px; overflow-y: auto; margin-top: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.75);'>
-            <table style='width: 100%; border-collapse: collapse; text-align: left; color: #F8FAFC; font-family: sans-serif;'>
-                <thead>
-                    <tr style='background: rgba(225, 6, 0, 0.25); border-bottom: 2px solid #E10600; color: #FFFFFF; position: sticky; top: 0; z-index: 10;'>
-                        <th style='padding: 14px 18px; font-weight: 800; font-size: 0.9rem;'>📅 Temporada</th>
-                        <th style='padding: 14px 18px; font-weight: 800; font-size: 0.9rem;'>🏎️ Piloto Leyenda</th>
-                        <th style='padding: 14px 18px; font-weight: 800; font-size: 0.9rem;'>🛠️ Constructor</th>
-                        <th style='padding: 14px 18px; font-weight: 800; font-size: 0.9rem;'>🌍 Nacionalidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-        """
+        # Generación dinámica de la tabla estructurada con Pandas para evitar cortes de código
+        df_display = df_filtrado_p.copy()
+        df_display['Temporada'] = df_display['Temporada'].apply(lambda x: f"<span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{x}</span>")
+        df_display['Piloto Campeón'] = df_display['Piloto Campeón'].apply(lambda x: f"<span style='font-weight: 700; color: #F8FAFC;'>{x}</span>")
+        df_display['Escudería'] = df_display['Escudería'].apply(lambda x: f"<span style='color: #38BDF8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 600;'>{x}</span>")
+        df_display['Nacionalidad'] = df_display['Nacionalidad'].apply(lambda x: f"<span style='color: #CBD5E1;'>{x}</span>")
         
-        for _, row in df_filtrado_p.iterrows():
-            table_html += f"""
-                    <tr style='border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.2s;'>
-                        <td style='padding: 12px 18px;'><span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{row['Temporada']}</span></td>
-                        <td style='padding: 12px 18px; font-weight: 700; color: #F8FAFC;'>{row['Piloto Campeón']}</td>
-                        <td style='padding: 12px 18px;'><span style='color: #38BDF8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 600;'>{row['Escudería']}</span></td>
-                        <td style='padding: 12px 18px; color: #CBD5E1;'>{row['Nacionalidad']}</td>
-                    </tr>
-            """
-            
-        table_html += """
-                </tbody>
-            </table>
+        df_display.columns = ["📅 Temporada", "🏎️ Piloto Leyenda", "🛠️ Constructor", "🌍 Nacionalidad"]
+        
+        html_table_content = df_display.to_html(classes="f1-table", index=False, escape=False)
+        
+        table_html = f"""
+        <style>
+            .f1-table {{
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
+                color: #F8FAFC;
+                font-family: sans-serif;
+            }}
+            .f1-table th {{
+                background: rgba(225, 6, 0, 0.25);
+                border-bottom: 2px solid #E10600;
+                color: #FFFFFF;
+                padding: 14px 18px;
+                font-weight: 800;
+                font-size: 0.9rem;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }}
+            .f1-table td {{
+                padding: 12px 18px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }}
+            .f1-table tr:hover {{
+                background: rgba(255, 255, 255, 0.02);
+            }}
+        </style>
+        <div style='max-height: 400px; overflow-y: auto; margin-top: 15px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.75);'>
+            {html_table_content}
         </div>
         """
         st.markdown(table_html, unsafe_allow_html=True)
@@ -2613,14 +2626,11 @@ with tab12:
     with tab_grafico_pro:
         st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo avanzado con destacados de leyenda y analítica de campeonatos:</p>", unsafe_allow_html=True)
         
-        # Gráfica Plotly Mejorada con Color Especial para los Máximos Monarcas (7 Títulos) y Range Slider
         df_chart_p = df_historico["Piloto Campeón"].value_counts().reset_index()
         df_chart_p.columns = ["Piloto", "Títulos"]
         df_chart_p = df_chart_p.sort_values(by="Títulos", ascending=False)
         
-        # Asignar color dinámico: Ámbar brillante para los de 7 títulos, rojo F1 para el resto
         df_chart_p["Color"] = df_chart_p["Títulos"].apply(lambda x: "#F59E0B" if x == 7 else "#E10600")
-        
         mean_titulos = df_chart_p["Títulos"].mean()
 
         fig = px.bar(
