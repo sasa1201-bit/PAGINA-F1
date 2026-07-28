@@ -2649,7 +2649,7 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & FUEGOS ARTIFICIALES ---
+    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & BANNER PIROTÉCNICO ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>🔬 Inspector de Telemetría & Dossier de Leyenda</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento, datos clave y telemetría de campeonato.</p>", unsafe_allow_html=True)
 
@@ -2661,29 +2661,31 @@ with tab12:
     
     color_esc_sel = colores_f1.get(datos_seleccion["Escudería"], "#E10600")
 
-    # Lista ampliada de temporadas legendarias que activan fuegos artificiales
+    # Banner interactivo con fuegos artificiales para temporadas legendarias
     if anio_seleccionado in [1950, 1957, 1976, 1984, 1988, 1992, 1994, 2000, 2004, 2008, 2009, 2012, 2016, 2021, 2023]:
         components.html("""
+            <div style="background: linear-gradient(135deg, rgba(225,6,0,0.15), rgba(15,23,42,0.9)); border: 2px dashed #E10600; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px;">
+                <h4 style="color: #F8FAFC; font-family: sans-serif; margin: 0 0 5px 0; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">🎆 ¡Temporada Legendaria & Hito Histórico! 🎆</h4>
+                <canvas id="fireworks-canvas" style="width: 100%; height: 70px; display: block;"></canvas>
+            </div>
             <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
             <script>
-                var count = 200;
-                var defaults = { origin: { y: 0.7 } };
-                function fire(particleRatio, opts) {
-                  confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                  }));
-                }
-                fire(0.25, { spread: 26, startVelocity: 55 });
-                fire(0.2, { spread: 60 });
-                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-                fire(0.1, { spread: 120, startVelocity: 45 });
+                var canvas = document.getElementById('fireworks-canvas');
+                var myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+                myConfetti({
+                    particleCount: 120,
+                    spread: 100,
+                    origin: { y: 0.6 }
+                });
+                setTimeout(function() {
+                    myConfetti({ particleCount: 70, spread: 120, origin: { y: 0.4 } });
+                }, 400);
             </script>
-        """, height=0)
+        """, height=130)
 
     # Tarjeta Dossier Avanzada con el Dato Histórico Incluido
     st.markdown(f"""
-    <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid {color_esc_sel}; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 15px; margin-bottom: 25px;'>
+    <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid {color_esc_sel}; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 5px; margin-bottom: 25px;'>
         <div style='display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 15px;'>
             <div>
                 <span style='background: {color_esc_sel}; color: #FFFFFF; padding: 5px 12px; border-radius: 6px; font-weight: 900; font-size: 0.9rem;'>TEMPORADA {datos_seleccion["Temporada"]}</span>
