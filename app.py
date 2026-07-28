@@ -2564,7 +2564,7 @@ with tab12:
         "BRM": "#002D62"
     }
 
-    # --- SECCIÓN DE GRÁFICA CON SELECTOR DE TIPO ---
+    # --- 1. SECCIÓN DE GRÁFICA CON SELECTOR DE TIPO ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 10px;'>📊 Centro Analítico de Constructores</h3>", unsafe_allow_html=True)
     
     col_g1, col_g2 = st.columns([2, 1])
@@ -2574,7 +2574,7 @@ with tab12:
         tipo_grafico = st.selectbox(
             "⚡ Tipo de Gráfica:",
             ["Barras Horizontales", "Gráfico Circular (Donut)", "Barras Verticales"],
-            key="select_tipo_grafico_f1"
+            key="select_tipo_grafico_f1_v3"
         )
 
     df_esc = df_historico["Escudería"].value_counts().reset_index()
@@ -2649,21 +2649,21 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- SECCIÓN DE LA TABLA INTERACTIVA DE CAMPEONES (Reemplazando la Matriz Cronológica) ---
-    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>🏎️ Registro Histórico y Tabla de Campeones</h3>", unsafe_allow_html=True)
+    # --- 2. TABLA INTERACTIVA DE CAMPEONES (Reemplazando la Matriz Cronológica) ---
+    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>🏎️ Tabla de Campeones y Registro Histórico</h3>", unsafe_allow_html=True)
     
     col_f1, col_f2 = st.columns(2)
     with col_f1:
         filtro_leyenda = st.selectbox(
             "⚡ Filtrar por Leyenda de Pilotos:",
             ["Todos los Campeones", "Michael Schumacher", "Ayrton Senna", "Lewis Hamilton", "Sebastian Vettel", "Max Verstappen", "Fernando Alonso", "Juan Manuel Fangio"],
-            key="select_leyenda_enterprise_pilotos_v2"
+            key="select_leyenda_enterprise_pilotos_tablas"
         )
     with col_f2:
         busqueda_libre = st.text_input(
             "🔍 Búsqueda Inteligente (Pilotos):",
             placeholder="Filtra por piloto, escudería o año...",
-            key="input_busqueda_enterprise_pilotos_v2"
+            key="input_busqueda_enterprise_pilotos_tablas"
         )
 
     df_filtrado_p = df_historico.copy()
@@ -2678,7 +2678,7 @@ with tab12:
         st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; padding-top: 12px; margin: 0;'>Registros activos: <b>{len(df_filtrado_p)}</b></p>", unsafe_allow_html=True)
     with col_st2:
         csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean_v2")
+        st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean_tablas")
 
     df_display = df_filtrado_p.copy()
     df_display['Temporada'] = df_display['Temporada'].apply(lambda x: f"<span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{x}</span>")
