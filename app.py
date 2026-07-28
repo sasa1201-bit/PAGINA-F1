@@ -2574,7 +2574,7 @@ with tab12:
         tipo_grafico = st.selectbox(
             "⚡ Tipo de Gráfica:",
             ["Barras Horizontales", "Gráfico Circular (Donut)", "Barras Verticales"],
-            key="select_tipo_grafico_f1_v3"
+            key="select_tipo_grafico_f1_matrix"
         )
 
     df_esc = df_historico["Escudería"].value_counts().reset_index()
@@ -2649,48 +2649,23 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. TABLA INTERACTIVA DE CAMPEONES (Reemplazando la Matriz Cronológica) ---
-    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>🏎️ Tabla de Campeones y Registro Histórico</h3>", unsafe_allow_html=True)
+    # --- 2. MATRIZ CRONOLÓGICA DE DINASTÍAS (En lugar de la tabla) ---
+    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>⏱️ Matriz Cronológica de Dinastías [1950 - 2024]</h3>", unsafe_allow_html=True)
     
-    col_f1, col_f2 = st.columns(2)
-    with col_f1:
-        filtro_leyenda = st.selectbox(
-            "⚡ Filtrar por Leyenda de Pilotos:",
-            ["Todos los Campeones", "Michael Schumacher", "Ayrton Senna", "Lewis Hamilton", "Sebastian Vettel", "Max Verstappen", "Fernando Alonso", "Juan Manuel Fangio"],
-            key="select_leyenda_enterprise_pilotos_tablas"
-        )
-    with col_f2:
-        busqueda_libre = st.text_input(
-            "🔍 Búsqueda Inteligente (Pilotos):",
-            placeholder="Filtra por piloto, escudería o año...",
-            key="input_busqueda_enterprise_pilotos_tablas"
-        )
+    cards_html = ""
+    for _, row in df_historico.iterrows():
+        esc = row["Escudería"]
+        color_borde = colores_f1.get(esc, "#E10600")
+        cards_html += f"""
+        <div style="background: rgba(15, 23, 42, 0.9); border-top: 3px solid {color_borde}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;">
+            <div style="font-size: 0.75rem; font-weight: 800; color: #E10600; letter-spacing: 1px; margin-bottom: 4px;">{row['Temporada']}</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #F8FAFC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['Piloto Campeón']}">{row['Piloto Campeón']}</div>
+            <div style="font-size: 0.8rem; color: #38BDF8; margin-top: 4px; font-weight: 600;">{esc}</div>
+            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 2px;">{row['Nacionalidad']}</div>
+        </div>
+        """
 
-    df_filtrado_p = df_historico.copy()
-    if filtro_leyenda != "Todos los Campeones":
-        df_filtrado_p = df_filtrado_p[df_filtrado_p["Piloto Campeón"].str.contains(filtro_leyenda, case=False)]
-    if busqueda_libre:
-        mask = df_filtrado_p.astype(str).apply(lambda x: x.str.contains(busqueda_libre, case=False).any(), axis=1)
-        df_filtrado_p = df_filtrado_p[mask]
-
-    col_st1, col_st2 = st.columns([3, 1])
-    with col_st1:
-        st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; padding-top: 12px; margin: 0;'>Registros activos: <b>{len(df_filtrado_p)}</b></p>", unsafe_allow_html=True)
-    with col_st2:
-        csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean_tablas")
-
-    df_display = df_filtrado_p.copy()
-    df_display['Temporada'] = df_display['Temporada'].apply(lambda x: f"<span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;'>{x}</span>")
-    df_display['Piloto Campeón'] = df_display['Piloto Campeón'].apply(lambda x: f"<span style='font-weight: 700; color: #F8FAFC;'>{x}</span>")
-    df_display['Escudería'] = df_display['Escudería'].apply(lambda x: f"<span style='color: #38BDF8; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 600;'>{x}</span>")
-    df_display['Nacionalidad'] = df_display['Nacionalidad'].apply(lambda x: f"<span style='color: #CBD5E1;'>{x}</span>")
-    
-    df_display.columns = ["📅 Temporada", "🏎️ Piloto Leyenda", "🛠️ Constructor", "🌍 Nacionalidad"]
-    
-    html_table_content = df_display.to_html(classes="f1-table", index=False, escape=False)
-    
-    table_html = f"""
+    matrix_container_html = f"""
     <!DOCTYPE html>
     <html>
     <head>
@@ -2700,41 +2675,30 @@ with tab12:
             margin: 0;
             font-family: sans-serif;
         }}
-        .f1-table {{
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            color: #F8FAFC;
+        .grid-container {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            padding: 4px;
         }}
-        .f1-table th {{
-            background: rgba(225, 6, 0, 0.85);
-            border-bottom: 2px solid #E10600;
-            color: #FFFFFF;
-            padding: 14px 18px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }}
-        .f1-table td {{
-            padding: 12px 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }}
-        .f1-table tr:hover {{
-            background: rgba(255, 255, 255, 0.04);
+        .grid-container > div:hover {{
+            transform: translateY(-3px);
+            background: rgba(30, 41, 59, 0.95);
+            box-shadow: 0 8px 20px rgba(225, 6, 0, 0.25);
         }}
     </style>
     </head>
     <body>
-    <div style='max-height: 400px; overflow-y: auto; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.85);'>
-        {html_table_content}
+    <div style="max-height: 480px; overflow-y: auto; padding-right: 6px;">
+        <div class="grid-container">
+            {cards_html}
+        </div>
     </div>
     </body>
     </html>
     """
-    
-    components.html(table_html, height=420, scrolling=False)
+
+    components.html(matrix_container_html, height=500, scrolling=False)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
