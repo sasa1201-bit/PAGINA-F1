@@ -2429,14 +2429,14 @@ with tab11:
 
 with tab12:
     # --- SALÓN DE LA FAMA: HISTORIAL COMPLETO DE CAMPEONES MUNDIALES (1950 - 2024) ---
-st.markdown("<div style='background: rgba(15, 23, 42, 0.75); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>", unsafe_allow_html=True)
-st.markdown("<h3 style='color: #F8FAFC; margin-bottom: 5px;'>📜 Archivo Histórico Oficial: Todos los Campeones del Mundo de la F1</h3>", unsafe_allow_html=True)
-st.write("Explora el registro completo temporada por temporada de cada leyenda que conquistó la gloria en la máxima categoría desde 1950.")
+    st.markdown("<div style='background: rgba(15, 23, 42, 0.75); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #F8FAFC; margin-bottom: 5px;'>📜 Archivo Histórico Oficial: Todos los Campeones del Mundo de la F1</h3>", unsafe_allow_html=True)
+    st.write("Explora el registro completo temporada por temporada de cada leyenda que conquistó la gloria en la máxima categoría desde 1950.")
 
-import pandas as pd
+    import pandas as pd
 
-# Base de datos completa con todos los campeones de la historia de la F1 (Intacta)
-datos_historicos = [
+    # Base de datos completa con todos los campeones de la historia de la F1 (Intacta)
+    datos_historicos = [
     {"Temporada": 2024, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
     {"Temporada": 2023, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
     {"Temporada": 2022, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
@@ -2514,36 +2514,36 @@ datos_historicos = [
     {"Temporada": 1950, "Piloto Campeón": "Nino Farina", "Escudería": "Alfa Romeo", "Nacionalidad": "🇮🇹 Italia"}
 ]
 
-df_historico = pd.DataFrame(datos_historicos)
+    df_historico = pd.DataFrame(datos_historicos)
 
-# --- AGREGADO DE INTERACTIVIDAD (Buscador dinámico en tiempo real) ---
-col_search, col_count = st.columns([3, 1])
-with col_search:
+    # --- AGREGADO DE INTERACTIVIDAD (Buscador dinámico en tiempo real) ---
+    col_search, col_count = st.columns([3, 1])
+    with col_search:
     busqueda_historica = st.text_input(
         "Filtro inteligente de leyendas:",
         placeholder="🔍 Escribe un piloto (ej. Senna), escudería (ej. Ferrari) o año...",
         key="input_busqueda_historica_f1"
     )
-with col_count:
+    with col_count:
     st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
     st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; text-align: right; margin: 0;'>Total Registros: <b>{len(df_historico)}</b></p>", unsafe_allow_html=True)
 
-# Lógica de filtrado interactivo
-if busqueda_historica:
+    # Lógica de filtrado interactivo
+    if busqueda_historica:
     filtro_mask = df_historico.astype(str).apply(lambda x: x.str.contains(busqueda_historica, case=False).any(), axis=1)
     df_a_mostrar = df_historico[filtro_mask]
-else:
+    else:
     df_a_mostrar = df_historico
 
-# Mostrar la tabla interactiva limpia en Streamlit
-st.dataframe(
+    # Mostrar la tabla interactiva limpia en Streamlit
+    st.dataframe(
     df_a_mostrar,
     use_container_width=True,
     hide_index=True,
     height=400
 )
 
-st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("""
     <hr style='border-color: rgba(255,255,255,0.08); margin-top: 50px;'>
