@@ -2636,9 +2636,29 @@ with tab12:
         components.html(table_html, height=420, scrolling=False)
 
     with tab_grafico_pro:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 20px;'>Centro analítico optimizado: Dominio histórico por escuderías y línea de tiempo limpia sin saturación visual.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 25px;'>Centro de Inteligencia Histórica: Distribución oficial de poder por constructores y matriz cronológica de monarcas.</p>", unsafe_allow_html=True)
         
-        # 1. Gráfico de Barras Horizontales: Dominios por Escudería (Limpiísimo y Estilizado)
+        # Paleta de colores oficial F1
+        colores_f1 = {
+            "Ferrari": "#DC0000",
+            "Mercedes": "#00D2BE",
+            "Red Bull Racing": "#3671C6",
+            "McLaren": "#FF8700",
+            "Williams": "#005AFF",
+            "Lotus": "#50C878",
+            "Brabham": "#1E3A8A",
+            "Renault": "#FEE500",
+            "Benetton": "#00A3E0",
+            "Tyrrell": "#003366",
+            "Alfa Romeo": "#990000",
+            "Maserati": "#717171",
+            "Cooper": "#004D25",
+            "Brawn GP": "#B1C900",
+            "Matra": "#002B49",
+            "BRM": "#002D62"
+        }
+
+        # 1. Gráfico de barras horizontales con colores oficiales
         df_esc = df_historico["Escudería"].value_counts().reset_index()
         df_esc.columns = ["Escudería", "Campeonatos"]
         df_esc = df_esc.sort_values(by="Campeonatos", ascending=True)
@@ -2649,56 +2669,80 @@ with tab12:
             y="Escudería",
             orientation="h",
             text="Campeonatos",
-            title="<b>🏆 Campeonatos Mundiales por Escudería [Constructores Legendarios]</b>"
+            color="Escudería",
+            color_discrete_map=colores_f1,
+            title="<b>🏆 Dominio Absoluto por Constructor [Constructores Legendarios]</b>"
         )
         fig_esc.update_traces(
-            marker_color="#E10600",
             texttemplate='%{text}',
             textposition='outside',
             marker_line_color='#FFFFFF',
-            marker_line_width=1
+            marker_line_width=0.8
         )
         fig_esc.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
             font=dict(family="sans-serif", color="#F8FAFC", size=12),
-            xaxis=dict(title="Total de Títulos Mundiales"),
+            xaxis=dict(title="Títulos Mundiales de Pilotos", gridcolor="rgba(255,255,255,0.05)"),
             yaxis=dict(title=""),
-            margin=dict(l=20, r=40, t=55, b=20)
+            margin=dict(l=20, r=40, t=55, b=20),
+            showlegend=False
         )
         st.plotly_chart(fig_esc, use_container_width=True)
 
-        st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.08); margin: 30px 0;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-        # 2. Línea de Tiempo Minimalista (Sin leyenda basura, interactiva y limpia)
-        fig_clean_time = px.scatter(
-            df_historico,
-            x="Temporada",
-            y="Piloto Campeón",
-            color="Escudería",
-            title="<b>⏱️ Cronología Interactiva de Monarcas [1950 - 2024]</b>",
-            labels={"Temporada": "Año", "Piloto Campeón": "Piloto"}
-        )
-        fig_clean_time.update_traces(
-            marker=dict(size=12, line=dict(width=1.5, color='#FFFFFF')),
-            hovertemplate="<b>Temporada:</b> %{x}<br><b>Piloto:</b> %{y}<br><b>Escudería:</b> %{marker.color}<extra></extra>"
-        )
-        fig_clean_time.update_layout(
-            template="plotly_dark",
-            plot_bgcolor="rgba(0,0,0,0)",
-            paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="sans-serif", color="#F8FAFC", size=12),
-            xaxis=dict(
-                title="Temporada", 
-                dtick=4, 
-                rangeslider=dict(visible=True, bgcolor="#1e293b", bordercolor="#E10600", thickness=0.08)
-            ),
-            yaxis=dict(title="", categoryorder="total ascending"),
-            margin=dict(l=20, r=20, t=55, b=80),
-            showlegend=False  # ¡Adiós al bloque gigante de leyendas que ensuciaba la pantalla!
-        )
-        st.plotly_chart(fig_clean_time, use_container_width=True)
+        # 2. Matriz Cronológica de Dinastías (Tarjetas HTML/CSS Pro)
+        st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>⏱️ Matriz Cronológica de Dinastías [1950 - 2024]</h3>", unsafe_allow_html=True)
+        
+        cards_html = ""
+        for _, row in df_historico.iterrows():
+            esc = row["Escudería"]
+            color_borde = colores_f1.get(esc, "#E10600")
+            cards_html += f"""
+            <div style="background: rgba(15, 23, 42, 0.9); border-top: 3px solid {color_borde}; border-radius: 10px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; overflow: hidden;">
+                <div style="font-size: 0.75rem; font-weight: 800; color: #E10600; letter-spacing: 1px; margin-bottom: 4px;">{row['Temporada']}</div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: #F8FAFC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['Piloto Campeón']}">{row['Piloto Campeón']}</div>
+                <div style="font-size: 0.8rem; color: #38BDF8; margin-top: 4px; font-weight: 600;">{esc}</div>
+                <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 2px;">{row['Nacionalidad']}</div>
+            </div>
+            """
+
+        matrix_container_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+            body {{
+                background-color: transparent;
+                margin: 0;
+                font-family: sans-serif;
+            }}
+            .grid-container {{
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+                padding: 4px;
+            }}
+            .grid-container > div:hover {{
+                transform: translateY(-3px);
+                background: rgba(30, 41, 59, 0.95);
+                box-shadow: 0 8px 20px rgba(225, 6, 0, 0.25);
+            }}
+        </style>
+        </head>
+        <body>
+        <div style="max-height: 480px; overflow-y: auto; padding-right: 6px;">
+            <div class="grid-container">
+                {cards_html}
+            </div>
+        </div>
+        </body>
+        </html>
+        """
+
+        components.html(matrix_container_html, height=500, scrolling=False)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
