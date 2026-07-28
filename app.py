@@ -2478,7 +2478,7 @@ with tab12:
         {"Temporada": 1988, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil", "Dato": "McLaren ganó 15 de 16 carreras; Senna se coronó por primera vez tras batallar con Prost."},
         {"Temporada": 1987, "Piloto Campeón": "Nelson Piquet", "Escudería": "Williams", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Piquet superó a Mansell gracias a su mayor consistencia en pista y manejo de carrera."},
         {"Temporada": 1986, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "Final de infarto en Adelaida: Prost aprovechó el reventón de neumático de Mansell para llevarse la corona."},
-        {"Temporada": 1985, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "Prost conquistó su primer campeonato mundial, siendo el primer piloto francés en lograrlo."},
+        {"Temporada": 1985, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia", "Dato": "Prost conquistó su primer campeonato mundial, siendo el primer francés en lograrlo."},
         {"Temporada": 1984, "Piloto Campeón": "Niki Lauda", "Escudería": "McLaren", "Nacionalidad": "🇦🇹 Austria", "Dato": "Lauda venció a Prost por apenas medio punto, la diferencia más ajustada de la historia de la F1."},
         {"Temporada": 1983, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil", "Dato": "Primer campeonato de la historia ganado con un motor turbocargado (BMW)."},
         {"Temporada": 1982, "Piloto Campeón": "Keke Rosberg", "Escudería": "Williams", "Nacionalidad": "🇫🇮 Finlandia", "Dato": "Año salvaje con 11 ganadores distintos; Rosberg fue campeón ganando una sola carrera en el año."},
@@ -2649,7 +2649,7 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 35px 0 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & BALLEONS ---
+    # --- 2. INSPECTOR DE TELEMETRÍA CON DATOS HISTÓRICOS & BALLOONS ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>🔬 Inspector de Telemetría & Dossier de Leyenda</h3>", unsafe_allow_html=True)
     st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Selecciona cualquier temporada histórica para desplegar el informe de rendimiento, datos clave y telemetría de campeonato.</p>", unsafe_allow_html=True)
 
@@ -2701,57 +2701,7 @@ with tab12:
 
     st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 25px 0;'>", unsafe_allow_html=True)
 
-    # --- 3. HEAD-TO-HEAD: COMPARADOR DE LEYENDAS ---
-    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>⚔️ Head-to-Head: Comparador de Leyendas</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Compara cara a cara las métricas, títulos mundiales y escuderías de dos campeones históricos.</p>", unsafe_allow_html=True)
-
-    lista_pilotos = sorted(df_historico["Piloto Campeón"].unique())
-    
-    col_p1, col_p2 = st.columns(2)
-    with col_p1:
-        p_sel1 = st.selectbox("⚡ Piloto Leyenda 1:", lista_pilotos, index=lista_pilotos.index("Ayrton Senna") if "Ayrton Senna" in lista_pilotos else 0, key="h2h_p1_tab12")
-    with col_p2:
-        p_sel2 = st.selectbox("⚡ Piloto Leyenda 2:", lista_pilotos, index=lista_pilotos.index("Michael Schumacher") if "Michael Schumacher" in lista_pilotos else 1, key="h2h_p2_tab12")
-
-    df_p1 = df_historico[df_historico["Piloto Campeón"] == p_sel1]
-    df_p2 = df_historico[df_historico["Piloto Campeón"] == p_sel2]
-
-    titulos_1 = len(df_p1)
-    anos_1 = ", ".join(map(str, sorted(df_p1["Temporada"].tolist(), reverse=True)))
-    equipos_1 = ", ".join(df_p1["Escudería"].unique())
-    nacion_1 = df_p1["Nacionalidad"].iloc[0]
-
-    titulos_2 = len(df_p2)
-    anos_2 = ", ".join(map(str, sorted(df_p2["Temporada"].tolist(), reverse=True)))
-    equipos_2 = ", ".join(df_p2["Escudería"].unique())
-    nacion_2 = df_p2["Nacionalidad"].iloc[0]
-
-    st.markdown(f"""
-    <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid #38BDF8; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 15px; margin-bottom: 25px;'>
-        <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;'>
-            <div style='background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-top: 4px solid #E10600;'>
-                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Contendiente Alfa</span>
-                <h3 style='color: #FFFFFF; font-size: 1.4rem; font-weight: 900; margin: 5px 0 12px 0;'>{p_sel1}</h3>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Nacionalidad:</b> {nacion_1}</div>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Títulos Mundiales:</b> <span style='font-size: 1.15rem; color: #10B981; font-weight: 800;'>{titulos_1}</span></div>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Años de gloria:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{anos_1}</span></div>
-                <div><b style='color: #38BDF8;'>Escuderías:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{equipos_1}</span></div>
-            </div>
-            <div style='background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-top: 4px solid #38BDF8;'>
-                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Contendiente Beta</span>
-                <h3 style='color: #FFFFFF; font-size: 1.4rem; font-weight: 900; margin: 5px 0 12px 0;'>{p_sel2}</h3>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Nacionalidad:</b> {nacion_2}</div>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Títulos Mundiales:</b> <span style='font-size: 1.15rem; color: #10B981; font-weight: 800;'>{titulos_2}</span></div>
-                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Años de gloria:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{anos_2}</span></div>
-                <div><b style='color: #38BDF8;'>Escuderías:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{equipos_2}</span></div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 25px 0;'>", unsafe_allow_html=True)
-
-    # --- 4. MATRIZ CRONOLÓGICA DE DINASTÍAS ---
+    # --- 3. MATRIZ CRONOLÓGICA DE DINASTÍAS ---
     st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;'>⏱️ Matriz Cronológica de Dinastías [1950 - 2024]</h3>", unsafe_allow_html=True)
     
     cards_html = ""
@@ -2802,6 +2752,56 @@ with tab12:
     """
 
     components.html(matrix_container_html, height=500, scrolling=False)
+
+    st.markdown("<hr style='border: 0.5px solid rgba(255,255,255,0.1); margin: 25px 0;'>", unsafe_allow_html=True)
+
+    # --- 4. HEAD-TO-HEAD: COMPARADOR DE LEYENDAS ---
+    st.markdown("<h3 style='color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 5px;'>⚔️ Head-to-Head: Comparador de Leyendas</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Compara cara a cara las métricas, títulos mundiales y escuderías de dos campeones históricos.</p>", unsafe_allow_html=True)
+
+    lista_pilotos = sorted(df_historico["Piloto Campeón"].unique())
+    
+    col_p1, col_p2 = st.columns(2)
+    with col_p1:
+        p_sel1 = st.selectbox("⚡ Piloto Leyenda 1:", lista_pilotos, index=lista_pilotos.index("Ayrton Senna") if "Ayrton Senna" in lista_pilotos else 0, key="h2h_p1_tab12")
+    with col_p2:
+        p_sel2 = st.selectbox("⚡ Piloto Leyenda 2:", lista_pilotos, index=lista_pilotos.index("Michael Schumacher") if "Michael Schumacher" in lista_pilotos else 1, key="h2h_p2_tab12")
+
+    df_p1 = df_historico[df_historico["Piloto Campeón"] == p_sel1]
+    df_p2 = df_historico[df_historico["Piloto Campeón"] == p_sel2]
+
+    titulos_1 = len(df_p1)
+    anos_1 = ", ".join(map(str, sorted(df_p1["Temporada"].tolist(), reverse=True)))
+    equipos_1 = ", ".join(df_p1["Escudería"].unique())
+    nacion_1 = df_p1["Nacionalidad"].iloc[0]
+
+    titulos_2 = len(df_p2)
+    anos_2 = ", ".join(map(str, sorted(df_p2["Temporada"].tolist(), reverse=True)))
+    equipos_2 = ", ".join(df_p2["Escudería"].unique())
+    nacion_2 = df_p2["Nacionalidad"].iloc[0]
+
+    st.markdown(f"""
+    <div style='background: rgba(15, 23, 42, 0.95); border: 2px solid #38BDF8; border-radius: 16px; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.6); margin-top: 15px; margin-bottom: 25px;'>
+        <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;'>
+            <div style='background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-top: 4px solid #E10600;'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Contendiente Alfa</span>
+                <h3 style='color: #FFFFFF; font-size: 1.4rem; font-weight: 900; margin: 5px 0 12px 0;'>{p_sel1}</h3>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Nacionalidad:</b> {nacion_1}</div>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Títulos Mundiales:</b> <span style='font-size: 1.15rem; color: #10B981; font-weight: 800;'>{titulos_1}</span></div>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Años de gloria:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{anos_1}</span></div>
+                <div><b style='color: #38BDF8;'>Escuderías:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{equipos_1}</span></div>
+            </div>
+            <div style='background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-top: 4px solid #38BDF8;'>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Contendiente Beta</span>
+                <h3 style='color: #FFFFFF; font-size: 1.4rem; font-weight: 900; margin: 5px 0 12px 0;'>{p_sel2}</h3>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Nacionalidad:</b> {nacion_2}</div>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Títulos Mundiales:</b> <span style='font-size: 1.15rem; color: #10B981; font-weight: 800;'>{titulos_2}</span></div>
+                <div style='margin-bottom: 8px;'><b style='color: #38BDF8;'>Años de gloria:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{anos_2}</span></div>
+                <div><b style='color: #38BDF8;'>Escuderías:</b> <span style='font-size: 0.88rem; color: #F8FAFC;'>{equipos_2}</span></div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
