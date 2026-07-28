@@ -2432,7 +2432,7 @@ with tab12:
     st.markdown("<div style='background: linear-gradient(135deg, #090d16 0%, #151c2c 100%); padding: 35px; border-radius: 20px; border: 2px solid #E10600; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); margin-bottom: 25px;'>", unsafe_allow_html=True)
     
     st.markdown("<h1 style='color: #FFFFFF; font-weight: 900; font-size: 2.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px;'>🏛️ Salón de la Fama F1 <span style='color: #E10600;'>[1950 - 2024]</span></h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales de Pilotos. Sistema analítico de alto rendimiento.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #94A3B8; font-size: 1.05rem; margin-bottom: 25px;'>Data Warehouse oficial de campeonatos mundiales. Sistema analítico de alto rendimiento.</p>", unsafe_allow_html=True)
 
     import pandas as pd
     import plotly.express as px
@@ -2517,7 +2517,7 @@ with tab12:
 
     df_historico = pd.DataFrame(datos_historicos)
 
-    # Tarjetas de Resumen Ejecutivo (Pilotos)
+    # Tarjetas de Resumen Ejecutivo Actualizadas (Con Escudería Ganadora Histórica)
     c_kpi1, c_kpi2, c_kpi3 = st.columns(3)
     with c_kpi1:
         st.markdown("""
@@ -2529,8 +2529,8 @@ with tab12:
     with c_kpi2:
         st.markdown("""
             <div style='background: rgba(15, 23, 42, 0.9); padding: 18px; border-radius: 12px; border-left: 4px solid #E10600; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>
-                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Máximo Monarca Pilotos</span>
-                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>Hamilton & Schumacher <span style='color: #E10600; font-size: 0.85rem;'>(7 c/u)</span></div>
+                <span style='color: #64748B; font-size: 0.75rem; text-transform: uppercase; font-weight: 800;'>Escudería Ganadora Histórica</span>
+                <div style='color: #F8FAFC; font-size: 1.3rem; font-weight: 800; margin-top: 4px;'>Ferrari <span style='color: #E10600; font-size: 0.85rem;'>(16 Títulos Constructores)</span></div>
             </div>
         """, unsafe_allow_html=True)
     with c_kpi3:
@@ -2545,8 +2545,8 @@ with tab12:
 
     # Sub-pestañas enfocadas exclusivamente en Pilotos y Analítica Gráfica de Pilotos Más Ganadores
     tab_pilotos, tab_grafico_pro = st.tabs([
-        "🏎️ Tabla de Campeones", 
-        "📊 Analítica Gráfica de Pilotos Más Ganadores"
+        "🏎️ Tabla de Campeones Interactiva", 
+        "📊 Analítica Gráfica Avanzada"
     ])
 
     with tab_pilotos:
@@ -2578,27 +2578,33 @@ with tab12:
             csv_data_p = df_filtrado_p.to_csv(index=False).encode('utf-8')
             st.download_button("📥 Exportar CSV", data=csv_data_p, file_name="pilotos_f1.csv", mime="text/csv", key="dl_p_clean")
 
-        st.dataframe(
-            df_filtrado_p,
-            use_container_width=True,
-            hide_index=True,
-            height=380,
-            column_config={
-                "Temporada": st.column_config.NumberColumn("📅 Temporada", format="%d"),
-                "Piloto Campeón": st.column_config.TextColumn("🏎️ Piloto Leyenda"),
-                "Escudería": st.column_config.TextColumn("🛠️ Constructor"),
-                "Nacionalidad": st.column_config.TextColumn("🌍 Nacionalidad")
-            }
-        )
+        # Tabla Rediseñada de Alto Rendimiento (Estilo Tarjetas / Custom Grid)
+        st.markdown("<div style='max-height: 420px; overflow-y: auto; padding-right: 5px; margin-top: 15px;'>", unsafe_allow_html=True)
+        for _, row in df_filtrado_p.iterrows():
+            st.markdown(f"""
+                <div style='background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-left: 4px solid #E10600; padding: 14px 18px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;'>
+                    <div>
+                        <span style='background: rgba(225, 6, 0, 0.15); color: #E10600; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; margin-right: 12px;'>📅 {row['Temporada']}</span>
+                        <span style='color: #F8FAFC; font-weight: 700; font-size: 1.05rem;'>{row['Piloto Campeón']}</span>
+                    </div>
+                    <div style='display: flex; gap: 15px; align-items: center;'>
+                        <span style='color: #94A3B8; font-size: 0.9rem; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2);'>🛠️ <b>{row['Escudería']}</b></span>
+                        <span style='color: #CBD5E1; font-size: 0.9rem;'>{row['Nacionalidad']}</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with tab_grafico_pro:
-        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo de los pilotos con más campeonatos mundiales en la historia de la F1:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #94A3B8; font-size: 0.95rem; margin-bottom: 15px;'>Ranking interactivo avanzado y analítica de campeonatos mundiales:</p>", unsafe_allow_html=True)
         
-        # Gráfica Plotly Interactiva Avanzada de Pilotos Más Ganadores
+        # Gráfica Plotly Interactiva Avanzada con Línea Promedio y Hover Mejorado
         df_chart_p = df_historico["Piloto Campeón"].value_counts().reset_index()
         df_chart_p.columns = ["Piloto", "Títulos"]
         df_chart_p = df_chart_p.sort_values(by="Títulos", ascending=False)
         
+        mean_titulos = df_chart_p["Títulos"].mean()
+
         fig = px.bar(
             df_chart_p,
             x="Piloto",
@@ -2606,8 +2612,18 @@ with tab12:
             text="Títulos",
             color="Títulos",
             color_continuous_scale=["#1e293b", "#E10600"],
-            title="<b>Pilotos Más Ganadores en la Historia de la Fórmula 1</b>"
+            title="<b>Ranking Elite: Pilotos con Más Campeonatos Mundiales en la Historia de la F1</b>"
         )
+        
+        fig.add_hline(
+            y=mean_titulos, 
+            line_dash="dot", 
+            line_color="#38BDF8", 
+            annotation_text=f"Promedio Títulos por Leyenda: {mean_titulos:.2f}", 
+            annotation_position="top right",
+            annotation_font=dict(color="#38BDF8", size=11)
+        )
+
         fig.update_layout(
             template="plotly_dark",
             plot_bgcolor="rgba(0,0,0,0)",
@@ -2615,9 +2631,17 @@ with tab12:
             font=dict(family="sans-serif", color="#F8FAFC", size=12),
             xaxis=dict(title="Piloto", tickangle=-35),
             yaxis=dict(title="Campeonatos Mundiales"),
-            margin=dict(l=20, r=20, t=50, b=80)
+            margin=dict(l=20, r=20, t=60, b=80),
+            hovermode="x unified"
         )
-        fig.update_traces(texttemplate='%{text}', textposition='outside', marker_line_color='#E10600', marker_line_width=1.5)
+        
+        fig.update_traces(
+            texttemplate='%{text}', 
+            textposition='outside', 
+            marker_line_color='#E10600', 
+            marker_line_width=1.5,
+            hovertemplate="<b>Piloto:</b> %{x}<br><b>Campeonatos:</b> %{y}<extra></extra>"
+        )
         
         st.plotly_chart(fig, use_container_width=True)
 
