@@ -336,8 +336,8 @@ if "tiempo_inicio" not in st.session_state:
 if "reaccion" not in st.session_state:
     st.session_state["reaccion"] = None
 
-# Navegación con 10 pestañas maestras
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+# Navegación con 12 pestañas maestras
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
     "🏠 Panel 2024", 
     "⚔️ H2H", 
     "🔴 En Vivo / 2024", 
@@ -348,7 +348,8 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
     "🛑 Estrategia Gantt", 
     "💵 Fantasy Optimizer", 
     "🏆 Constructores ",
-    "🎙️ Pit Wall "
+    "🎙️ Pit Wall ",
+    "🏛️ Salón de la Fama"
 ])
 
 with tab1:
@@ -2425,6 +2426,124 @@ with tab11:
 
         st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
+    with tab12:
+    # --- SALÓN DE LA FAMA: HISTORIAL COMPLETO DE CAMPEONES MUNDIALES (1950 - 2024) ---
+st.markdown("<div style='background: rgba(15, 23, 42, 0.75); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;'>", unsafe_allow_html=True)
+st.markdown("<h3 style='color: #F8FAFC; margin-bottom: 5px;'>📜 Archivo Histórico Oficial: Todos los Campeones del Mundo de la F1</h3>", unsafe_allow_html=True)
+st.write("Explora el registro completo temporada por temporada de cada leyenda que conquistó la gloria en la máxima categoría desde 1950.")
+
+import pandas as pd
+
+# Base de datos completa con todos los campeones de la historia de la F1 (Intacta)
+datos_historicos = [
+    {"Temporada": 2024, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
+    {"Temporada": 2023, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
+    {"Temporada": 2022, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
+    {"Temporada": 2021, "Piloto Campeón": "Max Verstappen", "Escudería": "Red Bull Racing", "Nacionalidad": "🇳🇱 Países Bajos"},
+    {"Temporada": 2020, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2019, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2018, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2017, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2016, "Piloto Campeón": "Nico Rosberg", "Escudería": "Mercedes", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2015, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2014, "Piloto Campeón": "Lewis Hamilton", "Escudería": "Mercedes", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2013, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2012, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2011, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2010, "Piloto Campeón": "Sebastian Vettel", "Escudería": "Red Bull Racing", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2009, "Piloto Campeón": "Jenson Button", "Escudería": "Brawn GP", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2008, "Piloto Campeón": "Lewis Hamilton", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 2007, "Piloto Campeón": "Kimi Räikkönen", "Escudería": "Ferrari", "Nacionalidad": "🇫🇮 Finlandia"},
+    {"Temporada": 2006, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España"},
+    {"Temporada": 2005, "Piloto Campeón": "Fernando Alonso", "Escudería": "Renault", "Nacionalidad": "🇪🇸 España"},
+    {"Temporada": 2004, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2003, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2002, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2001, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 2000, "Piloto Campeón": "Michael Schumacher", "Escudería": "Ferrari", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 1999, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia"},
+    {"Temporada": 1998, "Piloto Campeón": "Mika Häkkinen", "Escudería": "McLaren", "Nacionalidad": "🇫🇮 Finlandia"},
+    {"Temporada": 1997, "Piloto Campeón": "Jacques Villeneuve", "Escudería": "Williams", "Nacionalidad": "🇨🇦 Canadá"},
+    {"Temporada": 1996, "Piloto Campeón": "Damon Hill", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1995, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 1994, "Piloto Campeón": "Michael Schumacher", "Escudería": "Benetton", "Nacionalidad": "🇩🇪 Alemania"},
+    {"Temporada": 1993, "Piloto Campeón": "Alain Prost", "Escudería": "Williams", "Nacionalidad": "🇫🇷 Francia"},
+    {"Temporada": 1992, "Piloto Campeón": "Nigel Mansell", "Escudería": "Williams", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1991, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1990, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1989, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
+    {"Temporada": 1988, "Piloto Campeón": "Ayrton Senna", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1987, "Piloto Campeón": "Nelson Piquet", "Escudería": "Williams", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1986, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
+    {"Temporada": 1985, "Piloto Campeón": "Alain Prost", "Escudería": "McLaren", "Nacionalidad": "🇫🇷 Francia"},
+    {"Temporada": 1984, "Piloto Campeón": "Niki Lauda", "Escudería": "McLaren", "Nacionalidad": "🇦🇹 Austria"},
+    {"Temporada": 1983, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1982, "Piloto Campeón": "Keke Rosberg", "Escudería": "Williams", "Nacionalidad": "🇫🇮 Finlandia"},
+    {"Temporada": 1981, "Piloto Campeón": "Nelson Piquet", "Escudería": "Brabham", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1980, "Piloto Campeón": "Alan Jones", "Escudería": "Williams", "Nacionalidad": "🇦🇺 Australia"},
+    {"Temporada": 1979, "Piloto Campeón": "Jody Scheckter", "Escudería": "Ferrari", "Nacionalidad": "🇿🇦 Sudáfrica"},
+    {"Temporada": 1978, "Piloto Campeón": "Mario Andretti", "Escudería": "Lotus", "Nacionalidad": "🇺🇸 Estados Unidos"},
+    {"Temporada": 1977, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria"},
+    {"Temporada": 1976, "Piloto Campeón": "James Hunt", "Escudería": "McLaren", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1975, "Piloto Campeón": "Niki Lauda", "Escudería": "Ferrari", "Nacionalidad": "🇦🇹 Austria"},
+    {"Temporada": 1974, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "McLaren", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1973, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1972, "Piloto Campeón": "Emerson Fittipaldi", "Escudería": "Lotus", "Nacionalidad": "🇧🇷 Brasil"},
+    {"Temporada": 1971, "Piloto Campeón": "Jackie Stewart", "Escudería": "Tyrrell", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1970, "Piloto Campeón": "Jochen Rindt", "Escudería": "Lotus", "Nacionalidad": "🇦🇹 Austria"},
+    {"Temporada": 1969, "Piloto Campeón": "Jackie Stewart", "Escudería": "Matra", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1968, "Piloto Campeón": "Graham Hill", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1967, "Piloto Campeón": "Denny Hulme", "Escudería": "Brabham", "Nacionalidad": "🇳🇿 Nueva Zelanda"},
+    {"Temporada": 1966, "Piloto Campeón": "Jack Brabham", "Escudería": "Brabham", "Nacionalidad": "🇦🇺 Australia"},
+    {"Temporada": 1965, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1964, "Piloto Campeón": "John Surtees", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1963, "Piloto Campeón": "Jim Clark", "Escudería": "Lotus", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1962, "Piloto Campeón": "Graham Hill", "Escudería": "BRM", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1961, "Piloto Campeón": "Phil Hill", "Escudería": "Ferrari", "Nacionalidad": "🇺🇸 Estados Unidos"},
+    {"Temporada": 1960, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia"},
+    {"Temporada": 1959, "Piloto Campeón": "Jack Brabham", "Escudería": "Cooper", "Nacionalidad": "🇦🇺 Australia"},
+    {"Temporada": 1958, "Piloto Campeón": "Mike Hawthorn", "Escudería": "Ferrari", "Nacionalidad": "🇬🇧 Reino Unido"},
+    {"Temporada": 1957, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati", "Nacionalidad": "🇦🇷 Argentina"},
+    {"Temporada": 1956, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Ferrari", "Nacionalidad": "🇦🇷 Argentina"},
+    {"Temporada": 1955, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Mercedes", "Nacionalidad": "🇦🇷 Argentina"},
+    {"Temporada": 1954, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Maserati / Mercedes", "Nacionalidad": "🇦🇷 Argentina"},
+    {"Temporada": 1953, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia"},
+    {"Temporada": 1952, "Piloto Campeón": "Alberto Ascari", "Escudería": "Ferrari", "Nacionalidad": "🇮🇹 Italia"},
+    {"Temporada": 1951, "Piloto Campeón": "Juan Manuel Fangio", "Escudería": "Alfa Romeo", "Nacionalidad": "🇦🇷 Argentina"},
+    {"Temporada": 1950, "Piloto Campeón": "Nino Farina", "Escudería": "Alfa Romeo", "Nacionalidad": "🇮🇹 Italia"}
+]
+
+df_historico = pd.DataFrame(datos_historicos)
+
+# --- AGREGADO DE INTERACTIVIDAD (Buscador dinámico en tiempo real) ---
+col_search, col_count = st.columns([3, 1])
+with col_search:
+    busqueda_historica = st.text_input(
+        "Filtro inteligente de leyendas:",
+        placeholder="🔍 Escribe un piloto (ej. Senna), escudería (ej. Ferrari) o año...",
+        key="input_busqueda_historica_f1"
+    )
+with col_count:
+    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #38BDF8; font-size: 0.9rem; text-align: right; margin: 0;'>Total Registros: <b>{len(df_historico)}</b></p>", unsafe_allow_html=True)
+
+# Lógica de filtrado interactivo
+if busqueda_historica:
+    filtro_mask = df_historico.astype(str).apply(lambda x: x.str.contains(busqueda_historica, case=False).any(), axis=1)
+    df_a_mostrar = df_historico[filtro_mask]
+else:
+    df_a_mostrar = df_historico
+
+# Mostrar la tabla interactiva limpia en Streamlit
+st.dataframe(
+    df_a_mostrar,
+    use_container_width=True,
+    hide_index=True,
+    height=400
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("""
     <hr style='border-color: rgba(255,255,255,0.08); margin-top: 50px;'>
