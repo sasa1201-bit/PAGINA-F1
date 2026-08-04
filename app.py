@@ -3081,6 +3081,9 @@ with tab13:
 
     import random
 
+import random
+import pandas as pd
+
 with tab14:
     st.markdown("""
         <style>
@@ -3131,71 +3134,111 @@ with tab14:
 
     st.markdown("<div class='arcade-pro-container'>", unsafe_allow_html=True)
     st.markdown("<div class='arcade-pro-title'>🕹️ F1 Ultimate Time Machine Trivia (1950 - 2024)</div>", unsafe_allow_html=True)
-    st.markdown("<div class='arcade-pro-sub'>Elige tu década favorita o enfréntate al Modo Leyenda Global con más de 40 preguntas históricas.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='arcade-pro-sub'>Elige tu década favorita para cambiar las preguntas o enfréntate al Modo Leyenda Global.</div>", unsafe_allow_html=True)
 
-    # --- BANCO MASIVO DE PREGUNTAS POR DÉCADA (1950 - 2024) ---
+    # --- BANCO MASIVO DE PREGUNTAS POR DÉCADA ---
     BANCO_DECADAS = {
         "1950s": [
             {"pregunta": "¿Quién ganó el primer Campeonato Mundial de Pilotos de la historia de la F1 en 1950?", "opciones": ["Juan Manuel Fangio", "Giuseppe Farina", "Alberto Ascari", "Stirling Moss"], "correcta": "Giuseppe Farina"},
             {"pregunta": "¿Cuántos títulos mundiales de pilotos conquistó el argentino Juan Manuel Fangio en los años 50?", "opciones": ["3", "4", "5", "6"], "correcta": "5"},
             {"pregunta": "¿Qué circuito histórico albergó el primer Gran Premio oficial de la F1 el 13 de mayo de 1950?", "opciones": ["Mónaco", "Silverstone", "Monza", "Spa-Francorchamps"], "correcta": "Silverstone"},
             {"pregunta": "¿En qué año se introdujo oficialmente el Campeonato Mundial de Constructores?", "opciones": ["1950", "1954", "1958", "1960"], "correcta": "1958"},
-            {"pregunta": "¿Qué piloto italiano logró el récord absoluto de ganar 9 carreras consecutivas en los años 50 con Ferrari?", "opciones": ["Alberto Ascari", "Giuseppe Farina", "Luigi Villoresi", "Piero Taruffi"], "correcta": "Alberto Ascari"}
+            {"pregunta": "¿Qué piloto italiano logró el récord absoluto de ganar 9 carreras consecutivas en los años 50 con Ferrari?", "opciones": ["Alberto Ascari", "Giuseppe Farina", "Luigi Villoresi", "Piero Taruffi"], "correcta": "Alberto Ascari"},
+            {"pregunta": "¿Qué marca alemana debutó y ganó carreras en la F1 en 1954 con Juan Manuel Fangio antes de retirarse?", "opciones": ["BMW", "Mercedes-Benz", "Porsche", "Audi"], "correcta": "Mercedes-Benz"},
+            {"pregunta": "¿Qué circuito italiano es conocido popularmente como el 'Templo de la Velocidad'?", "opciones": ["Imola", "Mugello", "Monza", "Vallelunga"], "correcta": "Monza"},
+            {"pregunta": "¿En qué año ganó Mike Hawthorn su único campeonato mundial de F1 conduciendo para Ferrari?", "opciones": ["1956", "1958", "1959", "1952"], "correcta": "1958"},
+            {"pregunta": "¿Qué piloto ganó el campeonato de 1959 con Cooper-Climax, siendo el primero en ganar con motor trasero?", "opciones": ["Jack Brabham", "Stirling Moss", "Tony Brooks", "Phil Hill"], "correcta": "Jack Brabham"},
+            {"pregunta": "¿Qué marca británica ganó su primer campeonato de constructores en 1958 superando a Ferrari?", "opciones": ["Vanwall", "BRM", "Lotus", "Cooper"], "correcta": "Vanwall"}
         ],
         "1960s": [
             {"pregunta": "¿Qué innovación de diseño revolucionó la F1 en los 60s al colocar el motor detrás del piloto?", "opciones": ["Motor delantero V12", "Motor central-trasero (pionero Cooper)", "Tracción integral en las 4 ruedas", "Frenos hidroneumáticos"], "correcta": "Motor central-trasero (pionero Cooper)"},
             {"pregunta": "¿Cuántos campeonatos mundiales ganó el legendario piloto británico Jim Clark en los años 60?", "opciones": ["1", "2", "3", "4"], "correcta": "2"},
             {"pregunta": "¿En qué año se celebró el primer Gran Premio de México en el Autódromo de la Magdalena Mixhuca?", "opciones": ["1960", "1962", "1965", "1968"], "correcta": "1962"},
-            {"pregunta": "¿Qué escudería británica popularizó el icónico patrocinio comercial de colores corporativos tabaqueros en 1968?", "opciones": ["McLaren", "Tyrrell", "Team Lotus (Gold Leaf)", "Brabham"], "correcta": "Team Lotus (Gold Leaf)"},
-            {"pregunta": "¿Qué piloto británico logró la hazaña histórica de ganar la 'Triple Corona del Automovilismo'?", "opciones": ["Graham Hill", "Jackie Stewart", "John Surtees", "Jim Clark"], "correcta": "Graham Hill"}
+            {"pregunta": "¿Qué escudería británica popularizó el icónico patrocinio comercial tabaquero dorado y rojo en 1968?", "opciones": ["McLaren", "Tyrrell", "Team Lotus (Gold Leaf)", "Brabham"], "correcta": "Team Lotus (Gold Leaf)"},
+            {"pregunta": "¿Qué piloto británico logró la hazaña histórica de ganar la 'Triple Corona del Automovilismo'?", "opciones": ["Graham Hill", "Jackie Stewart", "John Surtees", "Jim Clark"], "correcta": "Graham Hill"},
+            {"pregunta": "¿Qué revolucionario diseño de chasis introdujo el Lotus 25 en 1962, cambiando los tubos por una estructura monocasco?", "opciones": ["Monocasco de aluminio", "Chasis tubular de titanio", "Estructura de fibra de carbono", "Chasis multitubular de acero"], "correcta": "Monocasco de aluminio"},
+            {"pregunta": "¿Qué piloto hizo historia en 1966 al ganar el mundial conduciendo un coche construido por su propio equipo?", "opciones": ["Bruce McLaren", "Jack Brabham", "Enzo Ferrari", "Colin Chapman"], "correcta": "Jack Brabham"},
+            {"pregunta": "¿Qué legendario motor V8 de competición hizo su debut triunfal con Lotus en el GP de Holanda de 1967?", "opciones": ["Ferrari V8", "Ford Cosworth DFV", "Climax V8", "BRM V8"], "correcta": "Ford Cosworth DFV"},
+            {"pregunta": "¿Qué piloto mexicano logró subirse al podio en el GP de México de 1968 con BRM?", "opciones": ["Moisés Solana", "Pedro Rodríguez", "Ricardo Rodríguez", "Sergio Pérez"], "correcta": "Pedro Rodríguez"},
+            {"pregunta": "¿En qué año se retiró oficialmente el uso obligatorio de los tradicionales colores 'British Racing Green' por patrocinios comerciales?", "opciones": ["1965", "1968", "1970", "1972"], "correcta": "1968"}
         ],
         "1970s": [
             {"pregunta": "¿Qué escudería revolucionó la aerodinámica introduciendo el 'Efecto Suelo' a finales de los 70?", "opciones": ["Ferrari", "Team Lotus (Lotus 78/79)", "Tyrrell", "McLaren"], "correcta": "Team Lotus (Lotus 78/79)"},
             {"pregunta": "¿En qué año sufrió Niki Lauda su terrible accidente en Nürburgring del cual logró recuperarse milagrosamente?", "opciones": ["1974", "1975", "1976", "1978"], "correcta": "1976"},
             {"pregunta": "¿Quién se coronó campeón mundial en 1976 tras una épica batalla bajo la lluvia en Japón contra Niki Lauda?", "opciones": ["James Hunt", "Mario Andretti", "Emerson Fittipaldi", "Jody Scheckter"], "correcta": "James Hunt"},
             {"pregunta": "¿Cuántos títulos mundiales consiguió el brasileño Emerson Fittipaldi en la década de los 70?", "opciones": ["1", "2", "3", "4"], "correcta": "2"},
-            {"pregunta": "¿Qué piloto estadounidense ganó el campeonato mundial de 1978 con el dominante Lotus con efecto suelo?", "opciones": ["Mario Andretti", "Mark Donohue", "Brett Lunger", "Peter Revson"], "correcta": "Mario Andretti"}
+            {"pregunta": "¿Qué piloto estadounidense ganó el campeonato mundial de 1978 con el dominante Lotus con efecto suelo?", "opciones": ["Mario Andretti", "Mark Donohue", "Brett Lunger", "Peter Revson"], "correcta": "Mario Andretti"},
+            {"pregunta": "¿Qué piloto sudafricano logró el único título mundial de su país en 1979 conduciendo para Ferrari?", "opciones": ["Jody Scheckter", "Dave Charlton", "Eddie Keizan", "Desiré Wilson"], "correcta": "Jody Scheckter"},
+            {"pregunta": "¿Qué escudería francesa introdujo los motores turbo en la F1 en 1977 con el apodo de la 'tetera amarilla'?", "opciones": ["Renault", "Ligier", "Matra", "Alpine"], "correcta": "Renault"},
+            {"pregunta": "¿Quién fue el compañero de equipo de Mario Andretti en Lotus que lamentablemente falleció en Monza en 1978?", "opciones": ["Ronnie Peterson", "Gunnar Nilsson", "Vittorio Brambilla", "Jean-Pierre Jarier"], "correcta": "Ronnie Peterson"},
+            {"pregunta": "¿Qué polémica innovación aerodinámica con un ventilador trasero utilizó el Brabham BT46B en 1978?", "opciones": ["Un ventilador de succión (Fan car)", "Alerones móviles por hidráulica", "Frenos de aire retráctiles", "Doble difusor soplado"], "correcta": "Un ventilador de succión (Fan car)"},
+            {"pregunta": "¿En qué circuito alemán ocurrió el terrible accidente de Niki Lauda en 1976?", "opciones": ["Hockenheim", "Nürburgring Nordschleife", "AVUS", "Norisring"], "correcta": "Nürburgring Nordschleife"}
         ],
         "1980s": [
             {"pregunta": "¿En qué año hizo su debut oficial en la Fórmula 1 el legendario brasileño Ayrton Senna?", "opciones": ["1982", "1984", "1986", "1988"], "correcta": "1984"},
             {"pregunta": "¿Cuántos caballos de fuerza (HP) llegaron a entregar los motores turboalimentados en clasificación en los 80?", "opciones": ["Hasta 600 HP", "Hasta 800 HP", "Más de 1,000 a 1,400 HP", "Exactamente 500 HP"], "correcta": "Más de 1,000 a 1,400 HP"},
             {"pregunta": "¿Quién fue el archirrival y compañero de equipo de Ayrton Senna en McLaren durante la inolvidable temporada de 1988?", "opciones": ["Nigel Mansell", "Alain Prost", "Nelson Piquet", "Keke Rosberg"], "correcta": "Alain Prost"},
             {"pregunta": "¿Cuántos campeonatos mundiales de F1 conquistó el brasileño Nelson Piquet en los 80?", "opciones": ["1", "2", "3", "4"], "correcta": "3"},
-            {"pregunta": "¿Qué escudería dominó de forma aplastante la temporada 1988 ganando 15 de 16 Grandes Premios?", "opciones": ["Williams", "Ferrari", "McLaren", "Lotus"], "correcta": "McLaren"}
+            {"pregunta": "¿Qué escudería dominó de forma aplastante la temporada 1988 ganando 15 de 16 Grandes Premios?", "opciones": ["Williams", "Ferrari", "McLaren", "Lotus"], "correcta": "McLaren"},
+            {"pregunta": "¿Qué piloto francés ganó el GP de Mónaco de 1984 bajo una lluvia torrencial antes de que se detuviera anticipadamente?", "opciones": ["Alain Prost", "René Arnoux", "Jacques Laffite", "Didier Pironi"], "correcta": "Alain Prost"},
+            {"pregunta": "¿Qué piloto brasileño logró su primera victoria en la F1 bajo una tremenda tormenta en Estoril 1985 con Lotus?", "opciones": ["Ayrton Senna", "Nelson Piquet", "Mauricio Gugelmin", "Roberto Moreno"], "correcta": "Ayrton Senna"},
+            {"pregunta": "¿Qué motorizador japonés dominó los campeonatos de constructores a finales de los 80 con McLaren y Williams?", "opciones": ["Honda", "Toyota", "Yamaha", "Subaru"], "correcta": "Honda"},
+            {"pregunta": "¿Qué piloto italiano sufrió un gravísimo accidente en los entrenamientos de Imola 1987 que afectó su carrera?", "opciones": ["Nelson Piquet", "Michele Alboreto", "Riccardo Patrese", "Ivan Capelli"], "correcta": "Nelson Piquet"},
+            {"pregunta": "¿Qué colisión en Suzuka entre Prost y Senna decidió el campeonato mundial de 1989?", "opciones": ["En la chicana del triángulo final", "En la primera curva tras la largada", "En la recta principal", "En la curva 130R"], "correcta": "En la chicana del triángulo final"}
         ],
         "1990s": [
-            {"pregunta": "¿En qué año ganó Michael Schumacher su primer campeonato mundial de pilotos con la escudería Benetton?", "opciones": ["1992", "1994", "1995", "1996"], "correcta": "1994"},
+            {"pregunta": "¿En qué año ganó Michael Schumacher sus primeros campeonatos mundiales con Benetton?", "opciones": ["1992", "1994", "1995", "1996"], "correcta": "1994"},
             {"pregunta": "¿Qué trágico fin de semana en Imola 1994 cobró las vidas de Ayrton Senna y Roland Ratzenberger?", "opciones": ["GP de San Marino", "GP de Mónaco", "GP de Italia", "GP de España"], "correcta": "GP de San Marino"},
             {"pregunta": "¿Qué piloto finlandés logró ganar campeonatos mundiales consecutivos con McLaren en 1998 y 1999?", "opciones": ["Heikki Kovalainen", "Mika Häkkinen", "Kimi Räikkönen", "Valtteri Bottas"], "correcta": "Mika Häkkinen"},
             {"pregunta": "¿Cuántos campeonatos mundiales de constructores consecutivos ganó Williams durante la década de los 90?", "opciones": ["2", "3", "5", "6"], "correcta": "5"},
-            {"pregunta": "¿Qué piloto canadiense se coronó campeón del mundo en 1997 siguiendo los pasos de su legendario padre Gilles?", "opciones": ["Jacques Villeneuve", "Paul Tracy", "Greg Moore", "Alex Tagliani"], "correcta": "Jacques Villeneuve"}
+            {"pregunta": "¿Qué piloto canadiense se coronó campeón del mundo en 1997 siguiendo los pasos de su legendario padre Gilles?", "opciones": ["Jacques Villeneuve", "Paul Tracy", "Greg Moore", "Alex Tagliani"], "correcta": "Jacques Villeneuve"},
+            {"pregunta": "¿Qué piloto británico ganó su ansiado campeonato mundial en 1992 con el icónico Williams FW14B?", "opciones": ["Damon Hill", "Nigel Mansell", "David Coulthard", "Martin Brundle"], "correcta": "Nigel Mansell"},
+            {"pregunta": "¿Qué escudería histórica fichó a Michael Schumacher a finales de 1995 para devolverla a la gloria mundial?", "opciones": ["Ferrari", "McLaren", "Williams", "Benetton"], "correcta": "Ferrari"},
+            {"pregunta": "¿Cuántas victorias acumuló Ayrton Senna en la Fórmula 1 a lo largo de su legendaria carrera?", "opciones": ["31", "41", "51", "65"], "correcta": "41"},
+            {"pregunta": "¿Qué sistema tecnológico automatizaba la altura y estabilidad del chasis y fue prohibido a principios de los 90?", "opciones": ["Suspensión activa", "Frenos cerámicos", "Control de tracción avanzado", "Efecto suelo dinámico"], "correcta": "Suspensión activa"},
+            {"pregunta": "¿Qué circuito albergó finales de temporada infartantes en los 90, como el choque de Schumacher y Villeneuve en 1997?", "opciones": ["Jerez (España)", "Estoril (Portugal)", "Adelaida (Australia)", "Brands Hatch (Reino Unido)"], "correcta": "Jerez (España)"}
         ],
         "2000s": [
             {"pregunta": "¿Cuántos títulos mundiales consecutivos ganó Michael Schumacher con Ferrari entre 2000 y 2004?", "opciones": ["3", "4", "5", "6"], "correcta": "5"},
             {"pregunta": "¿Qué piloto español puso fin a la hegemonía de Ferrari y Schumacher ganando los mundiales de 2005 y 2006?", "opciones": ["Pedro de la Rosa", "Fernando Alonso", "Marc Gené", "Jaime Alguersuari"], "correcta": "Fernando Alonso"},
             {"pregunta": "¿Qué piloto rescató un campeonato dramático para Ferrari en la última carrera del año 2007?", "opciones": ["Felipe Massa", "Kimi Räikkönen", "Rubens Barrichello", "Giancarlo Fisichella"], "correcta": "Kimi Räikkönen"},
             {"pregunta": "¿Qué escudería 'cenicienta' logró el campeonato de pilotos y constructores en 2009 tras comprar lo que era Honda?", "opciones": ["Brawn GP", "Force India", "Super Aguri", "Toyota F1"], "correcta": "Brawn GP"},
-            {"pregunta": "¿En qué circuito nocturno urbano se corrió el primer Gran Premio de noche en la historia de la F1 (2008)?", "opciones": ["Abu Dhabi", "Singapur", "Bakú", "Yeda"], "correcta": "Singapur"}
+            {"pregunta": "¿En qué circuito nocturno urbano se corrió el primer Gran Premio de noche en la historia de la F1 (2008)?", "opciones": ["Abu Dhabi", "Singapur", "Bakú", "Yeda"], "correcta": "Singapur"},
+            {"pregunta": "¿Qué piloto polaco sufrió un grave accidente en un rally en 2011, pero antes ganó con BMW Sauber en Canadá 2008?", "opciones": ["Robert Kubica", "Nick Heidfeld", "Vitaly Petrov", "Kamui Kobayashi"], "correcta": "Robert Kubica"},
+            {"pregunta": "¿En qué circuito brasileño se celebró el dramático GP de 2008 donde Lewis Hamilton ganó su primer título en la última curva?", "opciones": ["Jacarepaguá", "Interlagos (José Carlos Pace)", "Goiania", "Velopark"], "correcta": "Interlagos (José Carlos Pace)"},
+            {"pregunta": "¿Qué escudería francesa ganó los campeonatos de pilotos y constructores de 2005 y 2006?", "opciones": ["Renault", "Peugeot", "Citroën", "Bugatti"], "correcta": "Renault"},
+            {"pregunta": "¿Cómo se le conoció al escándalo de Singapur 2008 cuando se ordenó a un piloto chocar a propósito?", "opciones": ["Crashgate", "Spygate", "Flexigate", "Massagate"], "correcta": "Crashgate"},
+            {"pregunta": "¿Qué escudería fue protagonista principal del caso de espionaje industrial conocido como 'Spygate' en 2007?", "opciones": ["McLaren", "Ferrari", "Renault", "Toyota"], "correcta": "McLaren"}
         ],
         "2010s": [
             {"pregunta": "¿Cuántos títulos mundiales consecutivos ganó Sebastian Vettel con Red Bull Racing de 2010 a 2013?", "opciones": ["2", "3", "4", "5"], "correcta": "4"},
             {"pregunta": "¿Qué motorización introdujo la F1 de forma obligatoria en la temporada 2014 marcando la era híbrida?", "opciones": ["V8 atmosférico", "V6 Turbo Híbrido de 1.6L", "V10 atmosférico", "Motores eléctricos puros"], "correcta": "V6 Turbo Híbrido de 1.6L"},
             {"pregunta": "¿Quién se convirtió en el ganador de un Gran Premio más joven en la historia de la F1 (España 2016)?", "opciones": ["Charles Leclerc", "Lando Norris", "Max Verstappen", "Sebastian Vettel"], "correcta": "Max Verstappen"},
             {"pregunta": "¿Qué piloto alemán ganó el título en 2016 con Mercedes y anunció su retiro inmediato de la categoría?", "opciones": ["Nico Rosberg", "Nick Heidfeld", "Timo Glock", "Pascal Wehrlein"], "correcta": "Nico Rosberg"},
-            {"pregunta": "¿En qué año se hizo obligatorio el sistema de protección de cabina 'Halo' en los monoplazas?", "opciones": ["2016", "2017", "2018", "2020"], "correcta": "2018"}
+            {"pregunta": "¿En qué año se hizo obligatorio el sistema de protección de cabina 'Halo' en los monoplazas?", "opciones": ["2016", "2017", "2018", "2020"], "correcta": "2018"},
+            {"pregunta": "¿Qué récord de victorias consecutivas estableció Sebastian Vettel en la dominante temporada 2013?", "opciones": ["5", "7", "9", "11"], "correcta": "9"},
+            {"pregunta": "¿Qué piloto venezolano logró su histórica y única victoria en la F1 con Williams en el GP de España 2012?", "opciones": ["Pastor Maldonado", "Johnny Cecotto", "Ernesto Viso", "Rodolfo González"], "correcta": "Pastor Maldonado"},
+            {"pregunta": "¿En qué circuito se disputa tradicionalmente el Gran Premio de Abu Dhabi, cierre habitual de temporada desde 2009?", "opciones": ["Yas Marina", "Losail", "Sakhir", "Bahréin"], "correcta": "Yas Marina"},
+            {"pregunta": "¿Qué piloto finlandés fichó por Mercedes para la temporada 2017 tras el sorpresivo retiro de Nico Rosberg?", "opciones": ["Valtteri Bottas", "Heikki Kovalainen", "Kimi Räikkönen", "Mika Salo"], "correcta": "Valtteri Bottas"},
+            {"pregunta": "¿Cuántos campeonatos mundiales de constructores consecutivos acumuló Mercedes desde 2014 hasta 2021?", "opciones": ["6", "7", "8", "10"], "correcta": "8"}
         ],
         "2020s": [
             {"pregunta": "¿Qué escudería batió el récord histórico ganando 19 de 22 carreras en la dominante temporada 2023?", "opciones": ["Mercedes", "Ferrari", "Red Bull Racing", "McLaren"], "correcta": "Red Bull Racing"},
             {"pregunta": "¿Qué piloto mexicano logró su histórica primera victoria en la F1 en el Gran Premio de Sakhir 2020?", "opciones": ["Esteban Gutiérrez", "Sergio 'Checo' Pérez", "Pedro Rodríguez", "Moisés Solana"], "correcta": "Sergio 'Checo' Pérez"},
             {"pregunta": "¿Qué revolucionaria normativa aerodinámica regresó masivamente el 'efecto suelo' a partir de la temporada 2022?", "opciones": ["Efecto suelo con túneles Venturi", "Efecto suelo por ventiladores activos", "Suspensión inteligente activa", "Neumáticos lisos de 13 pulgadas"], "correcta": "Efecto suelo con túneles Venturi"},
             {"pregunta": "¿Cuál fue el circuito urbano que marcó el regreso de la F1 a Nevada con una carrera nocturna en el Strip (2023)?", "opciones": ["Miami", "Las Vegas", "Long Beach", "Dallas"], "correcta": "Las Vegas"},
-            {"pregunta": "¿Cuántos títulos mundiales acumuló Max Verstappen cerrando su racha dominante hasta la temporada 2024?", "opciones": ["2", "3", "4", "5"], "correcta": "4"}
+            {"pregunta": "¿Cuántos títulos mundiales acumuló Max Verstappen cerrando su racha dominante hasta la temporada 2024?", "opciones": ["2", "3", "4", "5"], "correcta": "4"},
+            {"pregunta": "¿Qué circuito albergó el Gran Premio de los Países Bajos marcando el masivo regreso de la 'Marea Naranja'?", "opciones": ["Assen", "Zandvoort", "Spa", "Nürburgring"], "correcta": "Zandvoort"},
+            {"pregunta": "¿Qué piloto británico debutó en Williams y luego fichó por Mercedes consiguiendo su primera victoria en Brasil?", "opciones": ["Lando Norris", "George Russell", "Oliver Bearman", "Alexander Albon"], "correcta": "George Russell"},
+            {"pregunta": "¿Qué polémica decisión arbitral en el GP de Abu Dhabi 2021 decidió el campeonato mundial en la última vuelta?", "opciones": ["El manejo del coche de seguridad por Michael Masi", "Una sanción de 10 segundos a Hamilton", "La descalificación de Verstappen", "Bandera roja injustificada"], "correcta": "El manejo del coche de seguridad por Michael Masi"},
+            {"pregunta": "¿Qué histórica escudería fichó a Lewis Hamilton a partir de la temporada 2025 rompiendo su alianza con Mercedes?", "opciones": ["Ferrari", "Aston Martin", "Williams", "Alpine"], "correcta": "Ferrari"},
+            {"pregunta": "¿Qué GP callejero nocturno estadounidense se estrenó con éxito masivo en mayo de 2022 alrededor de un estadio de fútbol americano?", "opciones": ["Miami", "Las Vegas", "Austin", "Long Beach"], "correcta": "Miami"}
         ]
     }
 
-    # --- INICIALIZACIÓN DE ESTADOS ---
+    # --- INICIALIZACIÓN DE ESTADOS SEGUROS ---
     if 'pro_state' not in st.session_state:
-        st.session_state.pro_state = "SELECT" # SELECT, PLAYING, FINISHED
+        st.session_state.pro_state = "SELECT"
     if 'pro_questions' not in st.session_state:
         st.session_state.pro_questions = []
     if 'pro_idx' not in st.session_state:
@@ -3206,6 +3249,12 @@ with tab14:
         st.session_state.pro_mode = ""
     if 'pro_highscore' not in st.session_state:
         st.session_state.pro_highscore = 0
+    if 'pro_game_id' not in st.session_state:
+        st.session_state.pro_game_id = 0
+    if 'pro_score_history' not in st.session_state:
+        st.session_state.pro_score_history = []
+    if 'pro_recorded' not in st.session_state:
+        st.session_state.pro_recorded = False
 
     # Panel Superior de Estadísticas
     c_stat1, c_stat2 = st.columns(2)
@@ -3222,26 +3271,43 @@ with tab14:
         
         col_m1, col_m2 = st.columns(2)
         with col_m1:
-            decada_elegida = st.selectbox("📅 Jugar por Década Específica:", list(BANCO_DECADAS.keys()))
+            decada_elegida = st.selectbox("📅 Jugar por Década Específica:", list(BANCO_DECADAS.keys()), key="select_decada_box")
             if st.button("🚀 Iniciar Desafío por Década", use_container_width=True):
-                st.session_state.pro_questions = random.sample(BANCO_DECADAS[decada_elegida], len(BANCO_DECADAS[decada_elegida]))
+                # Carga estricta únicamente de la década seleccionada
+                seleccion = random.sample(BANCO_DECADAS[decada_elegida], len(BANCO_DECADAS[decada_elegida]))
+                for q in seleccion:
+                    opts = q['opciones'].copy()
+                    random.shuffle(opts)
+                    q['shuffled_opts'] = opts
+                
+                st.session_state.pro_questions = seleccion
                 st.session_state.pro_idx = 0
                 st.session_state.pro_score = 0
                 st.session_state.pro_mode = f"Década: {decada_elegida}"
+                st.session_state.pro_game_id += 1
+                st.session_state.pro_recorded = False
                 st.session_state.pro_state = "PLAYING"
                 st.rerun()
         
         with col_m2:
-            st.markdown("<p style='color:#aaa; font-size:0.9rem; margin-top:5px;'><b>Modo Leyenda Global (1950 - 2024):</b> Se seleccionarán 10 preguntas aleatorias de todas las décadas juntas para poner a prueba tu conocimiento total.</p>", unsafe_allow_html=True)
+            st.markdown("<p style='color:#aaa; font-size:0.9rem; margin-top:5px;'><b>Modo Leyenda Global (1950 - 2024):</b> Selecciona 10 preguntas aleatorias de cualquier época mezcladas.</p>", unsafe_allow_html=True)
             if st.button("👑 Iniciar Modo Leyenda (Global)", use_container_width=True):
-                # Unir todas las preguntas de todas las décadas
                 todas_preguntas = []
                 for dec in BANCO_DECADAS.values():
                     todas_preguntas.extend(dec)
-                st.session_state.pro_questions = random.sample(todas_preguntas, 10)
+                
+                seleccion = random.sample(todas_preguntas, 10)
+                for q in seleccion:
+                    opts = q['opciones'].copy()
+                    random.shuffle(opts)
+                    q['shuffled_opts'] = opts
+
+                st.session_state.pro_questions = seleccion
                 st.session_state.pro_idx = 0
                 st.session_state.pro_score = 0
                 st.session_state.pro_mode = "Modo Leyenda (Global)"
+                st.session_state.pro_game_id += 1
+                st.session_state.pro_recorded = False
                 st.session_state.pro_state = "PLAYING"
                 st.rerun()
 
@@ -3251,22 +3317,26 @@ with tab14:
         idx = st.session_state.pro_idx
         q_actual = preguntas[idx]
 
-        # Barra de progreso interactiva
         progress_val = (idx) / len(preguntas)
         st.progress(progress_val, text=f"Pregunta {idx + 1} de {len(preguntas)}")
 
         st.markdown(f"<div class='arcade-q-box'>", unsafe_allow_html=True)
-        st.markdown(f"<h4 style='color: #FF1801; margin-top:0;'>Progreso del Test <span style='font-size:0.8rem; color:#aaa; float:right;'>Puntos actuales: {st.session_state.pro_score}</span></h4>", unsafe_allow_html=True)
+        
+        col_q_title, col_q_btn = st.columns([3, 1])
+        with col_q_title:
+            st.markdown(f"<h4 style='color: #FF1801; margin-top:0;'>Progreso del Test</h4>", unsafe_allow_html=True)
+        with col_q_btn:
+            if st.button("🔄 Reiniciar", use_container_width=True):
+                st.session_state.pro_state = "SELECT"
+                st.rerun()
+
         st.markdown(f"<h3 style='color: #fff; font-size:1.15rem;'>{q_actual['pregunta']}</h3>", unsafe_allow_html=True)
 
-        # Barajar opciones para cada pregunta en sesión si no se ha hecho
-        key_shuff = f"pro_shuffled_{idx}"
-        if key_shuff not in st.session_state:
-            opts = q_actual['opciones'].copy()
-            random.shuffle(opts)
-            st.session_state[key_shuff] = opts
-
-        eleccion = st.radio("Elige la opción correcta:", st.session_state[key_shuff], key=f"pro_ans_{idx}")
+        eleccion = st.radio(
+            "Elige la opción correcta:", 
+            q_actual['shuffled_opts'], 
+            key=f"radio_ans_{st.session_state.pro_game_id}_{idx}"
+        )
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -3278,21 +3348,28 @@ with tab14:
             else:
                 st.toast(f"❌ Incorrecto. La respuesta correcta era: {q_actual['correcta']}", icon="⚠️")
 
-            # Avanzar o terminar
             if idx + 1 < len(preguntas):
                 st.session_state.pro_idx += 1
                 st.rerun()
             else:
-                # Fin de la partida
                 final_s = st.session_state.pro_score
                 if final_s > st.session_state.pro_highscore:
                     st.session_state.pro_highscore = final_s
+                
+                if not st.session_state.pro_recorded:
+                    st.session_state.pro_score_history.append({
+                        "Intento": len(st.session_state.pro_score_history) + 1,
+                        "Modo": st.session_state.pro_mode,
+                        "Puntos": final_s
+                    })
+                    st.session_state.pro_recorded = True
+
                 st.session_state.pro_state = "FINISHED"
                 st.rerun()
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- 3. PANTALLA DE RESULTADOS ---
+    # --- 3. PANTALLA DE RESULTADOS Y GRÁFICA ---
     elif st.session_state.pro_state == "FINISHED":
         score_final = st.session_state.pro_score
         st.markdown("<br>", unsafe_allow_html=True)
@@ -3305,6 +3382,12 @@ with tab14:
             st.info("⚡ ¡Muy sólido! Conoces a la perfección los hitos más importantes de la categoría.")
         else:
             st.warning("⚠️ Buen intento. La historia de la F1 es fascinante; ¡vuelve a intentarlo para dominar la tabla!")
+
+        if st.session_state.pro_score_history:
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: white; text-align: center;'>📊 Historial de Puntuaciones por Partida</h4>", unsafe_allow_html=True)
+            df_history = pd.DataFrame(st.session_state.pro_score_history)
+            st.bar_chart(df_history.set_index("Intento")["Puntos"], color="#FF1801")
 
         st.markdown("<br>", unsafe_allow_html=True)
         col_end1, col_end2, col_end3 = st.columns([1, 2, 1])
