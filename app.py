@@ -337,7 +337,7 @@ if "reaccion" not in st.session_state:
     st.session_state["reaccion"] = None
 
 # Navegación con 13 pestañas maestras
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13= st.tabs([
     "🏠 Panel",
     "⚔️ H2H",
     "🗺️ Circuitos",
