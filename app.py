@@ -337,10 +337,10 @@ if "reaccion" not in st.session_state:
     st.session_state["reaccion"] = None
 
 # Navegación con 13 pestañas maestras
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
     "🏠 Panel",
     "⚔️ H2H",
-    "🔴 En Vivo",
+    "🗺️ Circuitos",
     "📈 FastF1",
     "⛅ Clima",
     "💰 Cost Cap",
@@ -349,8 +349,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13
     "💵 Fantasy",
     "🏆 Equipos",
     "🎙️ Pit Wall",
-    "🏛️ Fama",
-    "🗺️ Circuitos"
+    "🏛️ Fama"
 ])
 
 with tab1:
@@ -2844,100 +2843,6 @@ with tab12:
         </div>
     </div>
     """, unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-with tab13:
-    st.markdown("""
-        <style>
-            .f1-card {
-                background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
-                border-left: 4px solid #E10600; /* Rojo F1 */
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-                border-right: 1px solid rgba(255, 255, 255, 0.08);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 8px;
-                padding: 16px;
-                margin-bottom: 16px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-                transition: transform 0.2s ease, border-color 0.2s ease;
-            }
-            .f1-card:hover {
-                transform: translateY(-3px);
-                border-left-color: #FFD700; /* Dorado al pasar el mouse */
-            }
-            .f1-card-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 8px;
-            }
-            .f1-round {
-                font-size: 0.75rem;
-                font-weight: 700;
-                color: #888;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-            .f1-flag {
-                font-size: 1.2rem;
-            }
-            .f1-circuit-name {
-                color: #FFFFFF;
-                font-size: 0.95rem;
-                font-weight: 800;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin: 0;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header' style='color: #FFD700; font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 25px;'>🏁 CALENDARIO OFICIAL F1 2024</div>", unsafe_allow_html=True)
-    
-    circuitos_2024 = [
-        {"ronda": "Ronda 1", "pais": "🇧🇭", "nombre": "Gran Premio de Baréin"},
-        {"ronda": "Ronda 2", "pais": "🇸🇦", "nombre": "Gran Premio de Arabia Saudita"},
-        {"ronda": "Ronda 3", "pais": "🇦🇺", "nombre": "Gran Premio de Australia"},
-        {"ronda": "Ronda 4", "pais": "🇯🇵", "nombre": "Gran Premio de Japón"},
-        {"ronda": "Ronda 5", "pais": "🇨🇳", "nombre": "Gran Premio de China"},
-        {"ronda": "Ronda 6", "pais": "🇺🇸", "nombre": "Gran Premio de Miami"},
-        {"ronda": "Ronda 7", "pais": "🇮🇹", "nombre": "Gran Premio de Emilia-Romagna"},
-        {"ronda": "Ronda 8", "pais": "🇲🇨", "nombre": "Gran Premio de Mónaco"},
-        {"ronda": "Ronda 9", "pais": "🇨🇦", "nombre": "Gran Premio de Canadá"},
-        {"ronda": "Ronda 10", "pais": "🇪🇸", "nombre": "Gran Premio de España"},
-        {"ronda": "Ronda 11", "pais": "🇦🇹", "nombre": "Gran Premio de Austria"},
-        {"ronda": "Ronda 12", "pais": "🇬🇧", "nombre": "Gran Premio de Gran Bretaña"},
-        {"ronda": "Ronda 13", "pais": "🇭🇺", "nombre": "Gran Premio de Hungría"},
-        {"ronda": "Ronda 14", "pais": "🇧🇪", "nombre": "Gran Premio de Bélgica"},
-        {"ronda": "Ronda 15", "pais": "🇳🇱", "nombre": "Gran Premio de Países Bajos"},
-        {"ronda": "Ronda 16", "pais": "🇮🇹", "nombre": "Gran Premio de Italia"},
-        {"ronda": "Ronda 17", "pais": "🇦🇿", "nombre": "Gran Premio de Azerbaiyán"},
-        {"ronda": "Ronda 18", "pais": "🇸🇬", "nombre": "Gran Premio de Singapur"},
-        {"ronda": "Ronda 19", "pais": "🇺🇸", "nombre": "Gran Premio de Estados Unidos"},
-        {"ronda": "Ronda 20", "pais": "🇲🇽", "nombre": "Gran Premio de la Ciudad de México"},
-        {"ronda": "Ronda 21", "pais": "🇧🇷", "nombre": "Gran Premio de São Paulo"},
-        {"ronda": "Ronda 22", "pais": "🇺🇸", "nombre": "Gran Premio de Las Vegas"},
-        {"ronda": "Ronda 23", "pais": "🇶🇦", "nombre": "Gran Premio de Catar"},
-        {"ronda": "Ronda 24", "pais": "🇦🇪", "nombre": "Gran Premio de Abu Dabi"}
-    ]
-
-    for i in range(0, len(circuitos_2024), 3):
-        cols = st.columns(3)
-        for j in range(3):
-            if i + j < len(circuitos_2024):
-                c = circuitos_2024[i + j]
-                with cols[j]:
-                    st.markdown(f"""
-                        <div class='f1-card'>
-                            <div class='f1-card-header'>
-                                <span class='f1-round'>{c['ronda']}</span>
-                                <span class='f1-flag'>{c['pais']}</span>
-                            </div>
-                            <p class='f1-circuit-name'>{c['nombre']}</p>
-                        </div>
-                    """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
