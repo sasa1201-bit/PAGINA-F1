@@ -349,7 +349,8 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.t
     "💵 Fantasy",
     "🏆 Equipos",
     "🎙️ Pit Wall",
-    "🏛️ Fama"
+    "🏛️ Fama",
+    "⚙️ Mecánica"
 ])
 
 with tab1:
@@ -2843,6 +2844,164 @@ with tab12:
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    with tab13:
+    st.markdown("""
+        <style>
+            .f1-epic-container {
+                background: linear-gradient(135deg, #0f0f11 0%, #1a1a1e 100%);
+                border: 1px solid rgba(255, 215, 0, 0.2);
+                border-radius: 16px;
+                padding: 30px;
+                box-shadow: 0 12px 35px rgba(0,0,0,0.8);
+            }
+            .epic-title {
+                color: #FFD700;
+                font-size: 1.8rem;
+                font-weight: 900;
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 5px;
+            }
+            .epic-subtitle {
+                color: #a0a0a5;
+                font-size: 0.95rem;
+                text-align: center;
+                margin-bottom: 25px;
+            }
+            .stat-box {
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 10px;
+                padding: 15px;
+                text-align: center;
+            }
+            .stat-value {
+                color: #FFD700;
+                font-size: 1.4rem;
+                font-weight: 800;
+            }
+            .stat-label {
+                color: #ccc;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                margin-top: 5px;
+            }
+            .tech-card {
+                background: rgba(20, 20, 25, 0.85);
+                border-left: 4px solid #FFD700;
+                border-radius: 0 10px 10px 0;
+                padding: 20px;
+                margin-top: 15px;
+                color: #e0e0e0;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<div class='f1-epic-container'>", unsafe_allow_html=True)
+    st.markdown("<div class='epic-title'>🏎️ Ingeniería y Anatomía Legendaria de F1</div>", unsafe_allow_html=True)
+    st.markdown("<div class='epic-subtitle'>El pináculo de la ingeniería automotriz: tecnología aeroespacial llevada al asfalto a más de 350 km/h.</div>", unsafe_allow_html=True)
+
+    # Métricas clave en columnas superiores
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown("<div class='stat-box'><div class='stat-value'>~1,000 HP</div><div class='stat-label'>Potencia Total</div></div>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='stat-box'><div class='stat-value'>798 kg</div><div class='stat-label'>Peso Mínimo Reg.</div></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown("<div class='stat-box'><div class='stat-value'>5G - 6G</div><div class='stat-label'>Fuerza de Frenado</div></div>", unsafe_allow_html=True)
+    with col4:
+        st.markdown("<div class='stat-box'><div class='stat-value'>300+</div><div class='stat-label'>Sensores Activos</div></div>", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Inspector Táctico Interactivo
+    st.markdown("<h4 style='color: #FFD700; text-align: center; text-transform: uppercase; font-size: 1.1rem;'>🔍 Inspector Táctico de Componentes</h4>", unsafe_allow_html=True)
+    
+    componente = st.selectbox(
+        "Selecciona un componente del monoplaza para consultar su ficha técnica avanzada:",
+        [
+            "🛡️ El Halo y Célula de Supervivencia",
+            "✈️ Túneles Venturi y Efecto Suelo",
+            "⚡ Unidad de Potencia Híbrida (V6 + ERS)",
+            "🔥 Frenos de Carbono-Carbono",
+            "📐 Suspensión Geométrica (Push-rod / Pull-rod)",
+            "📡 Volante de Alta Complejidad"
+        ],
+        key="f1_anatomy_selector"
+    )
+
+    if "Halo" in componente:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>🛡️ El Halo y Célula de Supervivencia</h3>
+                <p><b>Materiales:</b> Titanio de grado aeroespacial de alta resistencia estructural.</p>
+                <p><b>Capacidad de Carga:</b> Diseñado para soportar un peso estático de hasta <b>12 toneladas</b> (equivalente a dos autobuses de pasajeros), protegiendo la cabeza del piloto de impactos directos y escombros pesados en vuelo.</p>
+                <p><b>Monocasco:</b> Construido con más de 12 capas de fibra de carbono combinada con un núcleo de aluminio en panal de abeja (honeycomb) y paneles de <b>Zylon</b> para prevenir penetraciones extremas.</p>
+            </div>
+        """, unsafe_allow_html=True)
+    elif "Venturi" in componente:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>✈️ Túneles Venturi y Efecto Suelo</h3>
+                <p><b>Principio Físico:</b> Aceleración masiva del flujo de aire bajo el fondo plano del monoplaza mediante canales convergentes-divergentes.</p>
+                <p><b>Generación de Carga:</b> El 60% o más de la carga aerodinámica total (*downforce*) proviene del suelo, succionando el coche contra el asfalto sin generar tanta resistencia aerodinámica al avance (*drag*) como los alerones.</p>
+                <p><b>El Fenómeno "Porpoising":</b> Oscilación vertical inducida a alta velocidad por la pérdida y recuperación repentina del sello aerodinámico del suelo.</p>
+            </div>
+        """, unsafe_allow_html=True)
+    elif "Unidad de Potencia" in componente:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>⚡ Unidad de Potencia Híbrida (V6 + ERS)</h3>
+                <p><b>Motor Térmico:</b> V6 turboalimentado de 1.6 litros que gira a un límite reglamentario de 15,000 RPM.</p>
+                <p><b>Sistema ERS:</b> Compuesto por el <b>MGU-K</b> (recupera energía cinética en frenada) y el <b>MGU-H</b> (recupera energía térmica de los gases de escape). Aportan unos 160 caballos de fuerza eléctricos instantáneos.</p>
+                <p><b>Eficiencia:</b> Superior al 50% de eficiencia térmica, siendo el motor de combustión interna más eficiente jamás construido.</p>
+            </div>
+        """, unsafe_allow_html=True)
+    elif "Frenos" in componente:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>🔥 Frenos de Carbono-Carbono</h3>
+                <p><b>Composición:</b> Discos y pastillas fabricados de composite de carbono reforzado, horneados a más de 2,000 °C.</p>
+                <p><b>Temperatura Óptima:</b> Entre <b>400 °C y 1,000 °C</b>. Fuera de ese rango térmico, pierden fricción y capacidad de frenado por completo.</p>
+                <p><b>Desaceleración Extrema:</b> Capaces de generar fuerzas de frenado de hasta <b>5G</b>, reduciendo la velocidad de 300 km/h a 70 km/h en apenas un par de segundos y en menos de 100 metros.</p>
+            </div>
+        """, unsafe_allow_html=True)
+    elif "Suspensión" in componente:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>📐 Suspensión Geométrica (Push-rod / Pull-rod)</h3>
+                <p><b>Configuración:</b> Triángulos de suspensión de fibra de carbono con sistemas de varillas conectadas a amortiguadores internos de alta precisión.</p>
+                <p><b>Función Crítica:</b> Controlan milimétricamente la altura de manejo (*ride height*), fundamental para mantener intacto el sellado aerodinámico del fondo plano durante baches, curvas cerradas y frenadas violentas.</p>
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+            <div class='tech-card'>
+                <h3 style='color: #FFD700; margin-top:0;'>📡 Volante de Alta Complejidad</h3>
+                <p><b>Interfaz de Control:</b> Cuenta con más de 20 botones, selectores rotatorios, levas de cambio de marcha, embrague dual y una pantalla LCD integrada.</p>
+                <p><b>Funciones Críticas:</b> Permite ajustar en tiempo real el diferencial, el reparto de frenada, los mapas de motor, la recuperación de energía y activar el sistema DRS con los pulgares mientras se conduce a más de 300 km/h.</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Sub-pestañas temáticas para complementar la exploración
+    sub1, sub2, sub3 = st.tabs(["🛡️ Seguridad Activa", "💨 Aerodinámica Avanzada", "⚙️ Telemetría y Red"])
+    
+    with sub1:
+        st.markdown("<h5 style='color: #fff;'>Estándares y Homologación FIA</h5>", unsafe_allow_html=True)
+        st.write("Cada monoplaza supera pruebas extremas de impacto frontal, lateral y trasero. El habitáculo cuenta con el sistema de extracción rápida del asiento y arneses de seis puntos de seguridad anclados directamente al monocasco.")
+    with sub2:
+        st.markdown("<h5 style='color: #fff;'>Gestión de Estelas y Flujo</h5>", unsafe_allow_html=True)
+        st.write("El aire limpio que ingresa por el alerón delantero es redirigido mediante bargeboards y pontones alrededor de las ruedas traseras (*tire wake*), minimizando la turbulencia y maximizando la succión inferior en curvas cerradas.")
+    with sub3:
+        st.markdown("<h5 style='color: #fff;'>Transmisión de Datos en Vivo</h5>", unsafe_allow_html=True)
+        st.write("Cada coche transmite más de un gigabyte de datos por sesión directamente al muro de boxes y a la fábrica en tiempo real, monitoreando presión de neumáticos, temperaturas internas, desgaste estructural y vibraciones mecánicas.")
 
     st.markdown("</div>", unsafe_allow_html=True)
     
