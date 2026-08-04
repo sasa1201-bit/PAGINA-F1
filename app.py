@@ -336,6 +336,16 @@ if "tiempo_inicio" not in st.session_state:
 if "reaccion" not in st.session_state:
     st.session_state["reaccion"] = None
 
+# Pega esto antes de tu st.tabs para que todas las pestañas se vean y no se oculten
+st.markdown("""
+    <style>
+        .stTabs [data-baseweb="tab-list"] {
+            flex-wrap: wrap !important;
+            gap: 4px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Navegación con 12 pestañas maestras
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13 = st.tabs([
     "🏠 Panel 2024", 
