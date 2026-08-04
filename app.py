@@ -2849,45 +2849,54 @@ with tab12:
 
 with tab13:
     st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header'>🗺️ Trazados de los Circuitos F1 2024</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🗺️ Trazados y Circuitos Oficiales Temporada 2024</div>", unsafe_allow_html=True)
     
     circuitos_2024 = [
-        {"nombre": "Gran Premio de Baréin", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Bahrain%20Circuit.png"},
-        {"nombre": "Gran Premio de Arabia Saudita", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Saudi%20Arabia%20Circuit.png"},
-        {"nombre": "Gran Premio de Australia", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Australia%20Circuit.png"},
-        {"nombre": "Gran Premio de Japón", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Japan%20Circuit.png"},
-        {"nombre": "Gran Premio de China", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/China%20Circuit.png"},
-        {"nombre": "Gran Premio de Miami", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Miami%20Circuit.png"},
-        {"nombre": "Gran Premio de Emilia-Romagna", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Emilia%20Romagna%20Circuit.png"},
-        {"nombre": "Gran Premio de Mónaco", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Monaco%20Circuit.png"},
-        {"nombre": "Gran Premio de Canadá", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Canada%20Circuit.png"},
-        {"nombre": "Gran Premio de España", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Spain%20Circuit.png"},
-        {"nombre": "Gran Premio de Austria", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Austria%20Circuit.png"},
-        {"nombre": "Gran Premio de Gran Bretaña", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Great%20Britain%20Circuit.png"},
-        {"nombre": "Gran Premio de Hungría", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Hungary%20Circuit.png"},
-        {"nombre": "Gran Premio de Bélgica", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Belgium%20Circuit.png"},
-        {"nombre": "Gran Premio de Países Bajos", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Netherlands%20Circuit.png"},
-        {"nombre": "Gran Premio de Italia", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Italy%20Circuit.png"},
-        {"nombre": "Gran Premio de Azerbaiyán", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Azerbaijan%20Circuit.png"},
-        {"nombre": "Gran Premio de Singapur", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Singapore%20Circuit.png"},
-        {"nombre": "Gran Premio de Estados Unidos", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/USA%20Circuit.png"},
-        {"nombre": "Gran Premio de la Ciudad de México", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Mexico%20Circuit.png"},
-        {"nombre": "Gran Premio de São Paulo", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Brazil%20Circuit.png"},
-        {"nombre": "Gran Premio de Las Vegas", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Las%20Vegas%20Circuit.png"},
-        {"nombre": "Gran Premio de Catar", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Qatar%20Circuit.png"},
-        {"nombre": "Gran Premio de Abu Dabi", "imagen": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/content/dam/fom-website/2023-redesign-assets/Circuitos%20166x9/Abu%20Dhabi%20Circuit.png"}
+        {"nombre": "Gran Premio de Baréin", "pais": "Baréin", "circuito": "Sakhir"},
+        {"nombre": "Gran Premio de Arabia Saudita", "pais": "Arabia Saudita", "circuito": "Yeda"},
+        {"nombre": "Gran Premio de Australia", "pais": "Australia", "circuito": "Melbourne"},
+        {"nombre": "Gran Premio de Japón", "pais": "Japón", "circuito": "Suzuka"},
+        {"nombre": "Gran Premio de China", "pais": "China", "circuito": "Shanghái"},
+        {"nombre": "Gran Premio de Miami", "pais": "Estados Unidos", "circuito": "Miami"},
+        {"nombre": "Gran Premio de Emilia-Romagna", "pais": "Italia", "circuito": "Ímola"},
+        {"nombre": "Gran Premio de Mónaco", "pais": "Mónaco", "circuito": "Mónaco"},
+        {"nombre": "Gran Premio de Canadá", "pais": "Canadá", "circuito": "Montreal"},
+        {"nombre": "Gran Premio de España", "pais": "España", "circuito": "Barcelona"},
+        {"nombre": "Gran Premio de Austria", "pais": "Austria", "circuito": "Spielberg"},
+        {"nombre": "Gran Premio de Gran Bretaña", "pais": "Reino Unido", "circuito": "Silverstone"},
+        {"nombre": "Gran Premio de Hungría", "pais": "Hungría", "circuito": "Budapest"},
+        {"nombre": "Gran Premio de Bélgica", "pais": "Bélgica", "circuito": "Spa-Francorchamps"},
+        {"nombre": "Gran Premio de Países Bajos", "pais": "Países Bajos", "circuito": "Zandvoort"},
+        {"nombre": "Gran Premio de Italia", "pais": "Italia", "circuito": "Monza"},
+        {"nombre": "Gran Premio de Azerbaiyán", "pais": "Azerbaiyán", "circuito": "Bakú"},
+        {"nombre": "Gran Premio de Singapur", "pais": "Singapur", "circuito": "Marina Bay"},
+        {"nombre": "Gran Premio de Estados Unidos", "pais": "Estados Unidos", "circuito": "Austin"},
+        {"nombre": "Gran Premio de la Ciudad de México", "pais": "México", "circuito": "Hermanos Rodríguez"},
+        {"nombre": "Gran Premio de São Paulo", "pais": "Brasil", "circuito": "Interlagos"},
+        {"nombre": "Gran Premio de Las Vegas", "pais": "Estados Unidos", "circuito": "Las Vegas"},
+        {"nombre": "Gran Premio de Catar", "pais": "Catar", "circuito": "Lusail"},
+        {"nombre": "Gran Premio de Abu Dabi", "pais": "Emiratos Árabes", "circuito": "Yas Marina"}
     ]
 
     for i in range(0, len(circuitos_2024), 3):
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(circuitos_2024):
-                circuito = circuitos_2024[i + j]
+                item = circuitos_2024[i + j]
                 with cols[j]:
                     st.markdown(f"""
-                        <div style='background: rgba(30, 41, 59, 0.4); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;'>
-                            <h4 style='color: #FFFFFF; font-size: 0.95rem; margin-bottom: 10px;'>{circuito['nombre']}</h4>
-                            <img src="{circuito['imagen']}" style="width: 100%; border-radius: 6px; object-fit: contain;" alt="{circuito['nombre']}">
+                        <div style='
+                            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                            border: 1px solid rgba(255, 24, 1, 0.4);
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+                            padding: 22px;
+                            border-radius: 12px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        '>
+                            <div style='font-size: 1.6rem; margin-bottom: 8px;'>🏎️</div>
+                            <h4 style='color: #FFFFFF; font-size: 0.95rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: 0.5px;'>{item['nombre']}</h4>
+                            <p style='color: #38bdf8; font-size: 0.75rem; font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 1.5px;'>{item['circuito']} • {item['pais']}</p>
                         </div>
                     """, unsafe_allow_html=True)
 
