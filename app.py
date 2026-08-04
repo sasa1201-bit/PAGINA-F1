@@ -2847,6 +2847,9 @@ with tab12:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
+import requests
+from io import BytesIO
+
 with tab13:
     st.markdown("""
         <style>
@@ -2858,12 +2861,6 @@ with tab13:
                 margin-bottom: 20px;
                 text-align: center;
                 box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-                transition: all 0.3s ease;
-            }
-            .circuit-card-container:hover {
-                transform: translateY(-4px);
-                border-color: rgba(255, 215, 0, 0.6);
-                box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
             }
             .circuit-title {
                 color: #FFFFFF;
@@ -2872,22 +2869,12 @@ with tab13:
                 margin: 0 0 8px 0;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
-            }
-            .circuit-img-wrapper {
-                background: rgba(0, 0, 0, 0.2);
-                padding: 8px;
-                border-radius: 6px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 120px;
             }
         </style>
     """, unsafe_allow_html=True)
 
     st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header' style='color: #FFD700; font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 25px;'>🗺️ Trazados Oficiales F1 2024 (Los 24 Circuitos)</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header' style='color: #FFD700; font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 25px;'>🗺️ Trazados Oficiales F1 2024</div>", unsafe_allow_html=True)
     
     circuitos_2024 = [
         {"nombre": "Gran Premio de Baréin", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Bahrain_International_Circuit_-_Grand_Prix_Layout.svg/500px-Bahrain_International_Circuit_-_Grand_Prix_Layout.svg.png"},
@@ -2926,7 +2913,17 @@ with tab13:
                         <div class='circuit-card-container'>
                             <div class='circuit-title'>{circuito['nombre']}</div>
                     """, unsafe_allow_html=True)
-                    st.image(circuito["imagen"], use_container_width=True)
+                    
+                    try:
+                        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+                        response = requests.get(circuito["imagen"], headers=headers, timeout=5)
+                        if response.status_code == 200:
+                            st.image(BytesIO(response.content), use_container_width=True)
+                        else:
+                            st.info("🏁 [Trazado disponible]")
+                    except Exception:
+                        st.info("🏁 [Trazado F1]")
+                        
                     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
