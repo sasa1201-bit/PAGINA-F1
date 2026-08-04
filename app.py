@@ -2850,221 +2850,231 @@ with tab12:
 with tab13:
     st.markdown("""
         <style>
-            .f1-ultimate-container {
-                background: linear-gradient(145deg, #0a0a0c 0%, #16161a 100%);
-                border: 1px solid rgba(255, 24, 1, 0.3);
-                border-radius: 18px;
-                padding: 30px;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+            .f1-dash {
+                background: linear-gradient(135deg, #0d0d12 0%, #1a1a24 100%);
+                border: 1px solid rgba(255, 24, 1, 0.4);
+                border-radius: 20px;
+                padding: 25px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
-            .ultimate-title {
+            .dash-title {
                 color: #FF1801;
-                font-size: 1.9rem;
+                font-size: 2.1rem;
                 font-weight: 900;
                 text-align: center;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
+                letter-spacing: 2px;
+                text-shadow: 0 0 20px rgba(255,24,1,0.6);
                 margin-bottom: 5px;
-                text-shadow: 0 0 15px rgba(255,24,1,0.4);
             }
-            .ultimate-subtitle {
-                color: #b0b0b5;
-                font-size: 0.95rem;
+            .dash-sub {
+                color: #cfcfd5;
+                font-size: 1rem;
                 text-align: center;
                 margin-bottom: 25px;
             }
-            .telemetry-card {
-                background: rgba(25, 25, 30, 0.9);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-left: 5px solid #FF1801;
-                border-radius: 0 12px 12px 0;
-                padding: 22px;
-                margin-top: 15px;
-                color: #f0f0f5;
-                box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            .metric-box {
+                background: rgba(25, 25, 35, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 14px;
+                padding: 15px;
+                text-align: center;
+                transition: all 0.3s ease;
             }
-            .spec-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                margin-top: 15px;
+            .metric-box:hover {
+                border-color: #FF1801;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(255,24,1,0.3);
             }
-            .spec-item {
-                background: rgba(255, 255, 255, 0.03);
-                padding: 10px 14px;
-                border-radius: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
+            .metric-val {
+                color: #FF1801;
+                font-size: 1.5rem;
+                font-weight: 900;
             }
-            .spec-label {
-                color: #888;
+            .metric-lbl {
+                color: #999;
                 font-size: 0.75rem;
                 text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-top: 5px;
             }
-            .spec-val {
-                color: #FFD700;
-                font-size: 1rem;
-                font-weight: bold;
+            .telemetry-panel {
+                background: rgba(20, 20, 28, 0.95);
+                border-left: 6px solid #FF1801;
+                border-radius: 0 16px 16px 0;
+                padding: 22px;
+                margin-top: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             }
         </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div class='f1-ultimate-container'>", unsafe_allow_html=True)
-    st.markdown("<div class='ultimate-title'>🏎️ Telemetría y Anatomía Estructural (Reglamento FIA 2024)</div>", unsafe_allow_html=True)
-    st.markdown("<div class='ultimate-subtitle'>Datos reales extraídos directamente de las Regulaciones Técnicas FIA 2024 y métricas de pista.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='f1-dash'>", unsafe_allow_html=True)
+    st.markdown("<div class='dash-title'>⚡ F1 Live Telemetry & Tech 2024</div>", unsafe_allow_html=True)
+    st.markdown("<div class='dash-sub'>Centro de Inteligencia Aerodinámica y Mecánica - Reglamento Oficial FIA</div>", unsafe_allow_html=True)
 
-    # Panel Superior con Métricas Reales 2024
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.markdown("<div style='background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;'><div style='color:#FF1801; font-size:1.3rem; font-weight:800;'>~1,020 HP</div><div style='color:#aaa; font-size:0.75rem; text-transform:uppercase;'>Potencia Total (~860 ICE + 160 ERS)</div></div>", unsafe_allow_html=True)
-    with m2:
-        st.markdown("<div style='background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;'><div style='color:#FF1801; font-size:1.3rem; font-weight:800;'>798 kg</div><div style='color:#aaa; font-size:0.75rem; text-transform:uppercase;'>Peso Mínimo FIA (Sin Combustible)</div></div>", unsafe_allow_html=True)
-    with m3:
-        st.markdown("<div style='background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;'><div style='color:#FF1801; font-size:1.3rem; font-weight:800;'>372.3 km/h</div><div style='color:#aaa; font-size:0.75rem; text-transform:uppercase;'>Velocidad Máx. Registrada 2024</div></div>", unsafe_allow_html=True)
-    with m4:
-        st.markdown("<div style='background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;'><div style='color:#FF1801; font-size:1.3rem; font-weight:800;'>5.5 G</div><div style='color:#aaa; font-size:0.75rem; text-transform:uppercase;'>Desaceleración Peak (Monza T1)</div></div>", unsafe_allow_html=True)
+    # Tarjetas superiores con efectos dinámicos
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown("<div class='metric-box'><div class='metric-val'>1,020 HP</div><div class='metric-lbl'>Potencia Combinada</div></div>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='metric-box'><div class='metric-val'>798 kg</div><div class='metric-lbl'>Peso Mínimo FIA</div></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown("<div class='metric-box'><div class='metric-val'>372.3 km/h</div><div class='metric-lbl'>Top Speed 2024</div></div>", unsafe_allow_html=True)
+    with col4:
+        st.markdown("<div class='metric-box'><div class='metric-val'>5.5 G</div><div class='metric-lbl'>Frenada Máxima</div></div>", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Selector de Sistemas
-    seleccion_sistema = st.selectbox(
-        "📂 Selecciona el sistema de ingeniería para inspección detallada:",
+    # Selector dinámico horizontal (Radio moderno)
+    sistema_activo = st.radio(
+        "🎛️ **Selecciona el sistema a inspeccionar en tiempo real:**",
         [
-            "1. Unidad de Potencia Híbrida (V6 Turbo + ERS)",
-            "2. Aerodinámica de Fondo Plano y Canales Venturi",
-            "3. Monocasco, Célula de Supervivencia y Sistema Halo",
-            "4. Frenos de Carbono-Carbono y Gestión Térmica",
-            "5. Transmisión y Caja de Cambios Seamless",
-            "6. Suspensión Dinámica (Push-rod / Pull-rod)",
-            "7. Volante, ECU Estándar FIA y Telemetría",
-            "8. Neumáticos Pirelli de 18 Pulgadas"
+            "⚙️ Unidad de Potencia",
+            "✈️ Aerodinámica",
+            "🛡️ Monocasco & Halo",
+            "🔥 Frenos Carbono",
+            "⚙️ Transmisión",
+            "📐 Suspensión",
+            "📡 ECU & Telemetría",
+            "🛞 Neumáticos 18''"
         ],
-        key="f1_advanced_selector"
+        horizontal=True,
+        key="f1_radio_selector"
     )
 
-    if "Unidad de Potencia" in seleccion_sistema:
+    # Renderizado interactivo según la selección
+    if "Unidad de Potencia" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>⚙️ 1. Unidad de Potencia Híbrida (Reglamento FIA Art. 5)</h3>
-                <p>Arquitectura V6 turboalimentada a 90° de 1.6 litros alimentada por combustible <b>E10</b> (10% etanol sustentable de 2da generación).</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Cilindrada y Bloque</div><div class='spec-val'>1,600 cc V6 Turbo (90° de apertura)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Inyección de Combustible</div><div class='spec-val'>Directa a alta presión (Máx. 500 bar)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Flujo Máximo de Combustible</div><div class='spec-val'>100 kg/h (a más de 10,500 RPM)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Capacidad de Tanque de Carrera</div><div class='spec-val'>Máximo 110 kg por Gran Premio</div></div>
-                    <div class='spec-item'><div class='spec-label'>Potencia ERS (MGU-K)</div><div class='spec-val'>120 kW (161 HP / 163 CV) asignados a 50,000 RPM</div></div>
-                    <div class='spec-item'><div class='spec-label'>Energía Transferida MGU-K -> Batería</div><div class='spec-val'>Máximo 2.0 MJ por vuelta</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>⚙️ Unidad de Potencia Híbrida (Reglamento Art. 5)</h3>
+                <p style='color: #ccc;'>Motor térmico V6 turbo de 1.6L combinado con recuperación de energía eléctrica avanzada.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Motor Térmico (ICE)", value="V6 Turbo 1.6L", delta="Inyección a 500 bar")
+            st.metric(label="Flujo de Combustible", value="100 kg/h", delta="Máx a 10,500 RPM")
+            st.metric(label="Eficiencia Térmica", value="> 52%", delta="Alta eficiencia")
+        with c2:
+            st.metric(label="Potencia ERS (MGU-K)", value="161 HP / 120 kW", delta="Regeneración 2 MJ/vuelta")
+            st.metric(label="Combustible Reglamentario", value="E10", delta="10% Etanol renovable")
+            st.metric(label="Límite de RPM", value="15,000 RPM", delta="Estándar FIA")
 
-    elif "Aerodinámica" in seleccion_sistema:
+    elif "Aerodinámica" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>✈️ 2. Aerodinámica de Fondo Plano y Canales Venturi</h3>
-                <p>Reglamento introducido para mitigar el aire sucio. La fuerza de succión proviene en su mayoría del flujo inferior del coche.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Aporte del Suelo al Downforce</div><div class='spec-val'>60% - 65% de la carga aerodinámica total</div></div>
-                    <div class='spec-item'><div class='spec-label'>Carga Aerodinámica a 250 km/h</div><div class='spec-val'>~1,800 kg a 2,200 kg (varía por circuito)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Ganancia de Velocidad por DRS</div><div class='spec-val'>+10 a +18 km/h en recta activa</div></div>
-                    <div class='spec-item'><div class='spec-label'>Altura del Borde del Suelo (2024)</div><div class='spec-val'>Elevado 15 mm reglamentarios para evitar porpoising</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>✈️ Aerodinámica de Fondo Plano y Canales Venturi</h3>
+                <p style='color: #ccc;'>Efecto suelo masivo que genera la mayor parte de la carga descendente para fomentar adelantamientos.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Aporte del Suelo", value="60% - 65%", delta="Downforce inferior")
+            st.metric(label="Efecto DRS", value="+10 a +18 km/h", delta="Reducción de resistencia")
+        with c2:
+            st.metric(label="Carga Promedio", value="~2,000 kg", delta="A 250 km/h")
+            st.metric(label="Borde del Suelo", value="+15 mm", delta="Altura reglamentaria 2024")
 
-    elif "Monocasco" in seleccion_sistema:
+    elif "Monocasco" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>🛡️ 3. Monocasco, Célula de Supervivencia y Sistema Halo</h3>
-                <p>Estructura ultrarrígida de protección en caso de desaceleraciones extremas e impactos con objetos pesados.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Composición del Chasis</div><div class='spec-val'>Paneles sandwich de fibra de carbono y aluminio honeycomb</div></div>
-                    <div class='spec-item'><div class='spec-label'>Carga Estática del Halo</div><div class='spec-val'>Soporta 120 kN (12,200 kg / ~12 toneladas)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Laminado Anti-penetración</div><div class='spec-val'>Láminas de Zylon balístico en paredes laterales</div></div>
-                    <div class='spec-item'><div class='spec-label'>Resistencia Roll-Hoop (Antivuelco)</div><div class='spec-val'>Soporta impactos de 15 G verticales y 15 G laterales</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>🛡️ Monocasco, Célula de Supervivencia y Sistema Halo</h3>
+                <p style='color: #ccc;'>Estructura de fibra de carbono ultra resistente diseñada para proteger al piloto en colisiones extremas.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Resistencia del Halo", value="122 kN", delta="Soporta ~12.2 toneladas")
+            st.metric(label="Material Estructural", value="Fibra de Carbono", delta="+ Panal de Aluminio")
+        with c2:
+            st.metric(label="Protección Lateral", value="Zylon Balístico", delta="Antiperforación")
+            st.metric(label="Roll-Hoop", value="15 G", delta="Prueba de impacto vertical")
 
-    elif "Frenos" in seleccion_sistema:
+    elif "Frenos" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>🔥 4. Frenos de Carbono-Carbono (Reglamento Art. 11)</h3>
-                <p>Sistema *Brake-by-Wire* (BBW) en el eje trasero para armonizar la frenada mecánica con la regeneración eléctrica del MGU-K.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Diámetro de Discos</div><div class='spec-val'>328 mm (delanteros y traseros)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Orificios de Ventilación</div><div class='spec-val'>Hasta 1,400 perfiles de enfriamiento por disco</div></div>
-                    <div class='spec-item'><div class='spec-label'>Temperatura de Trabajo</div><div class='spec-val'>400 °C a 1,050 °C (picos de 1,200 °C)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Distancia 300 a 0 km/h</div><div class='spec-val'>115 a 120 metros (~2.9 segundos)</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>🔥 Frenos de Carbono-Carbono (Reglamento Art. 11)</h3>
+                <p style='color: #ccc;'>Sistema de frenado de altísimo rendimiento con discos de composite de carbono y Brake-by-Wire.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Diámetro de Discos", value="328 mm", delta="Delanteros y traseros")
+            st.metric(label="Temperatura Óptima", value="400°C - 1,050°C", delta="Rango de trabajo")
+        with c2:
+            st.metric(label="Orificios de Enfriamiento", value="Hasta 1,400", delta="Ventilación micrométrica")
+            st.metric(label="Frenada 300 a 0 km/h", value="~115 metros", delta="2.9 segundos")
 
-    elif "Transmisión" in seleccion_sistema:
+    elif "Transmisión" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>⚙️ 5. Transmisión y Caja de Cambios (Reglamento Art. 9)</h3>
-                <p>Transmisión longitudinal semiautomática con tecnología de cambio instantáneo sin pérdida de tracción.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Número de Marchas</div><div class='spec-val'>8 velocidades hacia adelante + 1 marcha atrás</div></div>
-                    <div class='spec-item'><div class='spec-label'>Tiempo de Cambio Seamless</div><div class='spec-val'>0.005 segundos (5 milisegundos)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Límite de Unidades por Temporada</div><div class='spec-val'>5 cajas de cambios completas por coche (2024)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Cárter de la Transmisión</div><div class='spec-val'>Estructura portante fabricada en titanio/carbono</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>⚙️ Transmisión y Caja de Cambios (Reglamento Art. 9)</h3>
+                <p style='color: #ccc;'>Caja longitudinal semiautomática con cambios instantáneos sin pérdida de par motor.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Velocidades", value="8 Adelante + 1", delta="Marcha atrás")
+            st.metric(label="Tiempo de Cambio", value="0.005 s", delta="Seamless instantáneo")
+        with c2:
+            st.metric(label="Ciclo de Vida", value="5 Grandes Premios", delta="Por componente")
+            st.metric(label="Cárter Estructural", value="Titanio / Carbono", delta="Función portante")
 
-    elif "Suspensión" in seleccion_sistema:
+    elif "Suspensión" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>📐 6. Suspensión Dinámica (Push-rod / Pull-rod)</h3>
-                <p>Geometría diseñada para mantener la plataforma aerodinámica plana en aceleración (*anti-squat*) y frenada (*anti-dive*).</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Configuración Red Bull RB20</div><div class='spec-val'>Pull-rod delantera / Push-rod trasera</div></div>
-                    <div class='spec-item'><div class='spec-label'>Configuración Ferrari SF-24</div><div class='spec-val'>Push-rod delantera / Pull-rod trasera</div></div>
-                    <div class='spec-item'><div class='spec-label'>Control Amortiguador</div><div class='spec-val'>Barras de torsión mecánicas (Inerter prohibido desde 2022)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Material de Triángulos</div><div class='spec-val'>Fibra de carbono con carenado aerodinámico</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>📐 Suspensión Dinámica (Push-rod / Pull-rod)</h3>
+                <p style='color: #ccc;'>Geometría optimizada para el control dinámico de la altura y estabilidad del monoplaza.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Configuración Red Bull", value="Pull-rod delantera", delta="Push-rod trasera")
+            st.metric(label="Configuración Ferrari", value="Push-rod delantera", delta="Pull-rod trasera")
+        with c2:
+            st.metric(label="Elementos Elásticos", value="Barras de Torsión", delta="Amortiguación hidráulica")
+            st.metric(label="Material Triángulos", value="Carbono Carenado", delta="Baja resistencia aerodinámica")
 
-    elif "Volante" in seleccion_sistema:
+    elif "ECU" in sistema_activo:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>📡 7. Volante, ECU Estándar FIA y Telemetría</h3>
-                <p>El centro neurálgico del monoplaza conectado a la unidad de control electrónica común suministrada por McLaren Applied.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Botones e Interruptores</div><div class='spec-val'>25+ mandos, selectores multifunción y levas</div></div>
-                    <div class='spec-item'><div class='spec-label'>Unidad ECU Común</div><div class='spec-val'>TAG-320B (McLaren Applied Technologies)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Sensores Activos</div><div class='spec-val'>300+ sensores (presión, temperatura, deformación)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Transmisión de Datos en Vivo</div><div class='spec-val'>Frecuencia Atlas a 1.5 - 2.0 GB de datos por carrera</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>📡 Volante, ECU Estándar FIA y Telemetría</h3>
+                <p style='color: #ccc;'>Centro de mandos digital conectado en tiempo real al sistema central de telemetría de la FIA.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Mandos y Botones", value="25+ Controles", delta="Levas dobles de carbono")
+            st.metric(label="Unidad ECU", value="TAG-320B", delta="McLaren Applied")
+        with c2:
+            st.metric(label="Sensores Activos", value="300+ Parámetros", delta="Monitoreo en vivo")
+            st.metric(label="Volumen de Datos", value="~1.8 GB", delta="Por sesión de pista")
 
     else:
         st.markdown("""
-            <div class='telemetry-card'>
-                <h3 style='color: #FF1801; margin-top:0;'>🛞 8. Neumáticos Pirelli de 18 Pulgadas (Reglamento Art. 10)</h3>
-                <p>Neumáticos de perfil bajo montados sobre rines de aluminio forjado de 18" equipados con tapacubos aerodinámicos estándar.</p>
-                <div class='spec-grid'>
-                    <div class='spec-item'><div class='spec-label'>Dimensiones Delanteras</div><div class='spec-val'>305/670-R18 (Ancho: 305 mm)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Dimensiones Traseras</div><div class='spec-val'>405/670-R18 (Ancho: 405 mm)</div></div>
-                    <div class='spec-item'><div class='spec-label'>Mantas Térmicas (Reglamento 2024)</div><div class='spec-val'>Calentamiento a máx. 70 °C durante 2 horas</div></div>
-                    <div class='spec-item'><div class='spec-label'>Gama de Compuestos Secos</div><div class='spec-val'>C1 (Duro) a C5 (Blando) en asignación Pirelli</div></div>
-                </div>
+            <div class='telemetry-panel'>
+                <h3 style='color: #FF1801; margin-top:0;'>🛞 Neumáticos Pirelli de 18 Pulgadas (Reglamento Art. 10)</h3>
+                <p style='color: #ccc;'>Neumáticos de perfil bajo sobre rines de 18 pulgadas diseñados para optimizar el comportamiento en pista.</p>
             </div>
         """, unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(label="Dimensiones Delanteras", value="305/670-R18", delta="Ancho 305 mm")
+            st.metric(label="Dimensiones Traseras", value="405/670-R18", delta="Ancho 405 mm")
+        with c2:
+            st.metric(label="Mantas Térmicas", value="Máximo 70 °C", delta="Límite reglamentario 2024")
+            st.metric(label="Gama de Compuestos", value="C1 al C5", delta="Asignación Slick de seco")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Sub-pestañas finales
-    sub_inf1, sub_inf2 = st.tabs(["📊 Reparto de Masas Real (FIA Art. 4.2)", "🔬 Protocolos de Seguridad y Crash Test"])
-    with sub_inf1:
-        st.markdown("<h5 style='color: #fff; margin-top:5px;'>Distribución Reglamentaria de Peso (2024)</h5>", unsafe_allow_html=True)
-        st.write("El Artículo 4.2 del reglamento impone una distribución estática mínima y máxima del peso total de 798 kg: un **mínimo de 44.5% en el eje delantero** (aprox. 355 kg) y un **mínimo de 54% en el eje trasero** (aprox. 431 kg). Los ingenieros ajustan el margen restante colocándolo con contrapesos de tungsteno puro en la zona más baja del chasis.")
-    with sub_inf2:
-        st.markdown("<h5 style='color: #fff; margin-top:5px;'>Pruebas de Homologación de Impacto (Crash Tests)</h5>", unsafe_allow_html=True)
-        st.write("Para competir en 2024, la estructura del chasis debe absorber impactos sin fallas en la célula de supervivencia: choque frontal a 15 m/s (54 km/h) contra barrera rígida con desaceleración media menor a 40 G, prueba de impacto lateral a 10 m/s y compresión del Halo soportando 120 kN de fuerza lateral y vertical.")
+    # Pestañas inferiores de análisis rápido
+    tab_extra1, tab_extra2 = st.tabs(["📊 Distribución de Pesos FIA (Art. 4.2)", "🔬 Protocolo Crash Tests"])
+    with tab_extra1:
+        st.write("El reglamento técnico exige un peso mínimo de **798 kg** (con piloto y sin combustible). El reparto estático debe mantener al menos **44.5% adelante** y **54% atrás**, calibrado mediante lastres de tungsteno puro.")
+    with tab_extra2:
+        st.write("Las pruebas obligatorias de la FIA para homologar el chasis incluyen impactos frontales a 15 m/s, pruebas de compresión lateral en el tanque de combustible y ensayos del sistema antivuelco (*roll-hoop*) soportando hasta 120 kN.")
 
     st.markdown("</div>", unsafe_allow_html=True)
     
