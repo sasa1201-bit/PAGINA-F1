@@ -2847,7 +2847,7 @@ with tab12:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    with tab13:
+with tab13:
     st.markdown("""
         <style>
             .f1-epic-container {
