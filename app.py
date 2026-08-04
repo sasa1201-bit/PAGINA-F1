@@ -2850,47 +2850,21 @@ with tab12:
 with tab13:
     st.markdown("""
         <style>
-            .flag-circuit-card {
-                background: linear-gradient(135deg, #0a0a0a 0%, #161a23 100%);
-                border: 2px solid rgba(255, 255, 255, 0.15);
-                border-radius: 12px;
-                padding: 18px 12px;
+            .poster-card {
+                background: #0b0b0b;
+                border: 1px solid #222;
+                border-radius: 10px;
+                padding: 15px;
                 margin-bottom: 20px;
                 text-align: center;
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
-                transition: transform 0.2s ease, border-color 0.2s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             }
-            .flag-circuit-card:hover {
-                transform: translateY(-3px);
-                border-color: rgba(255, 215, 0, 0.6);
-            }
-            .circuit-mask {
-                width: 100%;
-                height: 95px;
-                background-size: cover;
-                background-position: center;
-                -webkit-mask-size: contain;
-                mask-size: contain;
-                -webkit-mask-repeat: no-repeat;
-                mask-repeat: no-repeat;
-                -webkit-mask-position: center;
-                mask-position: center;
-                margin-bottom: 12px;
-                filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
-            }
-            .circuit-name {
+            .poster-title {
                 color: #FFFFFF;
-                font-size: 0.9rem;
-                font-weight: 900;
-                margin: 0 0 2px 0;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-            .circuit-location {
-                color: #94a3b8;
-                font-size: 0.7rem;
-                font-weight: 700;
-                margin: 0;
+                font-size: 0.85rem;
+                font-weight: 800;
+                margin-top: 10px;
+                margin-bottom: 0px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
@@ -2898,33 +2872,34 @@ with tab13:
     """, unsafe_allow_html=True)
 
     st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header' style='color: #FFD700;'>🗺️ 2024 GRAND PRIX - CIRCUITOS OFICIALES CON BANDERA</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header' style='color: #FFD700;'>🗺️ 2024 GRAND PRIX - CIRCUITOS OFICIALES</div>", unsafe_allow_html=True)
     
+    # Lista con la ruta local de tus imágenes (ej. carpeta 'circuitos_f1' en tu proyecto de GitHub)
     circuitos_2024 = [
-        {"nombre": "MELBOURNE", "pais": "AUSTRALIA", "flag": "au", "svg": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Albert_Park_Circuit_2022.svg"},
-        {"nombre": "SHANGHAI", "pais": "CHINA", "flag": "cn", "svg": "https://upload.wikimedia.org/wikipedia/commons/1/17/Shanghai_International_Circuit.svg"},
-        {"nombre": "SUZUKA", "pais": "JAPAN", "flag": "jp", "svg": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Suzuka_circuit_map-2003.svg"},
-        {"nombre": "SAKHIR", "pais": "BAHRAIN", "flag": "bh", "svg": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Bahrain_International_Circuit_-_Grand_Prix_Layout.svg"},
-        {"nombre": "JEDDAH", "pais": "SAUDI ARABIA", "flag": "sa", "svg": "https://upload.wikimedia.org/wikipedia/commons/3/36/Jeddah_Street_Circuit_%282021%29.svg"},
-        {"nombre": "MIAMI", "pais": "UNITED STATES", "flag": "us", "svg": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Miami_International_Autodrome.svg"},
-        {"nombre": "IMOLA", "pais": "ITALY", "flag": "it", "svg": "https://upload.wikimedia.org/wikipedia/commons/0/07/Autodromo_Internazionale_Enzo_e_Dino_Ferrari_Imola_2008.svg"},
-        {"nombre": "MONACO", "pais": "MONTE CARLO", "flag": "mc", "svg": "https://upload.wikimedia.org/wikipedia/commons/s/s3/Circuit_Monaco.svg"},
-        {"nombre": "BARCELONA", "pais": "SPAIN", "flag": "es", "svg": "https://upload.wikimedia.org/wikipedia/commons/9/91/Circuit_de_Barcelona-Catalunya_2021.svg"},
-        {"nombre": "MONTREAL", "pais": "CANADA", "flag": "ca", "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Circuit_Gilles_Villeneuve_2002.svg"},
-        {"nombre": "SPIELBERG", "pais": "AUSTRIA", "flag": "at", "svg": "https://upload.wikimedia.org/wikipedia/commons/8/89/Red_Bull_Ring_2011.svg"},
-        {"nombre": "SILVERSTONE", "pais": "GREAT BRITAIN", "flag": "gb", "svg": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Silverstone_Circuit_2020.svg"},
-        {"nombre": "BUDAPEST", "pais": "HUNGARY", "flag": "hu", "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Hungaroring.svg"},
-        {"nombre": "ZANDVOORT", "pais": "NETHERLANDS", "flag": "nl", "svg": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Circuit_Zandvoort_2020.svg"},
-        {"nombre": "MONZA", "pais": "ITALY", "flag": "it", "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Autodromo_Nazionale_Monza_in_2010.svg"},
-        {"nombre": "BAKU", "pais": "AZERBAIJAN", "flag": "az", "svg": "https://upload.wikimedia.org/wikipedia/commons/8/87/Baku_City_Circuit_2016.svg"},
-        {"nombre": "SINGAPORE", "pais": "SINGAPORE", "flag": "sg", "svg": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Marina_Bay_Street_Circuit_2023.svg"},
-        {"nombre": "AUSTIN", "pais": "UNITED STATES", "flag": "us", "svg": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Circuit_of_the_Americas.svg"},
-        {"nombre": "MEXICO CITY", "pais": "MEXICO", "flag": "mx", "svg": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez_2015.svg"},
-        {"nombre": "SAO PAULO", "pais": "BRAZIL", "flag": "br", "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Autodromo_Jose_Carlos_Pace_Interlagos_2014.svg"},
-        {"nombre": "LAS VEGAS", "pais": "UNITED STATES", "flag": "us", "svg": "https://upload.wikimedia.org/wikipedia/commons/0/07/Las_Vegas_Grand_Prix_Circuit.svg"},
-        {"nombre": "MADRID", "pais": "SPAIN", "flag": "es", "svg": "https://upload.wikimedia.org/wikipedia/commons/9/91/Circuit_de_Barcelona-Catalunya_2021.svg"},
-        {"nombre": "LOSAIL", "pais": "QATAR", "flag": "qa", "svg": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Losail_International_Circuit_2021.svg"},
-        {"nombre": "ABU DHABI", "pais": "UNITED ARAB EMIRATES", "flag": "ae", "svg": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Yas_Marina_Circuit_2021.svg"}
+        {"nombre": "MELBOURNE", "img": "circuitos_f1/melbourne.png"},
+        {"nombre": "SHANGHAI", "img": "circuitos_f1/shanghai.png"},
+        {"nombre": "SUZUKA", "img": "circuitos_f1/suzuka.png"},
+        {"nombre": "SAKHIR", "img": "circuitos_f1/sakhir.png"},
+        {"nombre": "JEDDAH", "img": "circuitos_f1/jeddah.png"},
+        {"nombre": "MIAMI", "img": "circuitos_f1/miami.png"},
+        {"nombre": "IMOLA", "img": "circuitos_f1/imola.png"},
+        {"nombre": "MONACO", "img": "circuitos_f1/monaco.png"},
+        {"nombre": "BARCELONA", "img": "circuitos_f1/barcelona.png"},
+        {"nombre": "MONTREAL", "img": "circuitos_f1/montreal.png"},
+        {"nombre": "SPIELBERG", "img": "circuitos_f1/spielberg.png"},
+        {"nombre": "SILVERSTONE", "img": "circuitos_f1/silverstone.png"},
+        {"nombre": "BUDAPEST", "img": "circuitos_f1/budapest.png"},
+        {"nombre": "ZANDVOORT", "img": "circuitos_f1/zandvoort.png"},
+        {"nombre": "MONZA", "img": "circuitos_f1/monza.png"},
+        {"nombre": "BAKU", "img": "circuitos_f1/baku.png"},
+        {"nombre": "SINGAPORE", "img": "circuitos_f1/singapore.png"},
+        {"nombre": "AUSTIN", "img": "circuitos_f1/austin.png"},
+        {"nombre": "MEXICO CITY", "img": "circuitos_f1/mexico.png"},
+        {"nombre": "SAO PAULO", "img": "circuitos_f1/saopaulo.png"},
+        {"nombre": "LAS VEGAS", "img": "circuitos_f1/lasvegas.png"},
+        {"nombre": "MADRID", "img": "circuitos_f1/madrid.png"},
+        {"nombre": "LOSAIL", "img": "circuitos_f1/losail.png"},
+        {"nombre": "ABU DHABI", "img": "circuitos_f1/abudhabi.png"}
     ]
 
     for i in range(0, len(circuitos_2024), 3):
@@ -2932,19 +2907,14 @@ with tab13:
         for j in range(3):
             if i + j < len(circuitos_2024):
                 c = circuitos_2024[i + j]
-                flag_url = f"https://flagcdn.com/w640/{c['flag']}.png"
                 with cols[j]:
-                    st.markdown(f"""
-                        <div class='flag-circuit-card'>
-                            <div class='circuit-mask' style='
-                                background-image: url("{flag_url}");
-                                -webkit-mask-image: url("{c['svg']}");
-                                mask-image: url("{c['svg']}");
-                            '></div>
-                            <h4 class='circuit-name'>{c['nombre']}</h4>
-                            <p class='circuit-location'>{c['pais']}</p>
-                        </div>
-                    """, unsafe_allow_html=True)
+                    st.markdown(f"<div class='poster-card'>", unsafe_allow_html=True)
+                    try:
+                        st.image(c["img"], use_container_width=True)
+                    except Exception:
+                        st.warning(f"Sube la imagen {c['img']}")
+                    st.markdown(f"<p class='poster-title'>{c['nombre']}</p>", unsafe_allow_html=True)
+                    st.markdown(f"</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
