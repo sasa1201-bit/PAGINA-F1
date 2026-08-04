@@ -339,21 +339,20 @@ if "reaccion" not in st.session_state:
 # Pega esto antes de tu st.tabs para que todas las pestañas se vean y no se oculten
 st.markdown("""
     <style>
-        /* Permite que las pestañas bajen de línea y el contenedor se expanda para mostrarlas */
-        .stTabs [data-baseweb="tab-list"] {
+        /* Rompe la altura fija de las pestañas en Streamlit y permite doble fila */
+        div[data-baseweb="tab-list"] {
             flex-wrap: wrap !important;
+            height: auto !important;
             overflow: visible !important;
         }
-        .stTabs div[data-baseweb="tab-list"] {
+        div[data-baseweb="tabs"] {
             overflow: visible !important;
-        }
-        .stTabs {
-            overflow: visible !important;
+            height: auto !important;
         }
     </style>
-""", unsafe_allow_html=True, key="css_tabs_fix")
+""", unsafe_allow_html=True)
 
-# Navegación con 12 pestañas maestras
+# Navegación con 13 pestañas maestras
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13 = st.tabs([
     "🏠 Panel 2024", 
     "⚔️ H2H", 
