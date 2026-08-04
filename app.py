@@ -2915,14 +2915,15 @@ with tab13:
                     """, unsafe_allow_html=True)
                     
                     try:
-                        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-                        response = requests.get(circuito["imagen"], headers=headers, timeout=5)
+                        # User-Agent requerido por las políticas de Wikimedia Commons para evitar bloqueos
+                        headers = {'User-Agent': 'F1DashboardApp/1.0 (EducationalProject; contact@streamlit.app)'}
+                        response = requests.get(circuito["imagen"], headers=headers, timeout=10)
                         if response.status_code == 200:
                             st.image(BytesIO(response.content), use_container_width=True)
                         else:
-                            st.info("🏁 [Trazado disponible]")
+                            st.image(circuito["imagen"], use_container_width=True)
                     except Exception:
-                        st.info("🏁 [Trazado F1]")
+                        st.image(circuito["imagen"], use_container_width=True)
                         
                     st.markdown("</div>", unsafe_allow_html=True)
 
