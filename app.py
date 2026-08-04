@@ -2887,12 +2887,9 @@ with tab13:
                     st.markdown(f"""
                         <div style='background: rgba(30, 41, 59, 0.4); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;'>
                             <h4 style='color: #FFFFFF; font-size: 0.95rem; margin-bottom: 10px;'>{circuito['nombre']}</h4>
+                            <img src="{circuito['imagen']}" style="width: 100%; border-radius: 6px; object-fit: contain;" alt="{circuito['nombre']}">
                         </div>
                     """, unsafe_allow_html=True)
-                    try:
-                        st.image(circuito["imagen"], use_container_width=True)
-                    except Exception:
-                        st.warning("Imagen no disponible temporalmente")
 
     st.markdown("</div>", unsafe_allow_html=True)
     
