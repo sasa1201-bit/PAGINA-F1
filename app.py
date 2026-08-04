@@ -2847,85 +2847,97 @@ with tab12:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-import requests
-from io import BytesIO
-
 with tab13:
     st.markdown("""
         <style>
-            .circuit-card-container {
-                background: linear-gradient(135deg, #101010 0%, #1a1a1a 100%);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 10px;
-                padding: 15px;
-                margin-bottom: 20px;
-                text-align: center;
-                box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+            .f1-card {
+                background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+                border-left: 4px solid #E10600; /* Rojo F1 */
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-right: 1px solid rgba(255, 255, 255, 0.08);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 16px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+                transition: transform 0.2s ease, border-color 0.2s ease;
             }
-            .circuit-title {
-                color: #FFFFFF;
-                font-size: 0.9rem;
-                font-weight: 800;
-                margin: 0 0 8px 0;
+            .f1-card:hover {
+                transform: translateY(-3px);
+                border-left-color: #FFD700; /* Dorado al pasar el mouse */
+            }
+            .f1-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+            .f1-round {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #888;
                 text-transform: uppercase;
                 letter-spacing: 1px;
+            }
+            .f1-flag {
+                font-size: 1.2rem;
+            }
+            .f1-circuit-name {
+                color: #FFFFFF;
+                font-size: 0.95rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin: 0;
             }
         </style>
     """, unsafe_allow_html=True)
 
     st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header' style='color: #FFD700; font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 25px;'>🗺️ Trazados Oficiales F1 2024</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header' style='color: #FFD700; font-size: 1.3rem; font-weight: 900; text-align: center; margin-bottom: 25px;'>🏁 CALENDARIO OFICIAL F1 2024</div>", unsafe_allow_html=True)
     
     circuitos_2024 = [
-        {"nombre": "Gran Premio de Baréin", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Bahrain_International_Circuit_-_Grand_Prix_Layout.svg/500px-Bahrain_International_Circuit_-_Grand_Prix_Layout.svg.png"},
-        {"nombre": "Gran Premio de Arabia Saudita", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Jeddah_Street_Circuit_%282021%29.svg/500px-Jeddah_Street_Circuit_%282021%29.svg.png"},
-        {"nombre": "Gran Premio de Australia", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Albert_Park_Circuit_2022.svg/500px-Albert_Park_Circuit_2022.svg.png"},
-        {"nombre": "Gran Premio de Japón", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Suzuka_circuit_map-2003.svg/500px-Suzuka_circuit_map-2003.svg.png"},
-        {"nombre": "Gran Premio de China", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Shanghai_International_Circuit.svg/500px-Shanghai_International_Circuit.svg.png"},
-        {"nombre": "Gran Premio de Miami", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Miami_International_Autodrome.svg/500px-Miami_International_Autodrome.svg.png"},
-        {"nombre": "Gran Premio de Emilia-Romagna", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Autodromo_Internazionale_Enzo_e_Dino_Ferrari_Imola_2008.svg/500px-Autodromo_Internazionale_Enzo_e_Dino_Ferrari_Imola_2008.svg.png"},
-        {"nombre": "Gran Premio de Mónaco", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/s/s3/Circuit_Monaco.svg/500px-Circuit_Monaco.svg.png"},
-        {"nombre": "Gran Premio de Canadá", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Circuit_Gilles_Villeneuve_2002.svg/500px-Circuit_Gilles_Villeneuve_2002.svg.png"},
-        {"nombre": "Gran Premio de España", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Circuit_de_Barcelona-Catalunya_2021.svg/500px-Circuit_de_Barcelona-Catalunya_2021.svg.png"},
-        {"nombre": "Gran Premio de Austria", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Red_Bull_Ring_2011.svg/500px-Red_Bull_Ring_2011.svg.png"},
-        {"nombre": "Gran Premio de Gran Bretaña", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Silverstone_Circuit_2020.svg/500px-Silverstone_Circuit_2020.svg.png"},
-        {"nombre": "Gran Premio de Hungría", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Hungaroring.svg/500px-Hungaroring.svg.png"},
-        {"nombre": "Gran Premio de Bélgica", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Spa-Francorchamps_2007.svg/500px-Spa-Francorchamps_2007.svg.png"},
-        {"nombre": "Gran Premio de Países Bajos", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Circuit_Zandvoort_2020.svg/500px-Circuit_Zandvoort_2020.svg.png"},
-        {"nombre": "Gran Premio de Italia", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Autodromo_Nazionale_Monza_in_2010.svg/500px-Autodromo_Nazionale_Monza_in_2010.svg.png"},
-        {"nombre": "Gran Premio de Azerbaiyán", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Baku_City_Circuit_2016.svg/500px-Baku_City_Circuit_2016.svg.png"},
-        {"nombre": "Gran Premio de Singapur", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Marina_Bay_Street_Circuit_2023.svg/500px-Marina_Bay_Street_Circuit_2023.svg.png"},
-        {"nombre": "Gran Premio de Estados Unidos", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Circuit_of_the_Americas.svg/500px-Circuit_of_the_Americas.svg.png"},
-        {"nombre": "Gran Premio de la Ciudad de México", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez_2015.svg/500px-Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez_2015.svg.png"},
-        {"nombre": "Gran Premio de São Paulo", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Autodromo_Jose_Carlos_Pace_Interlagos_2014.svg/500px-Autodromo_Jose_Carlos_Pace_Interlagos_2014.svg.png"},
-        {"nombre": "Gran Premio de Las Vegas", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Las_Vegas_Grand_Prix_Circuit.svg/500px-Las_Vegas_Grand_Prix_Circuit.svg.png"},
-        {"nombre": "Gran Premio de Catar", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Losail_International_Circuit_2021.svg/500px-Losail_International_Circuit_2021.svg.png"},
-        {"nombre": "Gran Premio de Abu Dabi", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Yas_Marina_Circuit_2021.svg/500px-Yas_Marina_Circuit_2021.svg.png"}
+        {"ronda": "Ronda 1", "pais": "🇧🇭", "nombre": "Gran Premio de Baréin"},
+        {"ronda": "Ronda 2", "pais": "🇸🇦", "nombre": "Gran Premio de Arabia Saudita"},
+        {"ronda": "Ronda 3", "pais": "🇦🇺", "nombre": "Gran Premio de Australia"},
+        {"ronda": "Ronda 4", "pais": "🇯🇵", "nombre": "Gran Premio de Japón"},
+        {"ronda": "Ronda 5", "pais": "🇨🇳", "nombre": "Gran Premio de China"},
+        {"ronda": "Ronda 6", "pais": "🇺🇸", "nombre": "Gran Premio de Miami"},
+        {"ronda": "Ronda 7", "pais": "🇮🇹", "nombre": "Gran Premio de Emilia-Romagna"},
+        {"ronda": "Ronda 8", "pais": "🇲🇨", "nombre": "Gran Premio de Mónaco"},
+        {"ronda": "Ronda 9", "pais": "🇨🇦", "nombre": "Gran Premio de Canadá"},
+        {"ronda": "Ronda 10", "pais": "🇪🇸", "nombre": "Gran Premio de España"},
+        {"ronda": "Ronda 11", "pais": "🇦🇹", "nombre": "Gran Premio de Austria"},
+        {"ronda": "Ronda 12", "pais": "🇬🇧", "nombre": "Gran Premio de Gran Bretaña"},
+        {"ronda": "Ronda 13", "pais": "🇭🇺", "nombre": "Gran Premio de Hungría"},
+        {"ronda": "Ronda 14", "pais": "🇧🇪", "nombre": "Gran Premio de Bélgica"},
+        {"ronda": "Ronda 15", "pais": "🇳🇱", "nombre": "Gran Premio de Países Bajos"},
+        {"ronda": "Ronda 16", "pais": "🇮🇹", "nombre": "Gran Premio de Italia"},
+        {"ronda": "Ronda 17", "pais": "🇦🇿", "nombre": "Gran Premio de Azerbaiyán"},
+        {"ronda": "Ronda 18", "pais": "🇸🇬", "nombre": "Gran Premio de Singapur"},
+        {"ronda": "Ronda 19", "pais": "🇺🇸", "nombre": "Gran Premio de Estados Unidos"},
+        {"ronda": "Ronda 20", "pais": "🇲🇽", "nombre": "Gran Premio de la Ciudad de México"},
+        {"ronda": "Ronda 21", "pais": "🇧🇷", "nombre": "Gran Premio de São Paulo"},
+        {"ronda": "Ronda 22", "pais": "🇺🇸", "nombre": "Gran Premio de Las Vegas"},
+        {"ronda": "Ronda 23", "pais": "🇶🇦", "nombre": "Gran Premio de Catar"},
+        {"ronda": "Ronda 24", "pais": "🇦🇪", "nombre": "Gran Premio de Abu Dabi"}
     ]
 
     for i in range(0, len(circuitos_2024), 3):
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(circuitos_2024):
-                circuito = circuitos_2024[i + j]
+                c = circuitos_2024[i + j]
                 with cols[j]:
                     st.markdown(f"""
-                        <div class='circuit-card-container'>
-                            <div class='circuit-title'>{circuito['nombre']}</div>
+                        <div class='f1-card'>
+                            <div class='f1-card-header'>
+                                <span class='f1-round'>{c['ronda']}</span>
+                                <span class='f1-flag'>{c['pais']}</span>
+                            </div>
+                            <p class='f1-circuit-name'>{c['nombre']}</p>
+                        </div>
                     """, unsafe_allow_html=True)
-                    
-                    try:
-                        # User-Agent requerido por las políticas de Wikimedia Commons para evitar bloqueos
-                        headers = {'User-Agent': 'F1DashboardApp/1.0 (EducationalProject; contact@streamlit.app)'}
-                        response = requests.get(circuito["imagen"], headers=headers, timeout=10)
-                        if response.status_code == 200:
-                            st.image(BytesIO(response.content), use_container_width=True)
-                        else:
-                            st.image(circuito["imagen"], use_container_width=True)
-                    except Exception:
-                        st.image(circuito["imagen"], use_container_width=True)
-                        
-                    st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
     
