@@ -2849,46 +2849,65 @@ with tab12:
 
 with tab13:
     st.markdown("<div class='telemetry-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='section-header'>🗺️ Trazados de los Circuitos F1 2024</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🗺️ Trazados y Circuitos F1 2024</div>", unsafe_allow_html=True)
     
     circuitos_2024 = [
-        {"nombre": "Gran Premio de Baréin", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Bahrain_International_Circuit_-_Grand_Prix_Layout.svg/500px-Bahrain_International_Circuit_-_Grand_Prix_Layout.svg.png"},
-        {"nombre": "Gran Premio de Arabia Saudita", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Jeddah_Street_Circuit_%282021%29.svg/500px-Jeddah_Street_Circuit_%282021%29.svg.png"},
-        {"nombre": "Gran Premio de Australia", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Albert_Park_Circuit_2022.svg/500px-Albert_Park_Circuit_2022.svg.png"},
-        {"nombre": "Gran Premio de Japón", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Suzuka_circuit_map-2003.svg/500px-Suzuka_circuit_map-2003.svg.png"},
-        {"nombre": "Gran Premio de China", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Shanghai_International_Circuit.svg/500px-Shanghai_International_Circuit.svg.png"},
-        {"nombre": "Gran Premio de Miami", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Miami_International_Autodrome.svg/500px-Miami_International_Autodrome.svg.png"},
-        {"nombre": "Gran Premio de Emilia-Romagna", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Autodromo_Internazionale_Enzo_e_Dino_Ferrari_Imola_2008.svg/500px-Autodromo_Internazionale_Enzo_e_Dino_Ferrari_Imola_2008.svg.png"},
-        {"nombre": "Gran Premio de Mónaco", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/s/s3/Circuit_Monaco.svg/500px-Circuit_Monaco.svg.png"},
-        {"nombre": "Gran Premio de Canadá", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Circuit_Gilles_Villeneuve_2002.svg/500px-Circuit_Gilles_Villeneuve_2002.svg.png"},
-        {"nombre": "Gran Premio de España", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Circuit_de_Barcelona-Catalunya_2021.svg/500px-Circuit_de_Barcelona-Catalunya_2021.svg.png"},
-        {"nombre": "Gran Premio de Austria", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Red_Bull_Ring_2011.svg/500px-Red_Bull_Ring_2011.svg.png"},
-        {"nombre": "Gran Premio de Gran Bretaña", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Silverstone_Circuit_2020.svg/500px-Silverstone_Circuit_2020.svg.png"},
-        {"nombre": "Gran Premio de Hungría", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Hungaroring.svg/500px-Hungaroring.svg.png"},
-        {"nombre": "Gran Premio de Bélgica", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Spa-Francorchamps_2007.svg/500px-Spa-Francorchamps_2007.svg.png"},
-        {"nombre": "Gran Premio de Países Bajos", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Circuit_Zandvoort_2020.svg/500px-Circuit_Zandvoort_2020.svg.png"},
-        {"nombre": "Gran Premio de Italia", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Autodromo_Nazionale_Monza_in_2010.svg/500px-Autodromo_Nazionale_Monza_in_2010.svg.png"},
-        {"nombre": "Gran Premio de Azerbaiyán", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Baku_City_Circuit_2016.svg/500px-Baku_City_Circuit_2016.svg.png"},
-        {"nombre": "Gran Premio de Singapur", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Marina_Bay_Street_Circuit_2023.svg/500px-Marina_Bay_Street_Circuit_2023.svg.png"},
-        {"nombre": "Gran Premio de Estados Unidos", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Circuit_of_the_Americas.svg/500px-Circuit_of_the_Americas.svg.png"},
-        {"nombre": "Gran Premio de la Ciudad de México", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez_2015.svg/500px-Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez_2015.svg.png"},
-        {"nombre": "Gran Premio de São Paulo", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Autodromo_Jose_Carlos_Pace_Interlagos_2014.svg/500px-Autodromo_Jose_Carlos_Pace_Interlagos_2014.svg.png"},
-        {"nombre": "Gran Premio de Las Vegas", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Las_Vegas_Grand_Prix_Circuit.svg/500px-Las_Vegas_Grand_Prix_Circuit.svg.png"},
-        {"nombre": "Gran Premio de Catar", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Losail_International_Circuit_2021.svg/500px-Losail_International_Circuit_2021.svg.png"},
-        {"nombre": "Gran Premio de Abu Dabi", "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Yas_Marina_Circuit_2021.svg/500px-Yas_Marina_Circuit_2021.svg.png"}
+        {"nombre": "Gran Premio de Baréin", "bandera": "🇧🇭", "longitud": "5.412 km"},
+        {"nombre": "Gran Premio de Arabia Saudita", "bandera": "🇸🇦", "longitud": "6.174 km"},
+        {"nombre": "Gran Premio de Australia", "bandera": "🇦🇺", "longitud": "5.278 km"},
+        {"nombre": "Gran Premio de Japón", "bandera": "🇯🇵", "longitud": "5.807 km"},
+        {"nombre": "Gran Premio de China", "bandera": "🇨🇳", "longitud": "5.451 km"},
+        {"nombre": "Gran Premio de Miami", "bandera": "🇺🇸", "longitud": "5.412 km"},
+        {"nombre": "Gran Premio de Emilia-Romagna", "bandera": "🇮🇹", "longitud": "4.909 km"},
+        {"nombre": "Gran Premio de Mónaco", "bandera": "🇲🇨", "longitud": "3.337 km"},
+        {"nombre": "Gran Premio de Canadá", "bandera": "🇨🇦", "longitud": "4.361 km"},
+        {"nombre": "Gran Premio de España", "bandera": "🇪🇸", "longitud": "4.657 km"},
+        {"nombre": "Gran Premio de Austria", "bandera": "🇦🇹", "longitud": "4.318 km"},
+        {"nombre": "Gran Premio de Gran Bretaña", "bandera": "🇬🇧", "longitud": "5.891 km"},
+        {"nombre": "Gran Premio de Hungría", "bandera": "🇭🇺", "longitud": "4.381 km"},
+        {"nombre": "Gran Premio de Bélgica", "bandera": "🇧🇪", "longitud": "7.004 km"},
+        {"nombre": "Gran Premio de Países Bajos", "bandera": "🇳🇱", "longitud": "4.259 km"},
+        {"nombre": "Gran Premio de Italia", "bandera": "🇮🇹", "longitud": "5.793 km"},
+        {"nombre": "Gran Premio de Azerbaiyán", "bandera": "🇦🇿", "longitud": "6.003 km"},
+        {"nombre": "Gran Premio de Singapur", "bandera": "🇸🇬", "longitud": "4.940 km"},
+        {"nombre": "Gran Premio de Estados Unidos", "bandera": "🇺🇸", "longitud": "5.513 km"},
+        {"nombre": "Gran Premio de la Ciudad de México", "bandera": "🇲🇽", "longitud": "4.304 km"},
+        {"nombre": "Gran Premio de São Paulo", "bandera": "🇧🇷", "longitud": "4.309 km"},
+        {"nombre": "Gran Premio de Las Vegas", "bandera": "🇺🇸", "longitud": "6.201 km"},
+        {"nombre": "Gran Premio de Catar", "bandera": "🇶🇦", "longitud": "5.419 km"},
+        {"nombre": "Gran Premio de Abu Dabi", "bandera": "🇦🇪", "longitud": "5.281 km"}
     ]
 
     for i in range(0, len(circuitos_2024), 3):
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(circuitos_2024):
-                circuito = circuitos_2024[i + j]
+                c = circuitos_2024[i + j]
                 with cols[j]:
                     st.markdown(f"""
-                        <div style='background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.4);'>
-                            <h4 style='color: #FFFFFF; font-size: 0.9rem; margin-bottom: 12px; font-weight: 700;'>{circuito['nombre']}</h4>
-                            <div style='background: rgba(15, 23, 42, 0.8); padding: 10px; border-radius: 6px; display: flex; align-items: center; justify-content: center; height: 130px;'>
-                                <img src="{circuito['imagen']}" style="max-height: 110px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(255,255,255,0.2));" alt="{circuito['nombre']}">
+                        <div style='
+                            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+                            border: 1px solid rgba(255, 24, 1, 0.4);
+                            border-radius: 12px;
+                            padding: 22px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+                        '>
+                            <div style='font-size: 2.2rem; margin-bottom: 8px;'>{c['bandera']}</div>
+                            <h4 style='color: #FFFFFF; font-size: 0.95rem; font-weight: 800; margin: 0 0 10px 0;'>{c['nombre']}</h4>
+                            <div style='
+                                background: rgba(255, 24, 1, 0.15);
+                                color: #ff4d4d;
+                                padding: 5px 12px;
+                                border-radius: 6px;
+                                display: inline-block;
+                                font-size: 0.75rem;
+                                font-weight: 700;
+                                border: 1px solid rgba(255, 24, 1, 0.3);
+                                letter-spacing: 0.5px;
+                            '>
+                                ⚡ LONGITUD: {c['longitud']}
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
