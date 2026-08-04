@@ -354,19 +354,19 @@ st.markdown("""
 
 # Navegación con 13 pestañas maestras
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13 = st.tabs([
-    "🏠 Panel 2024", 
-    "⚔️ H2H", 
-    "🔴 En Vivo / 2024", 
-    "📈 FastF1 Telemetry", 
-    "⛅ Clima", 
-    "💰 Cost Cap", 
-    "🚦 Luces Salida", 
-    "🛑 Estrategia Gantt", 
-    "💵 Fantasy Optimizer", 
-    "🏆 Constructores ",
-    "🎙️ Pit Wall ",
-    "🏛️ Salón de la Fama",
-    "🗺️ Trazado de los circuitos"
+    "🏠 Panel",
+    "⚔️ H2H",
+    "🔴 En Vivo",
+    "📈 FastF1",
+    "⛅ Clima",
+    "💰 Cost Cap",
+    "🚦 Salida",
+    "🛑 Gantt",
+    "💵 Fantasy",
+    "🏆 Equipos",
+    "🎙️ Pit Wall",
+    "🏛️ Fama",
+    "🗺️ Circuitos"
 ])
 
 with tab1:
