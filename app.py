@@ -3079,10 +3079,7 @@ with tab13:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    import random
-import pandas as pd
-import time
-
+with tab14: 
 import streamlit as st
 import random
 import time
@@ -3318,6 +3315,7 @@ BANCO_DECADAS = {
 
 # --- INICIALIZACIÓN DE ESTADOS SEGUROS ---
 if 'pro_state' not in st.session_state: st.session_state.pro_state = "SELECT"
+if 'pro_player_name' not in st.session_state: st.session_state.pro_player_name = "Piloto"
 if 'pro_questions' not in st.session_state: st.session_state.pro_questions = []
 if 'pro_idx' not in st.session_state: st.session_state.pro_idx = 0
 if 'pro_score' not in st.session_state: st.session_state.pro_score = 0
@@ -3345,15 +3343,21 @@ st.markdown("<br>", unsafe_allow_html=True)
 if st.session_state.pro_state == "SELECT":
     st.markdown("<div class='arcade-pro-container'>", unsafe_allow_html=True)
     st.markdown("<div class='arcade-pro-title'>🕹️ F1 Infinite Time Machine Trivia (1950 - 2024)</div>", unsafe_allow_html=True)
-    st.markdown("<div class='arcade-pro-sub'>Banco Masivo Infinito: Cientos de combinaciones posibles, preguntas aleatorias por década y modo global extremo.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='arcade-pro-sub'>Banco Masivo Infinito: Partidas rápidas de 10 preguntas aleatorias con combinaciones infinitas.</div>", unsafe_allow_html=True)
+
+    # Campo para el nombre del participante
+    st.session_state.pro_player_name = st.text_input("👤 Ingresa tu Nombre o Apodo para el Leaderboard:", value=st.session_state.pro_player_name)
+    st.markdown("<br>", unsafe_allow_html=True)
 
     col_m1, col_m2 = st.columns(2)
     with col_m1:
         st.markdown("<h3 style='color: white;'>Configurar Partida</h3>", unsafe_allow_html=True)
-        decada_elegida = st.selectbox("📅 Jugar por Década Específica:", list(BANCO_DECADAS.keys()), key="select_decada_box")
+        decada_elegida = st.selectbox("📅 Jugar por Década Específica (10 Preguntas):", list(BANCO_DECADAS.keys()), key="select_decada_box")
         
         if st.button("🚀 Iniciar Desafío por Década", use_container_width=True):
-            seleccion = random.sample(BANCO_DECADAS[decada_elegida], len(BANCO_DECADAS[decada_elegida]))
+            # Seleccionar exactamente 10 preguntas de forma aleatoria de esa década
+            num_preg = min(10, len(BANCO_DECADAS[decada_elegida]))
+            seleccion = random.sample(BANCO_DECADAS[decada_elegida], num_preg)
             for q in seleccion:
                 opts = q['opciones'].copy()
                 random.shuffle(opts)
@@ -3372,14 +3376,14 @@ if st.session_state.pro_state == "SELECT":
             st.rerun()
         
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
+        if st.button("👑 Iniciar Modo Leyenda (Global 10 Preguntas)", use_container_width=True):
             todas_preguntas = []
             for dec in BANCO_DECADAS.values():
                 todas_preguntas.extend(dec)
             
-            # Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito
-            num_preguntas_global = min(30, len(todas_preguntas))
-            seleccion = random.sample(todas_preguntas, num_preguntas_global)
+            # Seleccionar una muestra aleatoria de 10 preguntas de todo el repertorio global
+            num_preg_global = min(10, len(todas_preguntas))
+            seleccion = random.sample(todas_preguntas, num_preg_global)
             for q in seleccion:
                 opts = q['opciones'].copy()
                 random.shuffle(opts)
@@ -3390,7 +3394,7 @@ if st.session_state.pro_state == "SELECT":
             st.session_state.pro_score = 0
             st.session_state.pro_streak = 0
             st.session_state.pro_max_streak = 0
-            st.session_state.pro_mode = "Modo Leyenda (Global Infinito)"
+            st.session_state.pro_mode = "Modo Leyenda (Global)"
             st.session_state.pro_game_id += 1
             st.session_state.pro_recorded = False
             st.session_state.pro_q_start_time = time.time()
@@ -3416,7 +3420,7 @@ elif st.session_state.pro_state == "PLAYING":
     q_actual = preguntas[idx]
 
     progress_val = (idx) / len(preguntas)
-    st.progress(progress_val, text=f"Pregunta {idx + 1} de {len(preguntas)}")
+    st.progress(progress_val, text=f"Participante: {st.session_state.pro_player_name} | Pregunta {idx + 1} de {len(preguntas)}")
 
     st.markdown(f"<div class='arcade-q-box'>", unsafe_allow_html=True)
     
@@ -3476,7 +3480,9 @@ elif st.session_state.pro_state == "PLAYING":
                 st.session_state.pro_highscore = final_s
             
             if not st.session_state.pro_recorded:
+                nombre_val = st.session_state.pro_player_name if st.session_state.pro_player_name.strip() != "" else "Piloto Anónimo"
                 st.session_state.pro_score_history.append({
+                    "Participante": nombre_val,
                     "Modo": st.session_state.pro_mode,
                     "Puntos": final_s,
                     "Racha Máxima": st.session_state.pro_max_streak
@@ -3494,7 +3500,7 @@ elif st.session_state.pro_state == "FINISHED":
     st.markdown("<div class='arcade-pro-container'>", unsafe_allow_html=True)
     score_final = st.session_state.pro_score
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown(f"<h2 style='text-align: center; color: #FF1801; text-transform: uppercase;'>🏁 ¡Desafío Superado!</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; color: #FF1801; text-transform: uppercase;'>🏁 ¡Gran Trabajo, {st.session_state.pro_player_name}!</h2>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center; color: #FFD700; font-size: 3.2rem;'>{score_final} PUNTOS</h1>", unsafe_allow_html=True)
     st.markdown(f"<p style='text-align: center; color: #00E5FF; font-size: 1.2rem;'>🔥 Racha Máxima Lograda: <b>{st.session_state.pro_max_streak} aciertos seguidos</b></p>", unsafe_allow_html=True)
 
