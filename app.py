@@ -3081,9 +3081,9 @@ with tab13:
 
 
 
-
+with tab14:
 # --- CSS DEFINITIVO (DISEÑO ARCADE Y CERO PARPADEOS) ---
-st.markdown("""
+    st.markdown("""
     <style>
         .arcade-pro-container {
             background: linear-gradient(135deg, #08080c 0%, #13131c 100%);
