@@ -3080,9 +3080,8 @@ with tab13:
     st.markdown("</div>", unsafe_allow_html=True)
 
     import random
-
-import random
 import pandas as pd
+import time
 
 with tab14:
     st.markdown("""
@@ -3115,7 +3114,7 @@ with tab14:
                 background: rgba(22, 22, 30, 0.9);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 12px;
-                padding: 15px;
+                padding: 12px;
                 text-align: center;
             }
             .arcade-q-box {
@@ -3134,7 +3133,7 @@ with tab14:
 
     st.markdown("<div class='arcade-pro-container'>", unsafe_allow_html=True)
     st.markdown("<div class='arcade-pro-title'>🕹️ F1 Ultimate Time Machine Trivia (1950 - 2024)</div>", unsafe_allow_html=True)
-    st.markdown("<div class='arcade-pro-sub'>Elige tu década favorita para cambiar las preguntas o enfréntate al Modo Leyenda Global.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='arcade-pro-sub'>Modo Avanzado: Rachas de aciertos, bonus de velocidad por temporizador y tabla de clasificación global.</div>", unsafe_allow_html=True)
 
     # --- BANCO MASIVO DE PREGUNTAS POR DÉCADA ---
     BANCO_DECADAS = {
@@ -3245,6 +3244,10 @@ with tab14:
         st.session_state.pro_idx = 0
     if 'pro_score' not in st.session_state:
         st.session_state.pro_score = 0
+    if 'pro_streak' not in st.session_state:
+        st.session_state.pro_streak = 0
+    if 'pro_max_streak' not in st.session_state:
+        st.session_state.pro_max_streak = 0
     if 'pro_mode' not in st.session_state:
         st.session_state.pro_mode = ""
     if 'pro_highscore' not in st.session_state:
@@ -3255,25 +3258,27 @@ with tab14:
         st.session_state.pro_score_history = []
     if 'pro_recorded' not in st.session_state:
         st.session_state.pro_recorded = False
+    if 'pro_q_start_time' not in st.session_state:
+        st.session_state.pro_q_start_time = 0
 
     # Panel Superior de Estadísticas
-    c_stat1, c_stat2 = st.columns(2)
+    c_stat1, c_stat2, c_stat3 = st.columns(3)
     with c_stat1:
-        st.markdown(f"<div class='arcade-stat-card'>🏆 Récord Histórico: <b style='color:#FFD700;'>{st.session_state.pro_highscore} pts</b></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='arcade-stat-card'>🏆 Récord: <b style='color:#FFD700;'>{st.session_state.pro_highscore} pts</b></div>", unsafe_allow_html=True)
     with c_stat2:
-        st.markdown(f"<div class='arcade-stat-card'>⚡ Modo Activo: <b style='color:#FF1801;'>{st.session_state.pro_mode if st.session_state.pro_mode else 'Ninguno'}</b></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='arcade-stat-card'>🔥 Racha: <b style='color:#FF1801;'>{st.session_state.pro_streak} (Max: {st.session_state.pro_max_streak})</b></div>", unsafe_allow_html=True)
+    with c_stat3:
+        st.markdown(f"<div class='arcade-stat-card'>⚡ Modo: <b style='color:#00E5FF;'>{st.session_state.pro_mode if st.session_state.pro_mode else 'Inactivo'}</b></div>", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # --- 1. PANTALLA DE SELECCIÓN DE MODO ---
+    # --- 1. PANTALLA DE SELECCIÓN DE MODO Y LEADERBOARD GLOBAL ---
     if st.session_state.pro_state == "SELECT":
-        st.markdown("<h3 style='text-align: center; color: white;'>Selecciona tu desafío histórico:</h3>", unsafe_allow_html=True)
-        
         col_m1, col_m2 = st.columns(2)
         with col_m1:
+            st.markdown("<h3 style='color: white;'>Configurar Partida</h3>", unsafe_allow_html=True)
             decada_elegida = st.selectbox("📅 Jugar por Década Específica:", list(BANCO_DECADAS.keys()), key="select_decada_box")
             if st.button("🚀 Iniciar Desafío por Década", use_container_width=True):
-                # Carga estricta únicamente de la década seleccionada
                 seleccion = random.sample(BANCO_DECADAS[decada_elegida], len(BANCO_DECADAS[decada_elegida]))
                 for q in seleccion:
                     opts = q['opciones'].copy()
@@ -3283,15 +3288,17 @@ with tab14:
                 st.session_state.pro_questions = seleccion
                 st.session_state.pro_idx = 0
                 st.session_state.pro_score = 0
+                st.session_state.pro_streak = 0
+                st.session_state.pro_max_streak = 0
                 st.session_state.pro_mode = f"Década: {decada_elegida}"
                 st.session_state.pro_game_id += 1
                 st.session_state.pro_recorded = False
+                st.session_state.pro_q_start_time = time.time()
                 st.session_state.pro_state = "PLAYING"
                 st.rerun()
-        
-        with col_m2:
-            st.markdown("<p style='color:#aaa; font-size:0.9rem; margin-top:5px;'><b>Modo Leyenda Global (1950 - 2024):</b> Selecciona 10 preguntas aleatorias de cualquier época mezcladas.</p>", unsafe_allow_html=True)
-            if st.button("👑 Iniciar Modo Leyenda (Global)", use_container_width=True):
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("👑 Iniciar Modo Leyenda (Global 10Q)", use_container_width=True):
                 todas_preguntas = []
                 for dec in BANCO_DECADAS.values():
                     todas_preguntas.extend(dec)
@@ -3305,13 +3312,25 @@ with tab14:
                 st.session_state.pro_questions = seleccion
                 st.session_state.pro_idx = 0
                 st.session_state.pro_score = 0
+                st.session_state.pro_streak = 0
+                st.session_state.pro_max_streak = 0
                 st.session_state.pro_mode = "Modo Leyenda (Global)"
                 st.session_state.pro_game_id += 1
                 st.session_state.pro_recorded = False
+                st.session_state.pro_q_start_time = time.time()
                 st.session_state.pro_state = "PLAYING"
                 st.rerun()
 
-    # --- 2. JUEGO EN CURSO ---
+        with col_m2:
+            st.markdown("<h3 style='color: white;'>🌍 Tabla de Clasificación (Leaderboard)</h3>", unsafe_allow_html=True)
+            if st.session_state.pro_score_history:
+                df_leaderboard = pd.DataFrame(st.session_state.pro_score_history).sort_values(by="Puntos", ascending=False).reset_index(drop=True)
+                df_leaderboard.index = df_leaderboard.index + 1
+                st.dataframe(df_leaderboard, use_container_width=True)
+            else:
+                st.info("Aún no hay registros en la tabla de clasificación. ¡Juega tu primera partida para aparecer aquí!")
+
+    # --- 2. JUEGO EN CURSO (CON TEMPORIZADOR Y RACHAS) ---
     elif st.session_state.pro_state == "PLAYING":
         preguntas = st.session_state.pro_questions
         idx = st.session_state.pro_idx
@@ -3324,9 +3343,9 @@ with tab14:
         
         col_q_title, col_q_btn = st.columns([3, 1])
         with col_q_title:
-            st.markdown(f"<h4 style='color: #FF1801; margin-top:0;'>Progreso del Test</h4>", unsafe_allow_html=True)
+            st.markdown(f"<h4 style='color: #FF1801; margin-top:0;'>⏱️ ¡Responde Rápido para Bono de Velocidad!</h4>", unsafe_allow_html=True)
         with col_q_btn:
-            if st.button("🔄 Reiniciar", use_container_width=True):
+            if st.button("🔄 Abandonar", use_container_width=True):
                 st.session_state.pro_state = "SELECT"
                 st.rerun()
 
@@ -3341,15 +3360,36 @@ with tab14:
         st.markdown("<br>", unsafe_allow_html=True)
 
         if st.button("Verificar Respuesta ➔", use_container_width=True):
-            puntos_por_pregunta = 100 // len(preguntas)
+            # Calcular tiempo transcurrido para bono de velocidad
+            tiempo_transcurrido = time.time() - st.session_state.pro_q_start_time
+            
+            puntos_base = 100 // len(preguntas)
+            bono_velocidad = 10 if tiempo_transcurrido < 6 else 0  # Si responde en menos de 6 segundos
+            
             if eleccion == q_actual['correcta']:
-                st.session_state.pro_score += puntos_por_pregunta
-                st.toast(f"✅ ¡Correcto! (+{puntos_por_pregunta} pts)", icon="🔥")
+                st.session_state.pro_streak += 1
+                if st.session_state.pro_streak > st.session_state.pro_max_streak:
+                    st.session_state.pro_max_streak = st.session_state.pro_streak
+                
+                # Bonus por racha de aciertos (streak >= 3 otorga extra)
+                bonus_racha = 15 if st.session_state.pro_streak >= 3 else 0
+                pts_ganados = puntos_base + bono_velocidad + bonus_racha
+                
+                st.session_state.pro_score += pts_ganados
+                msg = f"✅ ¡Correcto! (+{puntos_base} pts"
+                if bono_velocidad > 0:
+                    msg += f" + {bono_velocidad} bono velocidad"
+                if bonus_racha > 0:
+                    msg += f" + {bonus_racha} racha 🔥"
+                msg += ")"
+                st.toast(msg, icon="🔥")
             else:
+                st.session_state.pro_streak = 0  # Rompe la racha
                 st.toast(f"❌ Incorrecto. La respuesta correcta era: {q_actual['correcta']}", icon="⚠️")
 
             if idx + 1 < len(preguntas):
                 st.session_state.pro_idx += 1
+                st.session_state.pro_q_start_time = time.time()  # Reiniciar cronómetro para siguiente pregunta
                 st.rerun()
             else:
                 final_s = st.session_state.pro_score
@@ -3358,9 +3398,9 @@ with tab14:
                 
                 if not st.session_state.pro_recorded:
                     st.session_state.pro_score_history.append({
-                        "Intento": len(st.session_state.pro_score_history) + 1,
                         "Modo": st.session_state.pro_mode,
-                        "Puntos": final_s
+                        "Puntos": final_s,
+                        "Racha Máxima": st.session_state.pro_max_streak
                     })
                     st.session_state.pro_recorded = True
 
@@ -3369,30 +3409,25 @@ with tab14:
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- 3. PANTALLA DE RESULTADOS Y GRÁFICA ---
+    # --- 3. PANTALLA DE RESULTADOS Y ACTUALIZACIÓN DE LEADERBOARD ---
     elif st.session_state.pro_state == "FINISHED":
         score_final = st.session_state.pro_score
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown(f"<h2 style='text-align: center; color: #FF1801; text-transform: uppercase;'>🏁 ¡Desafío Superado!</h2>", unsafe_allow_html=True)
         st.markdown(f"<h1 style='text-align: center; color: #FFD700; font-size: 3.2rem;'>{score_final} PUNTOS</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center; color: #00E5FF; font-size: 1.2rem;'>🔥 Racha Máxima Lograda: <b>{st.session_state.pro_max_streak} aciertos seguidos</b></p>", unsafe_allow_html=True)
 
         if score_final >= 90:
             st.success("👑 ¡Nivel Dios! Tu conocimiento enciclopédico de la F1 desde 1950 es absoluto.")
         elif score_final >= 60:
             st.info("⚡ ¡Muy sólido! Conoces a la perfección los hitos más importantes de la categoría.")
         else:
-            st.warning("⚠️ Buen intento. La historia de la F1 es fascinante; ¡vuelve a intentarlo para dominar la tabla!")
-
-        if st.session_state.pro_score_history:
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("<h4 style='color: white; text-align: center;'>📊 Historial de Puntuaciones por Partida</h4>", unsafe_allow_html=True)
-            df_history = pd.DataFrame(st.session_state.pro_score_history)
-            st.bar_chart(df_history.set_index("Intento")["Puntos"], color="#FF1801")
+            st.warning("⚠️ Buen intento. ¡Vuelve a intentarlo para dominar la tabla de clasificación global!")
 
         st.markdown("<br>", unsafe_allow_html=True)
         col_end1, col_end2, col_end3 = st.columns([1, 2, 1])
         with col_end2:
-            if st.button("🔄 Volver al Menú de Selección", use_container_width=True):
+            if st.button("🔄 Volver al Menú Principal y Leaderboard", use_container_width=True):
                 st.session_state.pro_state = "SELECT"
                 st.rerun()
 
