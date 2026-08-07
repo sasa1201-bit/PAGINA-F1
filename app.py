@@ -3079,7 +3079,7 @@ with tab13:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-with tab14: 
+
 import streamlit as st
 import random
 import time
