@@ -3377,11 +3377,12 @@ if st.session_state.pro_state == "SELECT":
     # Seleccionar exactamente 10 preguntas aleatorias de todo el repertorio
     num_preguntas_global = min(10, len(todas_preguntas))
     seleccion = random.sample(todas_preguntas, num_preguntas_global)
-            for q in seleccion:
-                opts = q['opciones'].copy()
-                random.shuffle(opts)
-                q['shuffled_opts'] = opts
-
+    
+    for q in seleccion:
+        opts = q['opciones'].copy()
+        random.shuffle(opts)
+        q['shuffled_opts'] = opts
+        
             st.session_state.pro_questions = seleccion
             st.session_state.pro_idx = 0
             st.session_state.pro_score = 0
