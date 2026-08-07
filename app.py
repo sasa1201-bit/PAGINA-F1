@@ -3080,10 +3080,7 @@ with tab13:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-import streamlit as st
-import random
-import time
-import pandas as pd
+
 
 # --- CSS DEFINITIVO (DISEÑO ARCADE Y CERO PARPADEOS) ---
 st.markdown("""
