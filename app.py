@@ -3342,7 +3342,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 if st.session_state.pro_state == "SELECT":
     st.markdown("<div class='arcade-pro-container'>", unsafe_allow_html=True)
     st.markdown("<div class='arcade-pro-title'>🕹️ F1 Infinite Time Machine Trivia (1950 - 2024)</div>", unsafe_allow_html=True)
-    st.markdown("<div class='arcade-pro-sub'>Banco Masivo Infinito: Cientos de combinaciones posibles, preguntas aleatorias por década y modo global extremo.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='arcade-pro-sub'>Banco Masivo Infinito: Preguntas aleatorias por década y modo global extremo.</div>", unsafe_allow_html=True)
 
     col_m1, col_m2 = st.columns(2)
     with col_m1:
@@ -3375,7 +3375,7 @@ if st.session_state.pro_state == "SELECT":
                 todas_preguntas.extend(dec)
             
             # Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito
-            num_preguntas_global = min(30, len(todas_preguntas))
+            num_preguntas_global = min(10, len(todas_preguntas))
             seleccion = random.sample(todas_preguntas, num_preguntas_global)
             for q in seleccion:
                 opts = q['opciones'].copy()
