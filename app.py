@@ -3372,10 +3372,10 @@ if st.session_state.pro_state == "SELECT":
         if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
             todas_preguntas = []
             for dec in BANCO_DECADAS.values():
-                todas_preguntas.extend(dec)
+               st.session_state.pro_questions = random.sample(todas_las_de_la_decada, min(10, len(todas_las_de_la_decada)))
             
             # Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito
-            num_preguntas_global = min(10, len(todas_preguntas))
+            num_preguntas_global = min(30, len(todas_preguntas))
             seleccion = random.sample(todas_preguntas, num_preguntas_global)
             for q in seleccion:
                 opts = q['opciones'].copy()
