@@ -3370,35 +3370,30 @@ if st.session_state.pro_state == "SELECT":
         
         st.markdown("<br>", unsafe_allow_html=True)
        if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
-            todas_preguntas = []
-            
-            # 1. Juntamos todas las preguntas de TODAS las décadas en una sola lista gigante
-            for dec in BANCO_DECADAS.values():
-                todas_preguntas.extend(dec)
-            
-            # 2. Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito (ej. 30 preguntas)
-            num_preguntas_global = min(30, len(todas_preguntas))
-            seleccion = random.sample(todas_preguntas, num_preguntas_global)
-            
-            # 3. Barajar las opciones de las preguntas seleccionadas
-            for q in seleccion:
-                opts = q['opciones'].copy()
-                random.shuffle(opts)
-                q['shuffled_opts'] = opts
+            todas_preguntas = []
+            for dec in BANCO_DECADAS.values():
+               st.session_state.pro_questions = random.sample(todas_las_de_la_decada, min(10, len(todas_las_de_la_decada)))
+            
+            # Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito
+            num_preguntas_global = min(30, len(todas_preguntas))
+            seleccion = random.sample(todas_preguntas, num_preguntas_global)
+            for q in seleccion:
+                opts = q['opciones'].copy()
+                random.shuffle(opts)
+                q['shuffled_opts'] = opts
 
-            # 4. Inicializar las variables para empezar la partida
-            st.session_state.pro_questions = seleccion
-            st.session_state.pro_idx = 0
-            st.session_state.pro_score = 0
-            st.session_state.pro_streak = 0
-            st.session_state.pro_max_streak = 0
-            st.session_state.pro_mode = "Modo Leyenda (Global Infinito)"
-            st.session_state.pro_game_id += 1
-            st.session_state.pro_recorded = False
-            st.session_state.pro_q_start_time = time.time()
-            st.session_state.pro_state = "PLAYING"
-            st.rerun()
-
+            st.session_state.pro_questions = seleccion
+            st.session_state.pro_idx = 0
+            st.session_state.pro_score = 0
+            st.session_state.pro_streak = 0
+            st.session_state.pro_max_streak = 0
+            st.session_state.pro_mode = "Modo Leyenda (Global Infinito)"
+            st.session_state.pro_game_id += 1
+            st.session_state.pro_recorded = False
+            st.session_state.pro_q_start_time = time.time()
+            st.session_state.pro_state = "PLAYING"
+            st.rerun()
+            
     with col_m2:
         st.markdown("<h3 style='color: white;'>🌍 Tabla de Clasificación (Leaderboard)</h3>", unsafe_allow_html=True)
         if st.session_state.pro_score_history:
