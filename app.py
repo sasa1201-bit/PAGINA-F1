@@ -3369,7 +3369,7 @@ if st.session_state.pro_state == "SELECT":
             st.rerun()
         
         st.markdown("<br>", unsafe_allow_html=True)
-   if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
+        if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
             todas_preguntas = []
             
             for dec in BANCO_DECADAS.values():
