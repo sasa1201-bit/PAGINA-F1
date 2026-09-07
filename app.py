@@ -3369,19 +3369,24 @@ if st.session_state.pro_state == "SELECT":
             st.rerun()
         
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
+       if st.button("👑 Iniciar Modo Leyenda (Global Infinito)", use_container_width=True):
             todas_preguntas = []
-            for dec in BANCO_DECADAS.values():
-               st.session_state.pro_questions = random.sample(todas_las_de_la_decada, min(10, len(todas_las_de_la_decada)))
             
-            # Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito
+            # 1. Juntamos todas las preguntas de TODAS las décadas en una sola lista gigante
+            for dec in BANCO_DECADAS.values():
+                todas_preguntas.extend(dec)
+            
+            # 2. Seleccionar una muestra amplia y aleatoria de todo el repertorio global infinito (ej. 30 preguntas)
             num_preguntas_global = min(30, len(todas_preguntas))
             seleccion = random.sample(todas_preguntas, num_preguntas_global)
+            
+            # 3. Barajar las opciones de las preguntas seleccionadas
             for q in seleccion:
                 opts = q['opciones'].copy()
                 random.shuffle(opts)
                 q['shuffled_opts'] = opts
 
+            # 4. Inicializar las variables para empezar la partida
             st.session_state.pro_questions = seleccion
             st.session_state.pro_idx = 0
             st.session_state.pro_score = 0
